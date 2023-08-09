@@ -22,7 +22,6 @@ for repo_name in repo_names:
         
         if commit_time >= six_months_ago:
             print(f"Repository '{repo_name}' has been changed in the last 6 months.")
-            res["repo_name"] = repo_name
             
             # Get the list of changed files for this commit
             changed_files = []
@@ -33,10 +32,18 @@ for repo_name in repo_names:
                 diff = repo.diff(parent_commit, commit)
                 for patch in diff:
                     changed_files.append(patch.delta.new_file.path)
+                    # res[repo_name]["commit_list"][commit.id]["changed_files"].append(patch.delta.new_file.path)
+            new_commit = {
+                'commit_id': commit.id,
+                'changed_files': changed_files
+            }
+            res[repo_name]["commit_list"].append(new_commit)
 
-            print("Changed files:")
-            for file in changed_files:
-                print(file)
-            print("-" * 40)
+            # print("Changed files:")
+            # for file in changed_files:
+            # # for file in res[repo_name]["commit_list"][commit.id]["changed_files"].append(patch.delta.new_file.path):
+            #     print(file)
+            # print("-" * 40)
             
             break
+print(res)
