@@ -4378,6 +4378,15 @@
                     "welab-application-core/src/main/java/com/welab/application/service/impl/CooperationUserServiceImpl.java"
                 ]
             }
+        },
+        "commit_counts": {
+            "2023-08": 15,
+            "2023-07": 38,
+            "2023-06": 108,
+            "2023-05": 15,
+            "2023-04": 27,
+            "2023-03": 102,
+            "2023-02": 80
         }
     },
     "welab-approval": {
@@ -21836,19 +21845,16 @@
                     "welab-approval-core/src/main/java/com/welab/approval/service/wedefend/BaseWedefend.java",
                     "welab-approval-core/src/main/java/com/welab/approval/utils/StringUtil.java"
                 ]
-            },
-            "176e9c1": {
-                "commit_author": "john.huang",
-                "commit_time": "12-Feb-2023",
-                "commit_msg": "prod 5.4.11\n",
-                "changed_files": [
-                    "welab-approval-api/src/main/java/com/welab/approval/dto/cmd/ApprovalPreLoansCmd.java",
-                    "welab-approval-api/src/main/java/com/welab/approval/enmu/PreLoansStateEnum.java",
-                    "welab-approval-api/src/main/java/com/welab/approval/service/ApprovalLoansService.java",
-                    "welab-approval-core/src/main/java/com/welab/approval/app/base/BaseApprovalPreLoansService.java",
-                    "welab-approval-core/src/main/java/com/welab/approval/service/dubbo/ApprovalLoansServiceImpl.java"
-                ]
             }
+        },
+        "commit_counts": {
+            "2023-08": 6,
+            "2023-07": 82,
+            "2023-06": 235,
+            "2023-05": 259,
+            "2023-04": 367,
+            "2023-03": 349,
+            "2023-02": 137
         }
     },
     "welab-collect": {
@@ -22711,6 +22717,14 @@
                     "welab-collect-api/src/main/java/com/welab/collect/enums/OptLogTableNameEnum.java"
                 ]
             }
+        },
+        "commit_counts": {
+            "2023-07": 3,
+            "2023-06": 10,
+            "2023-05": 15,
+            "2023-04": 31,
+            "2023-03": 8,
+            "2023-02": 8
         }
     },
     "welab-collection": {
@@ -23816,13 +23830,20 @@
                     "welab-collection-web/src/test/java/com/welab/collection/test/CollectionReportTest.java"
                 ]
             }
+        },
+        "commit_counts": {
+            "2023-04": 8,
+            "2023-03": 10,
+            "2023-02": 56
         }
     },
     "welab-common": {
-        "commit_list": {}
+        "commit_list": {},
+        "commit_counts": {}
     },
     "welab-core-component": {
-        "commit_list": {}
+        "commit_list": {},
+        "commit_counts": {}
     },
     "welab-credit-engine": {
         "commit_list": {
@@ -24619,6 +24640,14 @@
                     "welab-credit-engine-core/src/main/java/com/welab/credit/engine/app/impl/CreditFdcServiceImpl.java"
                 ]
             }
+        },
+        "commit_counts": {
+            "2023-08": 4,
+            "2023-07": 4,
+            "2023-06": 19,
+            "2023-05": 28,
+            "2023-03": 7,
+            "2023-02": 17
         }
     },
     "welab-customer-service": {
@@ -24874,6 +24903,12 @@
                     "welab-customer-service-core/src/main/java/com/welab/customer/app/command/UserEmailVerifyCmdExe.java"
                 ]
             }
+        },
+        "commit_counts": {
+            "2023-07": 4,
+            "2023-06": 11,
+            "2023-03": 6,
+            "2023-02": 6
         }
     },
     "welab-document": {
@@ -24939,10 +24974,17 @@
                     "welab-document-core/src/main/java/com/welab/document/app/command/UploadForSeaCmdExe.java"
                 ]
             }
+        },
+        "commit_counts": {
+            "2023-08": 1,
+            "2023-06": 3,
+            "2023-04": 2,
+            "2023-02": 1
         }
     },
     "welab-event": {
-        "commit_list": {}
+        "commit_list": {},
+        "commit_counts": {}
     },
     "welab-fund": {
         "commit_list": {
@@ -26934,10 +26976,18 @@
                     "welab-fund-core/src/main/java/com/welab/fund/app/impl/FundAccountDubboServiceImpl.java"
                 ]
             }
+        },
+        "commit_counts": {
+            "2023-06": 15,
+            "2023-05": 6,
+            "2023-04": 132,
+            "2023-03": 11,
+            "2023-02": 20
         }
     },
     "welab-integral": {
-        "commit_list": {}
+        "commit_list": {},
+        "commit_counts": {}
     },
     "welab-komodo": {
         "commit_list": {
@@ -27682,6 +27732,15 @@
                     "welab-komodo-web/src/main/java/com/welab/komodo/controller/app/FinancesController.java"
                 ]
             }
+        },
+        "commit_counts": {
+            "2023-08": 2,
+            "2023-07": 3,
+            "2023-06": 17,
+            "2023-05": 18,
+            "2023-04": 9,
+            "2023-03": 17,
+            "2023-02": 9
         }
     },
     "welab-loan-finance": {
@@ -32721,6 +32780,14 @@
                     "welab-loan-finance-core/src/main/java/com/welab/loan/finance/job/LoanTimeOutJob.java"
                 ]
             }
+        },
+        "commit_counts": {
+            "2023-07": 24,
+            "2023-06": 60,
+            "2023-05": 82,
+            "2023-04": 27,
+            "2023-03": 166,
+            "2023-02": 58
         }
     },
     "welab-marketing": {
@@ -35437,6 +35504,14 @@
                     "welab-marketing-web/src/main/resources/application.properties"
                 ]
             }
+        },
+        "commit_counts": {
+            "2023-08": 3,
+            "2023-06": 22,
+            "2023-05": 75,
+            "2023-04": 12,
+            "2023-03": 65,
+            "2023-02": 60
         }
     },
     "welab-merchant": {
@@ -35825,6 +35900,10 @@
                     "welab-merchant-core/src/main/resources/mapper/MerchantProductInfoMapper.xml"
                 ]
             }
+        },
+        "commit_counts": {
+            "2023-03": 34,
+            "2023-02": 5
         }
     },
     "welab-message": {
@@ -36292,6 +36371,12 @@
                     "welab-message-core/src/main/java/com/welab/message/service/push/AbsPushService.java"
                 ]
             }
+        },
+        "commit_counts": {
+            "2023-05": 12,
+            "2023-04": 6,
+            "2023-03": 13,
+            "2023-02": 17
         }
     },
     "welab-moon": {
@@ -37500,6 +37585,13 @@
                     "welab-moon-core/src/main/java/com/welab/moon/service/impl/TbLoanDubboServiceImpl.java"
                 ]
             }
+        },
+        "commit_counts": {
+            "2023-06": 15,
+            "2023-05": 21,
+            "2023-04": 26,
+            "2023-03": 37,
+            "2023-02": 15
         }
     },
     "welab-pay-gateway": {
@@ -38124,6 +38216,14 @@
                     "welab-pay-gateway-core/src/main/java/com/welab/pay/gateway/service/impl/QueryTaskServiceImpl.java"
                 ]
             }
+        },
+        "commit_counts": {
+            "2023-07": 1,
+            "2023-06": 26,
+            "2023-05": 14,
+            "2023-04": 9,
+            "2023-03": 9,
+            "2023-02": 3
         }
     },
     "welab-report": {
@@ -38292,6 +38392,10 @@
                     "welab-report-web/src/test/java/com/welab/report/test/reportjob/GadaReportTest.java"
                 ]
             }
+        },
+        "commit_counts": {
+            "2023-07": 12,
+            "2023-03": 3
         }
     },
     "welab-user": {
@@ -38501,6 +38605,13 @@
                     "welab-user-core/src/main/java/com/welab/user/app/manager/UpdatePwdManager.java"
                 ]
             }
+        },
+        "commit_counts": {
+            "2023-07": 8,
+            "2023-06": 3,
+            "2023-05": 3,
+            "2023-04": 8,
+            "2023-02": 1
         }
     }
 }

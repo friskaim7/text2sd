@@ -1,3 +1,4 @@
+from collections import defaultdict
 import pygit2
 import pprint
 import datetime as dt
@@ -20,8 +21,10 @@ for repo_name in repo_names:
 
     # Initialize the nested dictionaries for the repository
     res[repo_name] = {
-        "commit_list": {}
+        "commit_list": {},
+        "commit_counts": {}
     }
+    commit_counts = defaultdict(int)
 
     # Iterate through commit history
     for commit in repo.walk(repo.head.target):
@@ -31,6 +34,9 @@ for repo_name in repo_names:
             print("this commit was more than 6 month ago")
             break
         
+        commit_month = commit_time.strftime('%Y-%m')
+        commit_counts[commit_month] += 1
+
         changed_files = []
         parent_commit = None
         if commit.parents:
@@ -45,6 +51,7 @@ for repo_name in repo_names:
             "commit_msg": commit.message,
             "changed_files": changed_files,
         }
+    res[repo_name]["commit_counts"] = commit_counts
 
 # Specify the path of the JSON file
 json_file_path = 'output.json'        
