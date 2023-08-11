@@ -1,26 +1,38 @@
 import pygit2
-import datetime
+import pprint
+import datetime as dt
+import os
 
 # Open a repository
 REPO_ROOT_PATH = "E:\Work\Maucash\Repos\drive-download-20230808T022718Z-001\\"
 repo_names = ['welab-application']
 
 # Define timeframe
-today = datetime.datetime.now()
-six_months_ago = today - datetime.timedelta(days=30 * 6)
+today = dt.datetime.now()
+six_months_ago = today - dt.timedelta(days=30 * 6)
+
+# Define output variable
+res = dict()
 
 for repo_name in repo_names:
     repo = pygit2.Repository(REPO_ROOT_PATH + repo_name)
 
+    # Initialize the nested dictionaries for the repository
+    res[repo_name] = {
+        "commit_list": {}
+    }
+
     # Iterate through commit history
     for commit in repo.walk(repo.head.target):
-        commit_time = datetime.datetime.fromtimestamp(commit.commit_time)
-        formatted_time = commit_time.strftime('%d-%b-%Y')
+        commit_time = dt.datetime.fromtimestamp(commit.commit_time)
+        formatted_commit_time = commit_time.strftime('%d-%b-%Y')
         if commit_time < six_months_ago:
             print("this commit was more than 6 month ago")
             break
-        print("Commit ID:", commit.id)
-        print("Author:", commit.author.name)
-        print("Date:", formatted_time)
-        print("Message:", commit.message)
-        print("-" * 40)
+        res[repo_name]["commit_list"][str(commit.short_id)] = {
+            "commit_author" : commit.author.name,
+            "commit_time": formatted_commit_time,
+            "commit_msg": commit.message,
+        }
+        
+print(res)
