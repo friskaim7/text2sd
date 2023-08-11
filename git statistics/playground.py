@@ -2,6 +2,7 @@ import pygit2
 import pprint
 import datetime as dt
 import os
+import json
 
 # Open a repository
 REPO_ROOT_PATH = "E:\Work\Maucash\Repos\drive-download-20230808T022718Z-001\\"
@@ -29,10 +30,21 @@ for repo_name in repo_names:
         if commit_time < six_months_ago:
             print("this commit was more than 6 month ago")
             break
+        
+        changed_files = []
+        parent_commit = None
+        if commit.parents:
+            parent_commit = commit.parents[0]
+            diff = repo.diff(parent_commit, commit)
+            for patch in diff:
+                print("-" * 40)
+                print(commit_time)
+                changed_files.append(patch.delta.new_file.path)
+
         res[repo_name]["commit_list"][str(commit.short_id)] = {
             "commit_author" : commit.author.name,
             "commit_time": formatted_commit_time,
             "commit_msg": commit.message,
+            "changed_files": changed_files,
         }
-        
-print(res)
+
