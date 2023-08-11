@@ -37,8 +37,6 @@ for repo_name in repo_names:
             parent_commit = commit.parents[0]
             diff = repo.diff(parent_commit, commit)
             for patch in diff:
-                print("-" * 40)
-                print(commit_time)
                 changed_files.append(patch.delta.new_file.path)
 
         res[repo_name]["commit_list"][str(commit.short_id)] = {
@@ -48,3 +46,9 @@ for repo_name in repo_names:
             "changed_files": changed_files,
         }
 
+# Specify the path of the JSON file
+json_file_path = 'output.json'        
+
+# Save the dictionary to the JSON file
+with open(json_file_path, 'w') as json_file:
+    json.dump(res, json_file, indent=4)  # indent for pretty formatting
