@@ -5,7 +5,7 @@ import os
 
 # Open a repository
 REPO_ROOT_PATH = "E:\Work\Maucash\Repos\drive-download-20230808T022718Z-001\\"
-repo_names = ['welab-application']
+repo_names = [name for name in os.listdir(REPO_ROOT_PATH) if os.path.isdir(os.path.join(REPO_ROOT_PATH, name))]
 
 # Define timeframe
 today = dt.datetime.now()
