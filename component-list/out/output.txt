@@ -1,0 +1,53 @@
+***********************
+Filename: welab-application/welab-application-api/src/main/java/com/welab/application/common/AppUtil.java
+-----------------------
+Method Name: compare
+Annotations: 
+-----------------------
+Method Name: compareVersion
+Annotations: 
+-----------------------
+Method Name: isNewAppVersion
+Annotations: 
+-----------------------
+Method Name: getVersionNum
+Annotations: 
+-----------------------
+Method Name: parseAppVersion
+Annotations: 
+-----------------------
+Method Name: parseSingleAppVersion
+Annotations: 
+-----------------------
+Method Name: isDdm
+Annotations: 
+-----------------------
+Method Name: noDdmSecondProdCode
+Annotations: 
+-----------------------
+Method Name: jumpSalaryMethod
+Annotations: 
+-----------------------
+Method Name: jumpForcePage
+Annotations: 
+-----------------------
+Method Name: getAgeByBirth
+Annotations: 
+-----------------------
+Method Name: stringToDate
+Annotations: 
+-----------------------
+Method Name: getAgeByBirth
+Annotations: 
+-----------------------
+Method Name: getBirthday
+Annotations: 
+-----------------------
+Method Name: getYearPrefix
+Annotations: 
+-----------------------
+Method Name: getBatchId
+Annotations: 
+-----------------------
+Method Name: getAgeByNik
+Annotations: 

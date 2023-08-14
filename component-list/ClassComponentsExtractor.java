@@ -13,7 +13,7 @@ public class ClassComponentsExtractor {
     public static void main(String[] args) throws IOException {
         final String REPO_ROOT_PATH = "E:/Work/Maucash/Repos/21-repos/";
         String inputFileName = "welab-application/welab-application-api/src/main/java/com/welab/application/common/AppUtil.java";
-        String outputFilename = "component-list/out/" + inputFileName.replace(".java", ".txt");;
+        String outputFilename = "component-list/out/output.txt";
 
         File file = new File(REPO_ROOT_PATH + inputFileName);
         CompilationUnit cu = StaticJavaParser.parse(file);
@@ -25,16 +25,19 @@ public class ClassComponentsExtractor {
         try (PrintStream printStream = new PrintStream(new FileOutputStream(outputFilename))) {
             System.setOut(printStream);
 
+            System.out.println("***********************");
+            System.out.println("Filename: " + inputFileName);
+
             List<MethodDeclaration> methods = cu.findAll(MethodDeclaration.class);
             for (MethodDeclaration method : methods) {
+                System.out.println("-----------------------");
                 System.out.println("Method Name: " + method.getNameAsString());
 
                 List<AnnotationExpr> annotations = method.getAnnotations();
+                System.out.println("Annotations: ");
                 for (AnnotationExpr annotation : annotations) {
-                    System.out.println("Annotation: " + annotation);
+                    System.out.println(annotation);
                 }
-
-                System.out.println("-----------------------");
             }
         }
 
