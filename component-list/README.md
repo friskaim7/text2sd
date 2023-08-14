@@ -15,7 +15,7 @@
 - Javaparser .jar files
 
 ### How To Use
-1. Open command prompt (Powershell didn't work for unknown reason)
+1. Open command prompt in working-folder directory (Powershell didn't work for unknown reason)
 2. Compile the extractor program
 > javac -cp lib\javaparser-core-3.25.4.jar -d component-list\classes\ component-list\ClassComponentsExtractor.java
 3. Run the program
