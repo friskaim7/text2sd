@@ -8,6 +8,15 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.nio.file.FileVisitOption;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 
 public class ClassComponentsExtractor {
@@ -15,6 +24,11 @@ public class ClassComponentsExtractor {
         final String REPO_ROOT_PATH = "E:/Work/Maucash/Repos/21-repos/";
         String inputFileName = "welab-application/welab-application-api/src/main/java/com/welab/application/common/AppUtil.java";
         String outputFilename = "component-list/out/output.txt";
+
+        String[] javaFilePaths = findJavaFiles(REPO_ROOT_PATH);
+        for (String path : javaFilePaths) {
+            System.out.println("Java file: " + path);
+        }
 
         File file = new File(REPO_ROOT_PATH + inputFileName);
         CompilationUnit cu = StaticJavaParser.parse(file);
@@ -53,5 +67,22 @@ public class ClassComponentsExtractor {
         }
 
         System.out.println("Output has been written to " + outputFilename);
+    }
+
+    public static String[] findJavaFiles(String rootFolderPath) throws IOException {
+        final List<String> javaFilePathList = new ArrayList<>();
+        Path start = Paths.get(rootFolderPath);
+        Files.walkFileTree(start, EnumSet.noneOf(FileVisitOption.class), Integer.MAX_VALUE,
+                new SimpleFileVisitor<Path>() {
+                    @Override
+                    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
+                        if (file.toString().endsWith(".java")) {
+                            javaFilePathList.add(file.toString());
+                        }
+                        return FileVisitResult.CONTINUE;
+                    }
+                });
+
+        return javaFilePathList.toArray(new String[0]);
     }
 }
