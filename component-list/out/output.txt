@@ -3,51 +3,95 @@ Filename: welab-application/welab-application-api/src/main/java/com/welab/applic
 -----------------------
 Method Name: compare
 Annotations: 
+Variables: 
+versionArray1	|String[]
+versionArray2	|String[]
+idx	|int
+minLength	|int
+diff	|int
 -----------------------
 Method Name: compareVersion
 Annotations: 
+Variables: 
+result	|int
 -----------------------
 Method Name: isNewAppVersion
 Annotations: 
+Variables: 
+isNewVersion	|boolean
 -----------------------
 Method Name: getVersionNum
 Annotations: 
+Variables: 
+p	|Pattern
+m	|Matcher
 -----------------------
 Method Name: parseAppVersion
 Annotations: 
+Variables: 
+s	|String
 -----------------------
 Method Name: parseSingleAppVersion
 Annotations: 
+Variables: 
 -----------------------
 Method Name: isDdm
 Annotations: 
+Variables: 
+method	|String
 -----------------------
 Method Name: noDdmSecondProdCode
 Annotations: 
+Variables: 
 -----------------------
 Method Name: jumpSalaryMethod
 Annotations: 
+Variables: 
+jumpStr	|String
 -----------------------
 Method Name: jumpForcePage
 Annotations: 
+Variables: 
 -----------------------
 Method Name: getAgeByBirth
 Annotations: 
+Variables: 
+birthday	|Date
 -----------------------
 Method Name: stringToDate
 Annotations: 
+Variables: 
 -----------------------
 Method Name: getAgeByBirth
 Annotations: 
+Variables: 
+cal	|Calendar
+bir	|Calendar
+yearNow	|int
+monthNow	|int
+dayNow	|int
+yearBirth	|int
+monthBirth	|int
+dayBirth	|int
+age	|int
 -----------------------
 Method Name: getBirthday
 Annotations: 
+Variables: 
+day	|String
+month	|String
+year	|String
+fullYear	|String
+sb	|StringBuffer
 -----------------------
 Method Name: getYearPrefix
 Annotations: 
+Variables: 
 -----------------------
 Method Name: getBatchId
 Annotations: 
+Variables: 
 -----------------------
 Method Name: getAgeByNik
 Annotations: 
+Variables: 

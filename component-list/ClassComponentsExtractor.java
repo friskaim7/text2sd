@@ -1,6 +1,7 @@
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.body.VariableDeclarator;
 import com.github.javaparser.ast.expr.AnnotationExpr;
 
 import java.io.File;
@@ -38,6 +39,16 @@ public class ClassComponentsExtractor {
                 for (AnnotationExpr annotation : annotations) {
                     System.out.println(annotation);
                 }
+
+                // Retrieve information about variables within the method
+                System.out.println("Variables: ");
+                method.getBody().ifPresent(body -> {
+                    body.findAll(VariableDeclarator.class).forEach(variable -> {
+                        String variableName = variable.getNameAsString();
+                        String variableType = variable.getTypeAsString();
+                        System.out.println(variableName + "\t|" + variableType);
+                    });
+                });
             }
         }
 
