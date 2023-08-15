@@ -22,47 +22,49 @@ import java.util.List;
 public class ClassComponentsExtractor {
     public static void main(String[] args) throws IOException {
         final String REPO_ROOT_PATH = "E:/Work/Maucash/Repos/21-repos/";
-        String inputFileName = "welab-application/welab-application-api/src/main/java/com/welab/application/common/AppUtil.java";
         String outputFilename = "component-list/out/output.txt";
 
-        String[] javaFilePaths = findJavaFiles(REPO_ROOT_PATH);
-        for (String path : javaFilePaths) {
-            System.out.println("Java file: " + path);
-        }
-
-        File file = new File(REPO_ROOT_PATH + inputFileName);
-        CompilationUnit cu = StaticJavaParser.parse(file);
+        String[] inputFileNames = findJavaFiles(REPO_ROOT_PATH);
+        System.out.println("inputFileNames.length = " + inputFileNames.length);
 
         // Create parent directories for the output file
         File outputFile = new File(outputFilename);
         outputFile.getParentFile().mkdirs();
 
-        try (PrintStream printStream = new PrintStream(new FileOutputStream(outputFilename))) {
-            System.setOut(printStream);
+        for (String input : inputFileNames) {
+            System.out.println(input);
 
-            System.out.println("***********************");
-            System.out.println("Filename: " + inputFileName);
+            try (PrintStream printStream = new PrintStream(new FileOutputStream(outputFilename, true))) {
+                File file = new File(input);
+                CompilationUnit cu = StaticJavaParser.parse(file);
+                System.setOut(printStream);
 
-            List<MethodDeclaration> methods = cu.findAll(MethodDeclaration.class);
-            for (MethodDeclaration method : methods) {
-                System.out.println("-----------------------");
-                System.out.println("Method Name: " + method.getNameAsString());
+                System.out.println("**********************************************");
+                System.out.println("Filename: " + input);
 
-                List<AnnotationExpr> annotations = method.getAnnotations();
-                System.out.println("Annotations: ");
-                for (AnnotationExpr annotation : annotations) {
-                    System.out.println(annotation);
-                }
+                List<MethodDeclaration> methods = cu.findAll(MethodDeclaration.class);
+                for (MethodDeclaration method : methods) {
+                    System.out.println("-----------------------");
+                    System.out.println("Method Name: " + method.getNameAsString());
 
-                // Retrieve information about variables within the method
-                System.out.println("Variables: ");
-                method.getBody().ifPresent(body -> {
-                    body.findAll(VariableDeclarator.class).forEach(variable -> {
-                        String variableName = variable.getNameAsString();
-                        String variableType = variable.getTypeAsString();
-                        System.out.println(variableName + "\t|" + variableType);
+                    List<AnnotationExpr> annotations = method.getAnnotations();
+                    System.out.println("Annotations: ");
+                    for (AnnotationExpr annotation : annotations) {
+                        System.out.println(annotation);
+                    }
+
+                    // Retrieve information about variables within the method
+                    System.out.println("Variables: ");
+                    method.getBody().ifPresent(body -> {
+                        body.findAll(VariableDeclarator.class).forEach(variable -> {
+                            String variableName = variable.getNameAsString();
+                            String variableType = variable.getTypeAsString();
+                            System.out.println(variableName + "\t|" + variableType);
+                        });
                     });
-                });
+                }
+            } catch (Exception e) {
+                System.out.println("Failed to parse: " + input);
             }
         }
 
