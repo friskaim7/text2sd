@@ -1,0 +1,21 @@
+@startuml Test Diagram
+actor Node1
+actor Node2
+
+artifact Pod1 {
+  component [Container1A]
+  component [Container1B]
+}
+
+artifact Pod2 {
+  component [Container2]
+}
+
+artifact Pod3 {
+  component [Container3]
+}
+
+Node1 -- Pod2
+Node1 -- Pod1
+Node2 -- Pod3
+@enduml
