@@ -1,8 +1,10 @@
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.VariableDeclarator;
 import com.github.javaparser.ast.expr.AnnotationExpr;
+import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -22,7 +24,7 @@ import java.util.List;
 public class ClassComponentsExtractor {
     public static void main(String[] args) throws IOException {
         final String REPO_ROOT_PATH = "E:/Work/Maucash/Repos/21-repos/";
-        String outputFilename = "component-list/out/output.txt";
+        String outputFilename = "component-list/out/output1.txt";
 
         String[] inputFileNames = findJavaFiles(REPO_ROOT_PATH);
         System.out.println("inputFileNames.length = " + inputFileNames.length);
@@ -42,27 +44,63 @@ public class ClassComponentsExtractor {
                 System.out.println("**********************************************");
                 System.out.println("Filename: " + input);
 
-                List<MethodDeclaration> methods = cu.findAll(MethodDeclaration.class);
-                for (MethodDeclaration method : methods) {
+                ClassVisitor classVisitor = new ClassVisitor();
+                cu.accept(classVisitor, null);
+
+                List<String> classNames = classVisitor.getClassNames();
+                for (String className : classNames) {
                     System.out.println("-----------------------");
-                    System.out.println("Method Name: " + method.getNameAsString());
+                    System.out.println("Class Name: " + className);
 
-                    List<AnnotationExpr> annotations = method.getAnnotations();
-                    System.out.println("Annotations: ");
-                    for (AnnotationExpr annotation : annotations) {
-                        System.out.println(annotation);
-                    }
+                    cu.getClassByName(className).ifPresent(classOrInterfaceDeclaration -> {
+                        System.out.println("Methods in " + className + ":");
+                        for (MethodDeclaration method : classOrInterfaceDeclaration.getMethods()) {
+                            System.out.println("Method Name: " + method.getNameAsString());
+                            List<AnnotationExpr> annotations = method.getAnnotations();
+                            System.out.println("Annotations: ");
+                            for (AnnotationExpr annotation : annotations) {
+                                System.out.println(annotation);
+                            }
 
-                    // Retrieve information about variables within the method
-                    System.out.println("Variables: ");
-                    method.getBody().ifPresent(body -> {
-                        body.findAll(VariableDeclarator.class).forEach(variable -> {
-                            String variableName = variable.getNameAsString();
-                            String variableType = variable.getTypeAsString();
-                            System.out.println(variableName + "\t|" + variableType);
-                        });
+                            // Retrieve information about variables within the method
+                            System.out.println("Variables: ");
+                            method.getBody().ifPresent(body -> {
+                                body.findAll(VariableDeclarator.class).forEach(variable -> {
+                                    String variableName = variable.getNameAsString();
+                                    String variableType = variable.getTypeAsString();
+                                    System.out.println(variableName + "\t|" + variableType);
+                                });
+                            });
+                        }
                     });
                 }
+
+                // List<String> classNames = classVisitor.getClassNames();
+                // for (String className : classNames) {
+                // System.out.println("Class Name: " + className);
+                // }
+
+                // List<MethodDeclaration> methods = cu.findAll(MethodDeclaration.class);
+                // for (MethodDeclaration method : methods) {
+                //     System.out.println("-----------------------");
+                //     System.out.println("Method Name: " + method.getNameAsString());
+
+                //     List<AnnotationExpr> annotations = method.getAnnotations();
+                //     System.out.println("Annotations: ");
+                //     for (AnnotationExpr annotation : annotations) {
+                //         System.out.println(annotation);
+                //     }
+
+                //     // Retrieve information about variables within the method
+                //     System.out.println("Variables: ");
+                //     method.getBody().ifPresent(body -> {
+                //         body.findAll(VariableDeclarator.class).forEach(variable -> {
+                //             String variableName = variable.getNameAsString();
+                //             String variableType = variable.getTypeAsString();
+                //             System.out.println(variableName + "\t|" + variableType);
+                //         });
+                //     });
+                // }
             } catch (Exception e) {
                 System.out.println("Failed to parse: " + input);
             }
@@ -86,5 +124,19 @@ public class ClassComponentsExtractor {
                 });
 
         return javaFilePathList.toArray(new String[0]);
+    }
+
+    public static class ClassVisitor extends VoidVisitorAdapter<Void> {
+        private List<String> classNames = new ArrayList<>();
+
+        @Override
+        public void visit(ClassOrInterfaceDeclaration cls, Void arg) {
+            super.visit(cls, arg);
+            classNames.add(cls.getNameAsString());
+        }
+
+        public List<String> getClassNames() {
+            return classNames;
+        }
     }
 }
