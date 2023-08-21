@@ -11,6 +11,7 @@ import java.util.List;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SourceStringReader;
+import net.sourceforge.plantuml.core.DiagramDescription;
 
 /**
  * a
@@ -26,7 +27,7 @@ public class Code2Diagram {
 
         try {
             // Write the first image to "os"
-            String desc = reader.generateImage(os, new FileFormatOption(FileFormat.SVG));
+            reader.outputImage(os, new FileFormatOption(FileFormat.SVG));
             os.close();
 
             // The XML is stored into svg
@@ -35,7 +36,6 @@ public class Code2Diagram {
             // Save the SVG to a file
             saveSvgToFile(svg, "code2diagram/out/output.svg");
         } catch (IOException e) {
-            // Handle the exception here
             e.printStackTrace();
         }
     }
