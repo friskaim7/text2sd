@@ -1,0 +1,14 @@
+Komponen yang dibutuhkan:
+package name, relative path + file name
+class name, class variables, method names, calls (manggil class mana aja) 
+per method dalem class: method variable (?), calls (manggil method mana aja, baik dalam class maupun luar class)
+(detail di code2diagram\resource\input-template.txt)
+
+next iteration:
+- modifier (public, protected, private)
+- method parameters (in, inout, out)
+- inheritance
+
+PlantUML:
+- declare dulu baru relasi/aksi
+- caller method --> called method

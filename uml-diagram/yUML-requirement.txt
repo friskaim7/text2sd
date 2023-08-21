@@ -1,2 +1,0 @@
-class, variable, method, calls 
-method: variable, calls 
