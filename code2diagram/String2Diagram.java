@@ -9,10 +9,7 @@ import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SourceStringReader;
 
-/**
- * a
- */
-public class Code2Diagram {
+public class String2Diagram {
     public static void main(String[] args) {
         String source = "@startuml\n";
         source += "Bob -> Alice : hello\n";
