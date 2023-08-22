@@ -1,0 +1,56 @@
+[{
+    "file_relative_path": "file_relative_path",
+    "com.google.maps": [{
+        "TargetClass":{
+            "class_variables":[{
+                "class_variable_name": "VarA",
+                "class_variable_modifier": "public"
+            },
+            {
+                "class_variable_name": "VarB",
+                "class_variable_modifier": "private"
+            }],
+            "methods": [{
+                "MethodA":[{
+                    "method_variables":[{
+                        "method_variable_name": "MVarA",
+                        "method_variable_modifier": "public"
+                    },
+                    {
+                        "method_variable_name": "MVarB",
+                        "method_variable_modifier": "private"
+                    }]
+                }],
+                "calling": ["TargetMethod1", "TargetMethod2", "TargetMethod3"]
+            }]
+        }    
+    }]
+},
+{
+    "file_relative_path": "file_relative_path",
+    "com.google.mail": [{
+        "MailTargetClass":{
+            "class_variables":[{
+                "class_variable_name": "VarA",
+                "class_variable_modifier": "public"
+            },
+            {
+                "class_variable_name": "VarB",
+                "class_variable_modifier": "private"
+            }],
+            "methods": [{
+                "MethodC":[{
+                    "method_variables":[{
+                        "method_variable_name": "MVarA",
+                        "method_variable_modifier": "public"
+                    },
+                    {
+                        "method_variable_name": "MVarB",
+                        "method_variable_modifier": "private"
+                    }]
+                }],
+                "calling": ["TargetMethod1", "TargetMethod2", "TargetMethod3"]
+            }]
+        }    
+    }]
+}]

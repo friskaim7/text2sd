@@ -1,0 +1,158 @@
+[
+  {
+    "file_relative_path": "..\\..\\Repository\\welab-application\\welab-application-api\\src\\main\\java\\com\\welab\\application\\common\\AppUtil.java",
+    "imports": [
+      "com.welab.application.enums.ProductCodeEnum",
+      "com.welab.application.enums.SalaryMethodEnum",
+      "com.welab.sea.util.core.utils.DateUtils",
+      "org.apache.commons.lang3.StringUtils",
+      "org.joda.time.DateTime",
+      "org.joda.time.format.DateTimeFormat",
+      "org.slf4j.Logger",
+      "org.slf4j.LoggerFactory",
+      "java.util.Calendar",
+      "java.util.Date",
+      "java.util.regex.Matcher",
+      "java.util.regex.Pattern"
+    ],
+    "package_name": "com.welab.application.common",
+    "fields": [
+      "[log \u003d LoggerFactory.getLogger(AppUtil.class)]",
+      "[VERSION_NUM \u003d \"[^0-9.]\"]",
+      "[SEP \u003d \",\"]",
+      "[NIK_YEAR_PREFIX_20 \u003d \"20\"]",
+      "[NIK_YEAR_PREFIX_19 \u003d \"19\"]"
+    ],
+    "methods": [
+      {
+        "name": "compare",
+        "annotations": [],
+        "body": "Optional[{\r\n    if (version1 \u003d\u003d null || version2 \u003d\u003d null) {\r\n        throw new Exception(\"compareVersion error:illegal params.\");\r\n    }\r\n    version1 \u003d getVersionNum(version1);\r\n    version2 \u003d getVersionNum(version2);\r\n    //?????????????\".\"?\r\n    String[] versionArray1 \u003d version1.split(\"\\\\.\");\r\n    String[] versionArray2 \u003d version2.split(\"\\\\.\");\r\n    int idx \u003d 0;\r\n    //??????\r\n    int minLength \u003d Math.min(versionArray1.length, versionArray2.length);\r\n    int diff \u003d 0;\r\n    while (idx \u003c minLength \u0026\u0026 //?????\r\n    (diff \u003d versionArray1[idx].length() - versionArray2[idx].length()) \u003d\u003d 0 \u0026\u0026 (diff \u003d versionArray1[idx].compareTo(versionArray2[idx])) \u003d\u003d 0) {\r\n        //?????\r\n        ++idx;\r\n    }\r\n    //??????????????????????????????????????\r\n    diff \u003d (diff !\u003d 0) ? diff : versionArray1.length - versionArray2.length;\r\n    return diff;\r\n}]"
+      },
+      {
+        "name": "compareVersion",
+        "annotations": [],
+        "body": "Optional[{\r\n    int result \u003d compare(version1, version2);\r\n    if (result \u003c\u003d 0) {\r\n        return Boolean.TRUE;\r\n    }\r\n    return Boolean.FALSE;\r\n}]"
+      },
+      {
+        "name": "isNewAppVersion",
+        "annotations": [],
+        "body": "Optional[{\r\n    if (StringUtils.isBlank(compareVersion) || StringUtils.isBlank(userAppVersion)) {\r\n        return true;\r\n    }\r\n    boolean isNewVersion \u003d true;\r\n    try {\r\n        isNewVersion \u003d compareVersion(compareVersion, userAppVersion);\r\n    } catch (Exception e) {\r\n        log.error(\"????,error:\", e);\r\n    }\r\n    return isNewVersion;\r\n}]"
+      },
+      {
+        "name": "getVersionNum",
+        "annotations": [],
+        "body": "Optional[{\r\n    Pattern p \u003d Pattern.compile(VERSION_NUM);\r\n    Matcher m \u003d p.matcher(version);\r\n    return m.replaceAll(\"\").trim();\r\n}]"
+      },
+      {
+        "name": "parseAppVersion",
+        "annotations": [],
+        "body": "Optional[{\r\n    if (StringUtils.isBlank(v)) {\r\n        log.warn(\"???????\");\r\n        return false;\r\n    }\r\n    expression \u003d expression.toUpperCase();\r\n    for (String s : expression.split(\"AND\")) {\r\n        if (!parseSingleAppVersion(v, s)) {\r\n            return false;\r\n        }\r\n    }\r\n    return true;\r\n}]"
+      },
+      {
+        "name": "parseSingleAppVersion",
+        "annotations": [],
+        "body": "Optional[{\r\n    try {\r\n        expression \u003d expression.replace(\" \", \"\");\r\n        if (expression.startsWith(\"\u003e\u003d\")) {\r\n            return compare(v, expression.replace(\"\u003e\u003d\", \"\")) \u003e\u003d 0;\r\n        } else if (expression.startsWith(\"\u003e\")) {\r\n            return compare(v, expression.replace(\"\u003e\", \"\")) \u003e 0;\r\n        } else if (expression.startsWith(\"\u003c\u003d\")) {\r\n            return compare(expression.replace(\"\u003c\u003d\", \"\"), v) \u003e\u003d 0;\r\n        } else if (expression.startsWith(\"\u003c\")) {\r\n            return compare(expression.replace(\"\u003c\", \"\"), v) \u003e 0;\r\n        } else if (expression.startsWith(\"\u003d\u003d\")) {\r\n            return compare(v, expression.replace(\"\u003d\u003d\", \"\")) \u003d\u003d 0;\r\n        } else {\r\n            log.error(\"????????:{}\", expression);\r\n        }\r\n    } catch (Exception e) {\r\n        log.error(e.getMessage(), e);\r\n    }\r\n    return Boolean.FALSE;\r\n}]"
+      },
+      {
+        "name": "isDdm",
+        "annotations": [],
+        "body": "Optional[{\r\n    if (org.springframework.util.StringUtils.isEmpty(salaryMethod) || org.springframework.util.StringUtils.isEmpty(salaryDay)) {\r\n        return false;\r\n    }\r\n    if (noDdmSecondProdCode(secondProdCode)) {\r\n        return false;\r\n    }\r\n    String method \u003d \";\" + SalaryMethodEnum.TWICE_A_MONTH.getValue() + \";\" + SalaryMethodEnum.MONTHLY.getValue() + \";\";\r\n    if (method.contains(\";\" + salaryMethod + \";\")) {\r\n        return true;\r\n    }\r\n    return false;\r\n}]"
+      },
+      {
+        "name": "noDdmSecondProdCode",
+        "annotations": [],
+        "body": "Optional[{\r\n    return ProductCodeEnum.SIGAP_MAUCASH.getTypeValue().equals(secondProdCode) || ProductCodeEnum.NS_SIGAP_MAUCASH.getTypeValue().equals(secondProdCode) || ProductCodeEnum.RESTRUCTURE.getTypeValue().equals(secondProdCode) || ProductCodeEnum.BIMA_MAUCASH_SHORT.getTypeValue().equals(secondProdCode) || ProductCodeEnum.BIMA_MAUCASH_SHORT_V2.getTypeValue().equals(secondProdCode);\r\n}]"
+      },
+      {
+        "name": "jumpSalaryMethod",
+        "annotations": [],
+        "body": "Optional[{\r\n    log.info(\"AppUtil jumpSalaryMethod:{},occupation:{}\", jumpSalaryMethod, occupation);\r\n    if (StringUtils.isBlank(jumpSalaryMethod) || StringUtils.isBlank(occupation)) {\r\n        return false;\r\n    }\r\n    final String jumpStr \u003d SEP + jumpSalaryMethod + SEP;\r\n    if (jumpStr.contains(SEP + occupation + SEP)) {\r\n        return true;\r\n    }\r\n    return false;\r\n}]"
+      },
+      {
+        "name": "jumpForcePage",
+        "annotations": [],
+        "body": "Optional[{\r\n    return false;\r\n    //\t\tif (userId \u003d\u003d null || userId % 2 \u003d\u003d 0) {\r\n    //\t\t\treturn false;\r\n    //\t\t}\r\n    //\t\treturn true;\r\n}]"
+      },
+      {
+        "name": "getAgeByBirth",
+        "annotations": [],
+        "body": "Optional[{\r\n    Date birthday \u003d stringToDate(birthdayStr, \"dd/MM/yyyy\");\r\n    return getAgeByBirth(birthday);\r\n}]"
+      },
+      {
+        "name": "stringToDate",
+        "annotations": [],
+        "body": "Optional[{\r\n    return DateTime.parse(date, DateTimeFormat.forPattern(format)).toDate();\r\n}]"
+      },
+      {
+        "name": "getAgeByBirth",
+        "annotations": [],
+        "body": "Optional[{\r\n    //Calendar???\r\n    /*?Calendar???????Date??*/\r\n    Calendar cal \u003d Calendar.getInstance();\r\n    /*???????Calendar???bir??????Calendar?Date??????*/\r\n    Calendar bir \u003d Calendar.getInstance();\r\n    bir.setTime(birthday);\r\n    /*?????????????????????????????*/\r\n    if (cal.before(bir)) {\r\n        log.warn(\"birthday:{},The birthday is before Now,It\u0027s unbelievable\", birthday);\r\n        return 0;\r\n    }\r\n    /*???????*/\r\n    int yearNow \u003d cal.get(Calendar.YEAR);\r\n    int monthNow \u003d cal.get(Calendar.MONTH);\r\n    int dayNow \u003d cal.get(Calendar.DAY_OF_MONTH);\r\n    /*???????*/\r\n    int yearBirth \u003d bir.get(Calendar.YEAR);\r\n    int monthBirth \u003d bir.get(Calendar.MONTH);\r\n    int dayBirth \u003d bir.get(Calendar.DAY_OF_MONTH);\r\n    /*?????????????*/\r\n    int age \u003d yearNow - yearBirth;\r\n    /*?????????????????????????????????????age????*/\r\n    if (monthNow \u003c monthBirth || (monthNow \u003d\u003d monthBirth \u0026\u0026 dayNow \u003c dayBirth)) {\r\n        age--;\r\n    }\r\n    return age;\r\n}]"
+      },
+      {
+        "name": "getBirthday",
+        "annotations": [],
+        "body": "Optional[{\r\n    String day \u003d nik.substring(6, 8);\r\n    String month \u003d nik.substring(8, 10);\r\n    String year \u003d nik.substring(10, 12);\r\n    String fullYear \u003d getYearPrefix(Integer.valueOf(year)) + year;\r\n    day \u003d Integer.valueOf(day) \u003e 40 ? String.valueOf(Integer.valueOf(day) - 40) : day;\r\n    StringBuffer sb \u003d new StringBuffer();\r\n    return sb.append(day).append(\"/\").append(month).append(\"/\").append(fullYear).toString();\r\n}]"
+      },
+      {
+        "name": "getYearPrefix",
+        "annotations": [],
+        "body": "Optional[{\r\n    if (year \u003c 20) {\r\n        return NIK_YEAR_PREFIX_20;\r\n    }\r\n    return NIK_YEAR_PREFIX_19;\r\n}]"
+      },
+      {
+        "name": "getBatchId",
+        "annotations": [],
+        "body": "Optional[{\r\n    return DateUtils.parseDate(new Date(), \"yyMMddHHmmssSSS\");\r\n}]"
+      },
+      {
+        "name": "getAgeByNik",
+        "annotations": [],
+        "body": "Optional[{\r\n    try {\r\n        return getAgeByBirth(getBirthday(nik));\r\n    } catch (Exception e) {\r\n        log.warn(\"nik:{},getAgeByNik error:\", nik, e);\r\n    }\r\n    return 0;\r\n}]"
+      }
+    ]
+  },
+  {
+    "file_relative_path": "..\\..\\Repository\\welab-application\\welab-application-api\\src\\main\\java\\com\\welab\\application\\common\\Constants.java",
+    "imports": [
+      "com.welab.sea.util.core.utils.RegexUtils"
+    ],
+    "package_name": "com.welab.application.common",
+    "fields": [
+      "[REGEX_EMAIL \u003d \"[\\\\w!#$%\u0026\u0027*+/\u003d?^_`{|}~-]+(?:\\\\.[\\\\w!#$%\u0026\u0027*+/\u003d?^_`{|}~-]+)*@(?:[\\\\w](?:[\\\\w-]*[\\\\w])?\\\\.)+[\\\\w](?:[\\\\w-]*[\\\\w])?\"]",
+      "[REGEX_NIK \u003d \"\\\\A\\\\d{6}[0-7][0-9][0-1][0-9]\\\\d{2}\\\\d{4}\\\\z\"]",
+      "[REGEX_INDO_MOBILE \u003d RegexUtils.REGEX_MOBILE]",
+      "[APPLICATION \u003d \"application:\"]",
+      "[SEA_SOURCE \u003d \"sea\"]",
+      "[TEMPLATE_BEAN \u003d \"TemplateBean\"]",
+      "[SIGAP_COMPANY \u003d \"PT SIGAP PRIMA ASTREA (SIGAP)\"]",
+      "[SIGAP_COMPANY_START \u003d \"PT SIGAP\"]",
+      "[SIGAP_500_AMOUNT_MAX \u003d 500000]",
+      "[ASTRA_CERTIFICATION \u003d APPLICATION + \"astra_certification:\"]",
+      "[USER_RELATED_INFO_LOCK \u003d APPLICATION + \"user_related_info_lock:\"]",
+      "[REJECT_APPLY_AGAIN_CATEGORY \u003d \"reject_apply_again\"]",
+      "[MAUMODAL_REJECT_DAY \u003d \"maumodal_reject_day\"]",
+      "[REJECT_APPLY_AGAIN_CONFIG_KEY \u003d APPLICATION + \"reject_apply_again:\"]",
+      "[MAUMODAL_REJECT_DAY_KEY \u003d APPLICATION + \"maumodal_reject_day:\"]",
+      "[REJECT_APPLY_AGAIN_CREDIT_CONFIG_APPLY_KEY \u003d APPLICATION + \"reject_apply_again_credit:apply:\"]",
+      "[REJECT_APPLY_AGAIN_CREDIT_CONFIG_INCREASE_KEY \u003d APPLICATION + \"reject_apply_again_credit:increase:\"]",
+      "[LOAN_TIMEOUT_CONFIG_KEY \u003d APPLICATION + \"loan_timeout_config:\"]",
+      "[COUNT_BY_COMPANY \u003d APPLICATION + \"count_by_company:\"]",
+      "[COUNT_BY_WD_WEVICE_ID \u003d APPLICATION + \"count_by_wd_device_id:\"]",
+      "[JUMP_SALARY_METHOD_KEY \u003d APPLICATION + \"jump_salary_method:\"]",
+      "[DISBURSEMENT_METHOD_KEY \u003d APPLICATION + \"disbursement_method:\"]",
+      "[INCREASE_TAGS \u003d APPLICATION + \"increase_tags:\"]",
+      "[LOCK_ATTRIBUTE_UP_SIGAP_KEY \u003d APPLICATION + \"lock_attribute:up_sigap\"]",
+      "[LOCK_ATTRIBUTE_UP_ASTRA_KEY \u003d APPLICATION + \"lock_attribute:up_astra\"]",
+      "[LOCK_ATTRIBUTE_WP_ASTRA_KEY \u003d APPLICATION + \"lock_attribute:wp_astra\"]",
+      "[JUMBO_DISBURSED_LIMIT_KEY \u003d APPLICATION + \"jumbo_disbursed_limit:\"]",
+      "[COUNT_BY_GPS \u003d APPLICATION + \"count_by_gps:\"]",
+      "[COUNT_BY_NAME_OF_EMPLOYER \u003d APPLICATION + \"count_by_name_of_emloyer:\"]",
+      "[AGREEMENT_EPLAN_SUFFIX \u003d \"_eplan\"]",
+      "[AGREEMENT_EPLAN_NEW_SUFFIX \u003d \"_eplan_new\"]",
+      "[INDO_REGION_PROVINCE_KEY \u003d \"application:indo_region:province:\"]",
+      "[RESTRICTED_AREA_CONFIG \u003d \"restricted_area\"]",
+      "[H5_GIIAS \u003d \"H5_Giias\"]"
+    ],
+    "methods": []
+  }
+]
