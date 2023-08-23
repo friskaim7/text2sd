@@ -16,7 +16,7 @@ def determine_access_mod(access_mod):
 with open(input_filepath) as input_file:
     data = json.load(input_file)
     with open(output_filepath, 'a') as output_file:
-        output_file.write("@startuml\n")
+        output_file.write("@startuml Class Diagram\n")
 
         # iterate each file data
         for package_data in data:
