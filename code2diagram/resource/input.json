@@ -22,7 +22,7 @@
         "class_vars":[{
             "class_var_access_mod": "public",
             "class_static_mod": false,
-            "class_var__type": "String",
+            "class_var_type": "String",
             "class_var_name": "VarA"
         },
         {
@@ -101,8 +101,8 @@
         "class_access_mod": "public",
         "class_vars":[{
             "class_var_access_mod": "public",
-            "class_static_mod": false,
-            "class_var__type": "String",
+            "class_static_mod": true,
+            "class_var_type": "String",
             "class_var_name": "VarA"
         },
         {
