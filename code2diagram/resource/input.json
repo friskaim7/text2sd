@@ -10,69 +10,76 @@
     ],
     "package_name": "com.google.maps",
     "package_annotations":[{
-        "annotation_name": "@author",
-        "annotation_value": "john"
+        "name": "@author",
+        "value": "john"
     },{
-        "annotation_name": "@date",
-        "annotation_value": "2020-09-18 15:55:11"
+        "name": "@date",
+        "value": "2020-09-18 15:55:11"
     }],
     "classes": [{
-        "class_name": "TargetClass",
-        "class_access_mod": "public",
-        "class_vars":[{
-            "class_var_access_mod": "public",
-            "class_static_mod": false,
-            "class_var_type": "String",
-            "class_var_name": "VarA"
+        "name": "TargetClass",
+        "access_mod": "public",
+        "vars":[{
+            "access_mod": "public",
+            "static_mod": false,
+            "type": "String",
+            "name": "VarA"
         },
         {
-            "class_var_access_mod": "private",
-            "class_static_mod": false,
-            "class_var_type": "String",
-            "class_var_name": "VarB"
+            "access_mod": "private",
+            "static_mod": false,
+            "type": "String",
+            "name": "VarB"
         }],
-        "class_annotations":[{
-            "annotation_name": "@param",
-            "annotation_value": "version1"
+        "annotations":[{
+            "name": "@param",
+            "value": "version1"
         }],
         "methods":[{
-            "method_access_mod": "public",
-            "method_static_mod": true,
-            "method_return_type": "String",
-            "method_name": "MethodA",
-            "method_vars":[{
-                "method_var_access_mod": "public",
-                "method_var_name": "MVarA"
+            "access_mod": "public",
+            "static_mod": true,
+            "return_type": "String",
+            "name": "MethodA",
+            "params": [{
+                "type": "int",
+                "name": "ParamA"
             },{
-                "method_var_access_mod": "private",
-                "method_var_name": "MVarB"
+                "type": "String",
+                "name": "ParamB"
             }],
-            "method_annotations":[{
-                "annotation_name": "@param",
-                "annotation_value": "version1"
+            "vars":[{
+                "type": "int",
+                "name": "MVarA"
             },{
-                "annotation_name": "@param",
-                "annotation_value": "version2"
+                "type": "int",
+                "name": "MVarB"
+            }],
+            "annotations":[{
+                "name": "@param",
+                "value": "version1"
             },{
-                "annotation_name": "@return",
-                "annotation_value": ""
+                "name": "@param",
+                "value": "version2"
+            },{
+                "name": "@return",
+                "value": ""
             }],
             "calling": ["TargetMethod1", "TargetMethod2", "TargetMethod3"]
         },{
-            "method_access_mod": "private",
-            "method_static_mod": false,
-            "method_return_type": "String",
-            "method_name": "MethodA",
-            "method_vars":[{
-                "method_var_type": "int",
-                "method_var_name": "MVarA"
+            "access_mod": "private",
+            "static_mod": false,
+            "return_type": "String",
+            "name": "MethodA",
+            "vars":[{
+                "type": "int",
+                "name": "MVarA"
             },{
-                "method_var_type": "String",
-                "method_var_name": "MVarB"
+                "type": "String",
+                "name": "MVarB"
             }],
-            "method_annotations":[{
-                "annotation_value": "version1",
-                "annotation_name": "@param"
+            "annotations":[{
+                "value": "version1",
+                "name": "@param"
             }],
             "calling": ["TargetMethod1", "TargetMethod2", "TargetMethod3"]
         }]
@@ -90,69 +97,76 @@
     ],
     "package_name": "com.google.mail",
     "package_annotations":[{
-        "annotation_name": "@author",
-        "annotation_value": "john"
+        "name": "@author",
+        "value": "john"
     },{
-        "annotation_name": "@date",
-        "annotation_value": "2020-09-18 15:55:11"
+        "name": "@date",
+        "value": "2020-09-18 15:55:11"
     }],
     "classes": [{
-        "class_name": "TargetClass2",
-        "class_access_mod": "public",
-        "class_vars":[{
-            "class_var_access_mod": "public",
-            "class_static_mod": true,
-            "class_var_type": "String",
-            "class_var_name": "VarA"
+        "name": "TargetClass2",
+        "access_mod": "public",
+        "vars":[{
+            "access_mod": "public",
+            "static_mod": true,
+            "type": "String",
+            "name": "VarA"
         },
         {
-            "class_var_access_mod": "private",
-            "class_static_mod": false,
-            "class_var_type": "String",
-            "class_var_name": "VarB"
+            "access_mod": "private",
+            "static_mod": false,
+            "type": "String",
+            "name": "VarB"
         }],
-        "class_annotations":[{
-            "annotation_name": "@param",
-            "annotation_value": "version1"
+        "annotations":[{
+            "name": "@param",
+            "value": "version1"
         }],
         "methods":[{
-            "method_access_mod": "public",
-            "method_static_mod": true,
-            "method_return_type": "String",
-            "method_name": "MethodA",
-            "method_vars":[{
-                "method_var_access_mod": "public",
-                "method_var_name": "MVarA"
+            "access_mod": "public",
+            "static_mod": true,
+            "return_type": "String",
+            "name": "MethodA",
+            "params": [{
+                "type": "char",
+                "name": "ParamC"
             },{
-                "method_var_access_mod": "private",
-                "method_var_name": "MVarB"
+                "type": "float",
+                "name": "ParamD"
             }],
-            "method_annotations":[{
-                "annotation_name": "@param",
-                "annotation_value": "version1"
+            "vars":[{
+                "type": "String",
+                "name": "MVarA"
             },{
-                "annotation_name": "@param",
-                "annotation_value": "version2"
+                "type": "float",
+                "name": "MVarB"
+            }],
+            "annotations":[{
+                "name": "@param",
+                "value": "version1"
             },{
-                "annotation_name": "@return",
-                "annotation_value": ""
+                "name": "@param",
+                "value": "version2"
+            },{
+                "name": "@return",
+                "value": ""
             }],
             "calling": ["TargetMethod1", "TargetMethod2", "TargetMethod3"]
         },{
-            "method_access_mod": "private",
-            "method_static_mod": false,
-            "method_return_type": "String",
-            "method_name": "MethodA",
-            "method_vars":[{
-                "method_var_type": "int",
-                "method_var_name": "MVarA"
+            "access_mod": "private",
+            "static_mod": false,
+            "return_type": "String",
+            "name": "MethodA",
+            "vars":[{
+                "type": "int",
+                "name": "MVarA"
             },{
-                "method_var_type": "String",
-                "method_var_name": "MVarB"
+                "type": "String",
+                "name": "MVarB"
             }],
-            "method_annotations":[{
-                "annotation_value": "version1",
-                "annotation_name": "@param"
+            "annotations":[{
+                "value": "version1",
+                "name": "@param"
             }],
             "calling": ["TargetMethod1", "TargetMethod2", "TargetMethod3"]
         }]
