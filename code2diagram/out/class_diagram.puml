@@ -2,7 +2,11 @@
 class TargetClass
 TargetClass : +  String VarA
 TargetClass : -  String VarB
+TargetClass : + {static} String MethodA(ParamA: int,ParamB: String)
+TargetClass : -  String MethodA(ParamE: int,ParamF: String)
 class TargetClass2
 TargetClass2 : + {static} String VarA
 TargetClass2 : -  String VarB
+TargetClass2 : + {static} String MethodA(ParamC: char,ParamD: float)
+TargetClass2 : -  String MethodA(ParamG: int,ParamH: char)
 @enduml
