@@ -1,0 +1,8 @@
+@startuml
+class TargetClass
+TargetClass : +  String VarA
+TargetClass : -  String VarB
+class TargetClass2
+TargetClass2 : + {static} String VarA
+TargetClass2 : -  String VarB
+@enduml
