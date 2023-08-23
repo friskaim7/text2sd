@@ -19,21 +19,23 @@ def determine_static_mod(var_static_mod):
         static_string = "{static}"
     return static_string
 
+def params_to_string(params):
+    param_string = ""
+    for param in params:
+        param_name = param["name"]
+        param_type = param["type"]
+        param_string += f" {param_name}: {param_type},"
+    return param_string.strip(" ,") # Trailing comma and whitespace removed
+
 def class_member_to_string(class_name, class_member):
     access_mod = determine_access_mod(class_member["access_mod"])
     static_string = determine_static_mod(class_member["static_mod"])
     name = class_member["name"]
 
+    # Identify whether class_member represents a field or a method.
     if "return_type" in class_member:
         return_type = class_member["return_type"]
-        param_string = ""
-        params = class_member["params"]
-        print(params)
-        for param in params:
-            param_name = param["name"]
-            param_type = param["type"]
-            param_string += f"{param_name}: {param_type},"
-        param_string = param_string.rstrip(",")  # Remove trailing commas
+        param_string = params_to_string(class_member["params"])        
         return f"{class_name} : {access_mod} {static_string} {return_type} {name}({param_string})\n"
     else:
         var_type = class_member["type"]
@@ -55,7 +57,7 @@ with open(input_filepath) as input_file:
                 class_name = class_info.get("name", "")
                 output_file.write(f"class {class_name}\n")
 
-                # Write class fields/variables
+                # Write class fields
                 class_vars = class_info.get("vars", [])
                 for class_var in class_vars:
                     output_file.write(class_member_to_string(class_name, class_var))
@@ -64,6 +66,9 @@ with open(input_filepath) as input_file:
                 methods = class_info.get("methods", [])
                 for method in methods:
                     output_file.write(class_member_to_string(class_name, method))
+                
+                # TODO:
+                # Write class relationships
 
         output_file.write("@enduml\n")
 
