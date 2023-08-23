@@ -70,6 +70,13 @@
             "static_mod": false,
             "return_type": "String",
             "name": "MethodA",
+            "params": [{
+                "type": "int",
+                "name": "ParamE"
+            },{
+                "type": "String",
+                "name": "ParamF"
+            }],
             "vars":[{
                 "type": "int",
                 "name": "MVarA"
@@ -157,6 +164,13 @@
             "static_mod": false,
             "return_type": "String",
             "name": "MethodA",
+            "params": [{
+                "type": "int",
+                "name": "ParamG"
+            },{
+                "type": "char",
+                "name": "ParamH"
+            }],
             "vars":[{
                 "type": "int",
                 "name": "MVarA"
