@@ -131,7 +131,7 @@
         }],
         "methods":[{
             "access_mod": "public",
-            "static_mod": true,
+            "static_mod": false,
             "return_type": "String",
             "name": "MethodA",
             "params": [{
@@ -161,7 +161,7 @@
             "calling": ["TargetMethod1", "TargetMethod2", "TargetMethod3"]
         },{
             "access_mod": "private",
-            "static_mod": false,
+            "static_mod": true,
             "return_type": "String",
             "name": "MethodA",
             "params": [{
