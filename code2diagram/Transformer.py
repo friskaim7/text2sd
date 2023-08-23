@@ -13,6 +13,20 @@ def determine_access_mod(access_mod):
     }
     return access_modifiers[access_mod]
 
+def determine_static_mod(var_static_mod):
+    static_string = ""
+    if var_static_mod:
+        static_string = "{static}"
+    return static_string
+
+def class_var_to_write(class_var):
+    c_var_access_mod = determine_access_mod(class_var["class_var_access_mod"])
+    static_string = determine_static_mod(class_var["class_static_mod"])
+    c_var_type = class_var["class_var_type"]
+    c_var_name = class_var["class_var_name"]    
+                        
+    return f"{class_name} : {c_var_access_mod} {static_string} {c_var_type} {c_var_name}\n"
+
 with open(input_filepath) as input_file:
     data = json.load(input_file)
     with open(output_filepath, 'a') as output_file:
@@ -32,16 +46,7 @@ with open(input_filepath) as input_file:
                 # Write class fields/variables
                 class_vars = class_info.get("class_vars", [])
                 for class_var in class_vars:
-                    c_var_access_mod = determine_access_mod(class_var["class_var_access_mod"])
-                    c_var_type = class_var["class_var_type"]
-                    c_var_name = class_var["class_var_name"]
-
-                    # determine class static modifier
-                    static_string = ""
-                    if class_var["class_static_mod"]:
-                        static_string = "{static}"
-                                        
-                    output_file.write(f"{class_name} : {c_var_access_mod} {static_string} {c_var_type} {c_var_name}\n")
+                    output_file.write(class_var_to_write(class_var))
                 
                 # Write class methods
                 methods = class_info.get("methods", [])
