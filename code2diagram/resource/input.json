@@ -9,13 +9,36 @@
         "import java.nio.file.Paths"
     ],
     "package_name": "com.google.maps",
-    "package_annotations":[{
-        "name": "@author",
-        "value": "john"
-    },{
-        "name": "@date",
-        "value": "2020-09-18 15:55:11"
-    }],
+    "package_annotations":[],
+    "javadoc": {
+        "package": [{
+            "name": "@Title",
+            "value": "AppUtil.java"
+        },{
+            "name": "@Copyright",
+            "value": "© 2020 我来贷"
+        },{
+            "name": "@Company",
+            "value": "© 2020 Company"
+        }],
+        "class": [{
+            "name": "@author",
+            "value": "john"
+        },{
+            "name": "@date",
+            "value": "2020-09-18 15:55:11"
+        }],
+        "method": [{
+            "name": "@param",
+            "value": "version1"
+        },{
+            "name": "@param",
+            "value": "version2"
+        },{
+            "name": "@return",
+            "value": ""
+        }]
+    },
     "classes": [{
         "name": "TargetClass",
         "access_mod": "public",
@@ -31,10 +54,7 @@
             "type": "String",
             "name": "VarB"
         }],
-        "annotations":[{
-            "name": "@param",
-            "value": "version1"
-        }],
+        "annotations":[],
         "methods":[{
             "access_mod": "public",
             "static_mod": true,
@@ -55,13 +75,7 @@
                 "name": "MVarB"
             }],
             "annotations":[{
-                "name": "@param",
-                "value": "version1"
-            },{
-                "name": "@param",
-                "value": "version2"
-            },{
-                "name": "@return",
+                "name": "@override",
                 "value": ""
             }],
             "calling": ["TargetMethod1", "TargetMethod2", "TargetMethod3"]
@@ -103,13 +117,36 @@
         "import java.nio.file.Paths"
     ],
     "package_name": "com.google.mail",
-    "package_annotations":[{
-        "name": "@author",
-        "value": "john"
-    },{
-        "name": "@date",
-        "value": "2020-09-18 15:55:11"
-    }],
+    "package_annotations":[],
+    "javadoc": {
+        "package": [{
+            "name": "@Title",
+            "value": "AppUtil.java"
+        },{
+            "name": "@Copyright",
+            "value": "© 2020 我来贷"
+        },{
+            "name": "@Company",
+            "value": "© 2020 Company"
+        }],
+        "class": [{
+            "name": "@author",
+            "value": "john"
+        },{
+            "name": "@date",
+            "value": "2020-09-18 15:55:11"
+        }],
+        "method": [{
+            "name": "@param",
+            "value": "version1"
+        },{
+            "name": "@param",
+            "value": "version2"
+        },{
+            "name": "@return",
+            "value": ""
+        }]
+    },
     "classes": [{
         "name": "TargetClass2",
         "access_mod": "public",
@@ -125,10 +162,7 @@
             "type": "String",
             "name": "VarB"
         }],
-        "annotations":[{
-            "name": "@param",
-            "value": "version1"
-        }],
+        "annotations":[],
         "methods":[{
             "access_mod": "public",
             "static_mod": false,
@@ -148,16 +182,7 @@
                 "type": "float",
                 "name": "MVarB"
             }],
-            "annotations":[{
-                "name": "@param",
-                "value": "version1"
-            },{
-                "name": "@param",
-                "value": "version2"
-            },{
-                "name": "@return",
-                "value": ""
-            }],
+            "annotations":[],
             "calling": ["TargetMethod1", "TargetMethod2", "TargetMethod3"]
         },{
             "access_mod": "private",
@@ -178,10 +203,7 @@
                 "type": "String",
                 "name": "MVarB"
             }],
-            "annotations":[{
-                "value": "version1",
-                "name": "@param"
-            }],
+            "annotations":[],
             "calling": ["TargetMethod1", "TargetMethod2", "TargetMethod3"]
         }]
     }]
