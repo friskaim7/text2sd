@@ -1,46 +1,35 @@
 [{
-    "file_relative_path": "path/to/file1.java",
+    "file_relative_path": "..\\..\\Repository\\welab-application\\welab-application-api\\src\\main\\java\\com\\welab\\application\\common\\AppUtil.java",
     "imports": [
-        "import com.fasterxml.jackson.databind.JsonNode",
-        "import com.fasterxml.jackson.databind.ObjectMapper",
-        "import java.io.IOException",
-        "import java.nio.file.Files",
-        "import java.nio.file.Path",
-        "import java.nio.file.Paths"
+        "com.welab.application.enums.ProductCodeEnum",
+        "com.welab.application.enums.SalaryMethodEnum",
+        "com.welab.sea.util.core.utils.DateUtils",
+        "org.apache.commons.lang3.StringUtils",
+        "org.joda.time.DateTime",
+        "org.joda.time.format.DateTimeFormat",
+        "org.slf4j.Logger",
+        "org.slf4j.LoggerFactory",
+        "java.util.Calendar",
+        "java.util.Date",
+        "java.util.regex.Matcher",
+        "java.util.regex.Pattern"
     ],
-    "package_name": "com.google.maps",
+    "package_name": "com.welab.application.common",
     "package_annotations":[],
     "javadoc": {
-        "package": [{
-            "name": "@Title",
-            "value": "AppUtil.java"
-        },{
-            "name": "@Copyright",
-            "value": "© 2020 我来贷"
-        },{
-            "name": "@Company",
-            "value": "© 2020 Company"
-        }],
-        "class": [{
-            "name": "@author",
-            "value": "john"
-        },{
-            "name": "@date",
-            "value": "2020-09-18 15:55:11"
-        }],
-        "method": [{
-            "name": "@param",
-            "value": "version1"
-        },{
-            "name": "@param",
-            "value": "version2"
-        },{
-            "name": "@return",
-            "value": ""
-        }]
-    },
+        "package": [
+            "@Title: AppUtil.java  ",
+            "@Copyright: � 2020 ???  ",
+            "@Company: ???????????? "
+        ],
+        "class": [
+            "@description AppUtil   ",
+            "@author john  ",
+            "@date 2020-09-18 15:55:11  ",
+            "@version v1.0 "
+    ]},
     "classes": [{
-        "name": "TargetClass",
+        "name": "AppUtil",
         "access_mod": "public",
         "vars":[{
             "access_mod": "public",
@@ -53,13 +42,62 @@
             "static_mod": false,
             "type": "String",
             "name": "VarB"
+        },
+        {
+            "access_mod": "private",
+            "modifiers": [
+                "static"
+            ],
+            "type": "Logger",
+            "name": "log",
+            "default_value": "LoggerFactory.getLogger(AppUtil.class)"
+        },
+        {
+            "access_mod": "private",
+            "modifiers": [
+                "static",
+                "final"
+            ],
+            "type": "String",
+            "name": "VERSION_NUM",
+            "default_value": "[^0-9.]"
+        },
+        {
+            "access_mod": "private",
+            "modifiers": [
+                "static",
+                "final"
+            ],
+            "type": "String",
+            "name": "SEP",
+            "default_value": ","
+        },
+        {
+            "access_mod": "private",
+            "modifiers": [
+                "static",
+                "final"
+            ],
+            "type": "String",
+            "name": "NIK_YEAR_PREFIX_20",
+            "default_value": "20"
+        },
+        {
+            "access_mod": "private",
+            "modifiers": [
+                "static",
+                "final"
+            ],
+            "type": "String",
+            "name": "NIK_YEAR_PREFIX_19",
+            "default_value": "19"
         }],
         "annotations":[],
         "methods":[{
             "access_mod": "public",
             "static_mod": true,
             "return_type": "String",
-            "name": "MethodA",
+            "name": "compare",
             "params": [{
                 "type": "int",
                 "name": "ParamA"
@@ -78,12 +116,18 @@
                 "name": "@override",
                 "value": ""
             }],
-            "calling": ["TargetMethod1", "TargetMethod2", "TargetMethod3"]
+            "calling": [
+                "length from com.welab.application.common.AppUtil",
+                "min from com.welab.application.common.AppUtil",
+                "getVersionNum from com.welab.application.common.AppUtil",
+                "compareTo from com.welab.application.common.AppUtil",
+                "split from com.welab.application.common.AppUtil"
+            ]
         },{
             "access_mod": "private",
             "static_mod": false,
             "return_type": "String",
-            "name": "MethodA",
+            "name": "compareVersion",
             "params": [{
                 "type": "int",
                 "name": "ParamE"
@@ -102,7 +146,7 @@
                 "value": "version1",
                 "name": "@param"
             }],
-            "calling": ["TargetMethod1", "TargetMethod2", "TargetMethod3"]
+            "calling": ["compare from com.welab.application.common.AppUtil"]
         }]
     }]
 },
