@@ -163,34 +163,17 @@
     "package_name": "com.google.mail",
     "package_annotations":[],
     "javadoc": {
-        "package": [{
-            "name": "@Title",
-            "value": "AppUtil.java"
-        },{
-            "name": "@Copyright",
-            "value": "© 2020 我来贷"
-        },{
-            "name": "@Company",
-            "value": "© 2020 Company"
-        }],
-        "class": [{
-            "name": "@author",
-            "value": "john"
-        },{
-            "name": "@date",
-            "value": "2020-09-18 15:55:11"
-        }],
-        "method": [{
-            "name": "@param",
-            "value": "version1"
-        },{
-            "name": "@param",
-            "value": "version2"
-        },{
-            "name": "@return",
-            "value": ""
-        }]
-    },
+        "package": [
+            "@Title: AppUtil.java  ",
+            "@Copyright: � 2020 ???  ",
+            "@Company: ???????????? "
+        ],
+        "class": [
+            "@description AppUtil   ",
+            "@author john  ",
+            "@date 2020-09-18 15:55:11  ",
+            "@version v1.0 "
+    ]},
     "classes": [{
         "name": "TargetClass2",
         "access_mod": "public",
@@ -227,7 +210,10 @@
                 "name": "MVarB"
             }],
             "annotations":[],
-            "calling": ["TargetMethod1", "TargetMethod2", "TargetMethod3"]
+            "calling": [
+                "getNik from com.welab.application.common.AppUtil",
+                "getName from com.welab.application.common.AppUtil"
+            ]
         },{
             "access_mod": "private",
             "static_mod": true,
@@ -248,7 +234,10 @@
                 "name": "MVarB"
             }],
             "annotations":[],
-            "calling": ["TargetMethod1", "TargetMethod2", "TargetMethod3"]
+            "calling": [
+                "setNik from com.welab.application.common.AppUtil",
+                "setName from com.welab.application.common.AppUtil"
+            ]
         }]
     }]
 }]
