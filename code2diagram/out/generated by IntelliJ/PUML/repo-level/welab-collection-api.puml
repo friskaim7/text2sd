@@ -1,0 +1,223 @@
+@startuml
+enum com.welab.collection.enums.AutoReportingStatusCollectionEnum {
++  FINISHED
++  GCP_FAILED
++  MYSQL_FAILED
++  BOTH_FAILED
+- Byte value
+- String valueName
+}
+interface com.welab.collection.service.IBuyerInfoService {
+~ BuyerInfoDTO getByBuyerCode(String)
+}
+class com.welab.collection.vo.CollectionNotesVO {
+- String loanNumber
+- Long adminId
+- String notes
+- Date createdAt
+- Date updatedAt
+}
+class com.welab.collection.dto.cmd.CollectionNotesCmd {
+- String loanNumber
+- Long adminId
+- String notes
+}
+class com.welab.collection.dto.MessagePushAppDto {
+- Long userId
+- Long orgId
+- String templateName
+- Map<String,String> filedMap
+}
+abstract class com.welab.collection.dto.OptLogBase {
++ {static} String ADD
++ {static} String UPDATE
++ {static} String DELETE
++ {abstract}Long getId()
++ {abstract}OptLogEnumTableName getTableName()
++ {abstract}Map<String,String> listFieldMapping()
++ OptUnityLog createLog(String,T)
+- OptUnityLog comparatorObject(String,Object)
+- {static} Map<String,Object> changeValueToMap(Object)
+}
+class com.welab.collection.dto.OptLogBase$ModifyInfo {
+- String fieldName
+- String before
+- String after
+}
+class com.welab.collection.response.ResponsCodeType {
++ {static} String NAME_NOT_NULL
++ {static} String NAME_EXISTS
++ {static} String NAME_MAX_LEN
++ {static} String DESCRIPTION_MAX_LEN
++ {static} String PRODUCTCODE_MAX_LEN
++ {static} String RISKLEVEL_MAX_LEN
++ {static} String LOANSTAG_NOT_NULL
++ {static} String RULEID_NOT_NULL
++ {static} String STATUS_NOT_NULL
++ {static} String DECISION_NOT_NULL
++ {static} String TAG_NAME_NOT_NULL
++ {static} String TAG_STATUS_NOT_NULL
++ {static} String TAG_NAME_MAX_LEN
++ {static} String TAG_DESCRIPTION_MAX_LEN
++ {static} String TAG_ID_NOT_NULL
++ {static} String DECISION_NAME_NOT_NULL
++ {static} String DECISION_NAME_MAX_LEN
++ {static} String DECISION_DECISIONTYPE_NOT_NULL
++ {static} String DECISION_DECISIONTYPE_ERROR
++ {static} String DECISION_DESCRIPTION_MAX_LEN
++ {static} String DECISION_STATUS_NOT_NULL
++ {static} String DECISION_ID_NOT_NULL
++ {static} String DATA_IS_NULL
++ {static} String LOANNUMBER_IS_NULL
++ {static} String LOANNUMBER_FORMAT_ERROR
++ {static} String TAG_CLEAN_UP_DATE_FORMAT_ERROR
++ {static} String TAG_FORMAT_ERROR
++ {static} String ADDITIONAL_INFO_TO_LONG_ERROR
++ {static} String CUSTOMER_NAME_TO_LONG_ERROR
++ {static} String FILED_TO_LONG_ERROR
++ {static} String PROMISE_DATE_FORMAT_ERROR
++ {static} String PROMISE_DATE_LATER_ERROR
++ {static} String DATA_LIST_IS_NULL
++ {static} String PAUSE_OVERDUE_EXISTS
++ {static} String SYSTEM_ERROR
++ {static} String LOAN_NUMBER_IS_NULL
++ {static} String LOAN_NUMBER_REPEAT
++ {static} String LOAN_NUMBER_EXISTS
++ {static} String LOAN_NUMBER_NOT_EXISTS_OR_CLOSE
+}
+enum com.welab.collection.response.CollectionResponsCodeTypeEnum {
++  NAME_EXISTS
++  DECISION_NOT_NULL
++  DECISION_TYPE_ERROR
++  DATA_LIST_IS_NULL
++  PAUSE_OVERDUE_EXISTS
++  SYSTEM_ERROR
++  LOAN_NUMBER_IS_NULL
++  LOAN_NUMBER_EXISTS
++  LOAN_NUMBER_NOT_EXISTS_OR_CLOSE
++  LOAN_NUMBER_REPEAT
+- Integer code
+- String message
+- <<Create>> CollectionResponsCodeTypeEnum(Integer,String)
++ Integer getCode()
++ String getMessage()
+}
+class com.welab.collection.dto.BuyerInfoDTO {
+- Long id
+- String buyerCode
+- String buyerName
+- String descrription
+- String bankCode
+- String bankAccount
+- Long createAdminId
+- Date createdAt
+- Date updatedAt
+}
+enum com.welab.collection.enums.mq.FanoutMessageMetaInfoEnum {
+- MessageTypeEnum messageTypeEnum
++ String queueName
++ String bindExchangeName
++ String routingKey
++ String deadExchangeName
++ String deadRoutingKey
++ String tag
++ String listenerContainerFactoryBeanId
+}
+class com.welab.collection.dto.OptUnityLog {
+- Long id
+- Long bizId
+- String tableName
+- Long operatorAdminId
+- Long createAdminId
+- String operateType
+- String unityMatter
+- String unityContent
+- Date createdTime
+- Date updatedTime
+}
+class com.welab.collection.dto.qry.CollectionNotesQry {
+- String loanNumber
+}
+enum com.welab.collection.enums.mq.DirectMessageMetaInfoEnum {
+- MessageTypeEnum messageTypeEnum
++ String queueName
++ String bindExchangeName
++ String routingKey
++ String deadExchangeName
++ String deadRoutingKey
++ String tag
++ String listenerContainerFactoryBeanId
+}
+interface com.welab.collection.service.ICollectionPlanService {
+~ Response addApplyLog(CollectionPlanApplyLogDTO)
+~ Response<CollectionPlanApplyLogDTO> getLastApply(Long)
+}
+enum com.welab.collection.enums.mq.DelayMessageMetaInfoEnum {
+- MessageTypeEnum messageTypeEnum
++ String queueName
++ String bindExchangeName
++ String routingKey
++ String deadExchangeName
++ String deadRoutingKey
++ String tag
++ String listenerContainerFactoryBeanId
+}
+enum com.welab.collection.enums.EplanBillStatus {
++  PENDING_ASSIGNED
++  UNWORKED_TASK
++  Follow_up_call
++  Done
++  JOIN
++  Expired
++  Cancel
+- Integer status
+- String desc
++ {static} boolean verify(Integer)
++ {static} boolean verifyFinanceSyncStatus(Integer)
++ {static} boolean verifyFAutoCancelStatus(Integer)
++ {static} List<Integer> getCanAssignStatus()
+}
+enum com.welab.collection.enums.CollectionVoiceEnum {
++  INIT
++  VALID
++  FAIL
++  DISCARD
++  UPLOADED
++  SAVED_DOCUMENT
+- Byte value
+- String desc
+}
+class com.welab.collection.exception.CollectionException {
+- {static} long serialVersionUID
++ <<Create>> CollectionException(Integer)
++ <<Create>> CollectionException(Integer,String)
++ <<Create>> CollectionException(ResponsCodeType.CollectionResponsCodeTypeEnum)
+}
+class com.welab.collection.dto.SyncCollectionPlanDto {
+- String loanNumber
+- Integer status
+}
+enum com.welab.collection.enums.OptLogEnumTableName {
++  COLLECTION_RULE
++  TASK_ASSIGN_RULE
+- String tableName
+}
+class com.welab.collection.dto.CollectionPlanApplyLogDTO {
+- Long userId
+- String mobile
+- String loanNumber
+- String notes
+- String source
+- Date applyAt
+- Integer status
+}
+
+
+com.welab.collection.dto.OptLogBase +.. com.welab.collection.dto.OptLogBase$ModifyInfo
+com.welab.collection.dto.Serializable <|.. com.welab.collection.dto.OptLogBase$ModifyInfo
+java.io.Serializable <|.. com.welab.collection.dto.BuyerInfoDTO
+java.io.Serializable <|.. com.welab.collection.dto.OptUnityLog
+com.welab.common.exception.FastRuntimeException <|-- com.welab.collection.exception.CollectionException
+com.welab.common.msg.BaseMessageBody <|-- com.welab.collection.dto.SyncCollectionPlanDto
+java.io.Serializable <|.. com.welab.collection.dto.CollectionPlanApplyLogDTO
+@enduml

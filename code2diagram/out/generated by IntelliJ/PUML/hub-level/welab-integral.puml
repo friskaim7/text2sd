@@ -1,0 +1,153 @@
+@startuml
+class com.welab.integral.service.UserIntegralService {
+- Logger logger
+- UserIntegralMapper userIntegralMapper
++ UserIntegral getUserIntegralByUserId(Long)
++ Integer addOrUpdateUserIntegral(UserIntegral)
+}
+interface com.welab.integral.common.Urls {
+~ String ROOT
+~ String ROOT_DESC
+~ String V1
+}
+class com.welab.integral.test.UserIntegralDubboServiceTest {
+- UserIntegralDubboService userIntegralDubboService
++ void updateUserIntegral()
++ void getUserIntegralInfo()
+}
+class com.welab.integral.test.TempTest {
+- DefaultConfigService defaultConfigService
++ void yaml()
++ void yaml2()
+}
+class com.welab.integral.config.Swagger2Config {
++ Docket createRestApi()
+- ApiInfo apiInfo()
+}
+class com.welab.integral.dto.UserIntegralTrackInfoDto {
+- Long userId
+- String eventType
+}
+class com.welab.integral.service.impl.UserIntegralDubboServiceImpl {
+- Logger logger
+- UserIntegralService userIntegralService
+- UserIntegralTrackMapper userIntegralTrackMapper
++ Integer getUserRemainingIntegral(Long)
++ Integer getQuantityByEventType(Long,String)
++ Response<PageInfo<UserIntegralTrack>> getPageUserIntegralTrackBy(UserIntegralTrackInfoDto)
++ Response<UserIntegralInfoVo> getUserIntegralInfo(UserIntegralTrackInfoDto)
++ void updateUserIntegral(UserIntegralDto)
+}
+class com.welab.integral.model.UserIntegral {
+- Long id
+- Long userId
+- Integer integral
+- Date createdAt
+- Date updatedAt
+- Integer lockVersion
++ Long getId()
++ void setId(Long)
++ Long getUserId()
++ void setUserId(Long)
++ Integer getIntegral()
++ void setIntegral(Integer)
++ Date getCreatedAt()
++ void setCreatedAt(Date)
++ Date getUpdatedAt()
++ void setUpdatedAt(Date)
++ Integer getLockVersion()
++ void setLockVersion(Integer)
+}
+class com.welab.integral.exception.IntegralException {
+- {static} long serialVersionUID
++ <<Create>> IntegralException(Integer)
++ <<Create>> IntegralException(Integer,String)
+}
+class com.welab.integral.dto.UserIntegralDto {
+- {static} long serialVersionUID
+- Long userId
+- String eventType
+- Integer integral
+- String remark
+}
+interface com.welab.integral.mapper.UserIntegralMapper {
+~ int insert(UserIntegral)
+~ UserIntegral selectByUserId(Long)
+~ int updateByPrimaryKey(UserIntegral)
+}
+class com.welab.integral.test.ScaffoldTest {
+- DefaultConfigService config
+- String ZOOKEEPER_URL
++ void test1()
++ void appId()
+}
+interface com.welab.integral.service.UserIntegralDubboService {
+~ Integer getUserRemainingIntegral(Long)
+~ Integer getQuantityByEventType(Long,String)
+~ void updateUserIntegral(UserIntegralDto)
+~ Response<PageInfo<UserIntegralTrack>> getPageUserIntegralTrackBy(UserIntegralTrackInfoDto)
+~ Response<UserIntegralInfoVo> getUserIntegralInfo(UserIntegralTrackInfoDto)
+}
+class com.welab.integral.vo.UserIntegralTrack {
+- {static} long serialVersionUID
+- Long id
+- Long userId
+- Integer updateIntegral
+- Integer remainingIntegral
+- String eventType
+- String remark
+- Date createdAt
+}
+class com.welab.integral.filter.LogFilter {
+- {static} Logger LOGGER
+- {static} String NOTIFICATION_PREFIX
+- {static} String REQUEST_PREFIX
+- {static} String RESPONSE_PREFIX
+- AtomicLong _id
+# void doFilterInternal(HttpServletRequest,HttpServletResponse,FilterChain)
++ void destroy()
+- void log(StringBuilder)
+- StringBuilder prefixId(StringBuilder,long)
+- void printRequestLine(StringBuilder,String,long,String,String)
+- void printResponseLine(StringBuilder,String,long,int)
+- void printPrefixedHeaders(StringBuilder,long,String,HttpServletRequest)
+}
+class com.welab.integral.Application {
+- {static} Logger LOG
++ HttpMessageConverters fastJsonHttpMessageConverters()
++ FilterRegistrationBean logRegistration()
++ {static} void main(String[])
+}
+class com.welab.integral.test.SimpleTest {
+# Logger logger
+}
+class com.welab.integral.dto.PageInfoDto {
+- {static} long serialVersionUID
+# Integer pageNum
+# Integer pageSize
+}
+class com.welab.integral.vo.UserIntegralInfoVo {
+- {static} long serialVersionUID
+- Integer integral
+- Integer inviteesQuantity
+- PageInfo<UserIntegralTrack> userIntegralTrackPageInfo
+}
+interface com.welab.integral.mapper.UserIntegralTrackMapper {
+~ int insert(UserIntegralTrack)
+~ List<UserIntegralTrack> selectUserIntegralTrackList(Long,String)
+~ int selectCountByUserIdAndEvevtType(Long,String)
+}
+
+
+com.welab.integral.test.SimpleTest <|-- com.welab.integral.test.UserIntegralDubboServiceTest
+com.welab.integral.dto.PageInfoDto <|-- com.welab.integral.dto.UserIntegralTrackInfoDto
+com.welab.integral.service.UserIntegralDubboService <|.. com.welab.integral.service.impl.UserIntegralDubboServiceImpl
+com.welab.common.exception.FastRuntimeException <|-- com.welab.integral.exception.IntegralException
+java.io.Serializable <|.. com.welab.integral.dto.UserIntegralDto
+com.welab.integral.test.SimpleTest <|-- com.welab.integral.test.ScaffoldTest
+java.io.Serializable <|.. com.welab.integral.vo.UserIntegralTrack
+org.springframework.web.filter.OncePerRequestFilter <|-- com.welab.integral.filter.LogFilter
+org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests <|-- com.welab.integral.test.SimpleTest
+java.io.Serializable <|.. com.welab.integral.dto.PageInfoDto
+java.io.Serializable <|.. com.welab.integral.vo.UserIntegralInfoVo
+@enduml

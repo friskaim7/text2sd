@@ -1,0 +1,1908 @@
+@startuml
+class com.welab.collect.dto.OptUnityLogDto {
+- Long id
+- Long bizId
+- Long operatorAdminId
+- String operatorEmail
+- String operatorMobile
+- Long createAdminId
+- String creatorEmail
+- String creatorMobile
+- String operateType
+- String unityContent
+- Date createdAt
+}
+enum com.welab.collect.enums.OptLogOperateTypeEnum {
++  ADD
++  UPDATE
++  DELETE
+- String type
+- String desc
+}
+class com.welab.collect.controller.AppsflyerController {
+- AppsflyerService appsFlyerService
+- Logger log
++ Response insertAppsflyerData(AppsflyerDTO)
+}
+interface com.welab.collect.mapper.SystemEventMapper {
+~ int deleteByPrimaryKey(Long)
+~ int insert(SystemEvent)
+~ int insertSelective(SystemEvent)
+~ SystemEvent selectByPrimaryKey(Long)
+~ int updateByPrimaryKeySelective(SystemEvent)
+~ int updateByPrimaryKey(SystemEvent)
+~ int inserts(List<SystemEvent>)
+}
+class com.welab.collect.app.service.AppsFlyerUninstallDataService {
+- BaseAppsflyerUninstallDataService baseAppsflyerUninstallDataService
+- AppsFlyerReportCmdExcute appsFlyerReportCmdExcute
+- String UNINSTALL_DATA_URL
+- String INSTALLS_DATA_URL
+- String ORGANIC_UNINSTALL_DATA_URL
+- String ORGANIC_INSTALLS_DATA_URL
++ void addReportDataList(String,String)
+- void addReportDataList(String[],String)
+}
+interface com.welab.collect.mapper.AppsflyerPostAttributionMapper {
+~ int inserts(List<AppsflyerPostAttribution>)
+~ int insert(AppsflyerPostAttribution)
+~ Date selectLatestReportDate()
+}
+class com.welab.collect.service.impl.CollectEventServiceImpl {
+- JedisCluster jedisCluster
+- BaseClickStatisticsService baseClickStatisticsService
+- BaseAppEventService baseAppEventService
+- BannerServiceFacade bannerServiceFacade
+- NotificationServiceFacade notificationServiceFacade
+- BaseAppEventDetailService baseAppEventDetailService
++ {static} String bannerRedisKey
++ {static} String notificationRedisKey
++ void addCollectEvent(CollectEventDTO)
+- void saveAppEventDetail(CollectEventDTO,Long,Long)
+- void putMarketingClick(CollectEventDTO,Byte)
++ void addCollectEvents(List<CollectEventDTO>)
+}
+class com.welab.collect.dto.OptUnityLog {
+- Long id
+- Long bizId
+- String tableName
+- Long operatorAdminId
+- Long createAdminId
+- String operateType
+- String unityMatter
+- String unityContent
+- Date createdAt
+- Date updatedAt
+}
+class com.welab.collect.test.base.SimpleTest {
+# {static} Long USER_ID
+# Logger log
++ <<Create>> SimpleTest()
+}
+class com.welab.collect.test.AppsFlyerReportlDataServiceTest {
+- AppsFlyerUninstallDataService appsFlyerUninstallDataService
+- AppsFlyerReportDataEventJob appsFlyerDataEventJob
+- AppsFlyerInAppDataEventJob appsFlyerInAppDataEventJob
+- AppsflyerPostAttributionJob appsflyerPostAttributionJob
++ void addReportDataList()
++ void job()
++ void appsFlyerInAppDataEventJob()
++ void appsflyerPostAttributionJob()
++ {static} void main(String[])
+}
+class com.welab.collect.controller.OptUnityLogController {
+- OptUnityLogService optUnityLogService
++ Response<PageInfo<ListOptUnityLogVO>> listOptUnityLog(ListOptUnityLogDTO)
+}
+class com.welab.collect.Application {
+- {static} Logger LOG
++ {static} void main(String[])
+}
+class com.welab.collect.app.service.AppsFlyerInAppDataService {
+- BaseAppsflyerInAppDataService baseAppsflyerInAppDataService
+- AppsFlyerReportCmdExcute appsFlyerReportCmdExcute
+- String IN_APP_DATA_URL
+- String ORGANIC_IN_APP_DATA_URL
++ void addReportDataList(String,String)
+- void addReportDataList(String[],Boolean)
+}
+class com.welab.collect.dto.AppEventDto {
+- String eventType
+- Long consumeTime
+}
+class com.welab.collect.test.BaseAppInputServiceTest {
+- BaseAppInputService baseAppInputService
+- {static} String APP_INPUT_KEY
++ void add()
++ void addLisy()
+}
+class com.welab.collect.model.AppInput {
+- Long id
+- Long userId
+- String key
+- String value
+- Date createdAt
++ Long getId()
++ void setId(Long)
++ Long getUserId()
++ void setUserId(Long)
++ String getKey()
++ void setKey(String)
++ String getValue()
++ void setValue(String)
++ Date getCreatedAt()
++ void setCreatedAt(Date)
++ {static} List<AppInput> toAppInput(AppInputListDto,Long)
++ {static} AppInput toAppInput(AppInputDto,Long)
+}
+class com.welab.collect.dto.AppInputDto {
+- String key
+- String value
+- Long time
++ String getKey()
++ void setKey(String)
++ String getValue()
++ void setValue(String)
++ Long getTime()
++ void setTime(Long)
++ String toString()
+}
+class com.welab.collect.controller.AppInputController {
+- BaseAppInputService baseAppInputService
++ Response addAppInput(Long,Long,AppInputDto)
++ Response addAppInputs(Long,Long,AppInputListDto)
+}
+class com.welab.collect.exception.CollectException {
+- {static} long serialVersionUID
++ <<Create>> CollectException(Integer)
++ <<Create>> CollectException(Integer,String)
+}
+class com.welab.collect.dto.CollectEventDTO {
+- {static} long serialVersionUID
+- Long userId
+- String eventType
+- Long consumeTime
+- Long orgId
+- Long clickEventId
+- String content
++ <<Create>> CollectEventDTO()
++ <<Create>> CollectEventDTO(Long,String)
++ <<Create>> CollectEventDTO(Long,String,Long)
+}
+interface com.welab.collect.service.CollectEventService {
+~ void addCollectEvent(CollectEventDTO)
+~ void addCollectEvents(List<CollectEventDTO>)
+}
+class com.welab.collect.service.impl.AppInputDubboServiceImpl {
+- BaseAppInputService baseAppInputService
++ void addAppInput(AppInputListCmd)
+}
+class com.welab.collect.app.base.BaseAppsflyerPostAttributionService {
+- AppsflyerPostAttributionMapper appsflyerPostAttributionMapper
++ void addAppsflyerInAppData(List<AppsflyerPostAttribution>)
++ void add(AppsflyerPostAttribution)
++ Date getLatestReportDate()
+}
+class com.welab.collect.app.command.AppsFlyerReportCmdExcute {
+- String APP_ID
+- String APPSFLYER_TOKEN
++ String getReportData(String,String,String)
+}
+class com.welab.collect.test.OptUnityLogServiceTest {
+- OptUnityLogService optUnityLogService
++ void test_01_01_addOptUnityLog()
++ void test_02_01_listOptUnityLog()
++ void test_03_01_compareResult()
+}
+class com.welab.collect.test.OptUnityLogServiceTest$ObjA {
+- Integer code
+- String name
++ Long getId()
++ OptLogTableNameEnum getTableName()
++ Map<String,String> listFieldMapping()
+}
+class com.welab.collect.test.OptUnityLogServiceTest$ObjB {
+- Integer code
+- String name
++ Long getId()
++ OptLogTableNameEnum getTableName()
++ Map<String,String> listFieldMapping()
+}
+class com.welab.collect.test.SystemEventServiceTest {
+- SystemEventService systemEventService
+- {static} String MOBILE
+- {static} String PLATFORM
+- {static} String PATH
++ void pushRedis()
+}
+class com.welab.collect.util.TableNameUtil {
++ {static} String getAppEventName(Long)
++ {static} String getAppInputName(Long)
+}
+class com.welab.collect.app.base.BaseAppInputService {
+- AppInputMapper appInputMapper
++ void add(List<AppInput>,Long)
++ void add(AppInput,Long)
+}
+interface com.welab.collect.mapper.AdminOperationTrackMapper {
+~ int deleteByPrimaryKey(Long)
+~ int insert(AdminOperationTrack)
+~ int insertSelective(AdminOperationTrack)
+~ AdminOperationTrack selectByPrimaryKey(Long)
+~ int updateByPrimaryKeySelective(AdminOperationTrack)
+~ int updateByPrimaryKey(AdminOperationTrack)
+~ List<AdminOperationTrack> selectByPlatformName(String)
+}
+class com.welab.collect.model.SystemEvent {
+- Long id
+- Long userId
+- String mobile
+- String loanNumber
+- String platform
+- String path
+- Date operatingTime
+- Date createdAt
++ Long getId()
++ void setId(Long)
++ Long getUserId()
++ void setUserId(Long)
++ String getMobile()
++ void setMobile(String)
++ String getLoanNumber()
++ void setLoanNumber(String)
++ String getPlatform()
++ void setPlatform(String)
++ String getPath()
++ void setPath(String)
++ Date getOperatingTime()
++ void setOperatingTime(Date)
++ Date getCreatedAt()
++ void setCreatedAt(Date)
+}
+class com.welab.collect.test.CollectEventServiceImplTest {
+- CollectEventServiceImpl collectEventService
+- JedisCluster jedisCluster
+- {static} Long CLICK_EVENT_ID
++ void addCollectEvent()
++ void addCollectEventBannerClick()
++ void addCollectEventNotificationClick()
+}
+class com.welab.collect.model.AppEvent {
+- Long id
+- Long userId
+- String eventType
+- Long consumeTime
+- Date createdAt
++ Long getId()
++ void setId(Long)
++ Long getUserId()
++ void setUserId(Long)
++ String getEventType()
++ void setEventType(String)
++ Long getConsumeTime()
++ void setConsumeTime(Long)
++ Date getCreatedAt()
++ void setCreatedAt(Date)
+}
+class com.welab.collect.util.CsvLineUtil {
++ {static} String[] cvsField(String)
++ {static} void main(String[])
+}
+class com.welab.collect.test.base.AppsflyerTest {
++ {static} void main(String[])
+}
+class com.welab.collect.dto.AppInputDto {
+- {static} long serialVersionUID
+- String key
+- String value
+- Long time
++ String getKey()
++ void setKey(String)
++ String getValue()
++ void setValue(String)
++ Long getTime()
++ void setTime(Long)
++ String toString()
+}
+class com.welab.collect.dto.AppInputListDto {
+- AppInputDto[] appInputDtos
+- Long time
++ AppInputDto[] getAppInputDtos()
++ void setAppInputDtos(AppInputDto[])
++ Long getTime()
++ void setTime(Long)
++ String toString()
+}
+interface com.welab.collect.mapper.AppsflyerReportlDataMapper {
+~ int inserts(List<AppsflyerReportlData>)
+~ int insert(AppsflyerReportlData)
+~ Date selectLatestReportDate()
+}
+class com.welab.collect.controller.AppEventController {
+- BaseAppEventService baseAppEventService
++ Response addAppEvent(Long,Long,AppEventDto[])
+- AppEvent[] toAppEvent(AppEventDto[],Long)
+}
+class com.welab.collect.dto.ListOptUnityLogCmd {
+- Long bizId
+- String tableName
+- Long operatorAdminId
+- Long createAdminId
+- String operateType
+- int convertUserInfoFlag
+}
+interface com.welab.collect.service.OptUnityLogService {
+~ PageInfo<OptUnityLogDto> listOptUnityLog(PageRequestDTO<ListOptUnityLogCmd>)
+~ Response addOptUnityLog(AddOptUnityLogCmd)
+~ Response<OptUnityLog> compareAndCreateUpdateLog(OptLogBase,OptLogBase)
+}
+interface com.welab.collect.mapper.AppInputMapper {
+~ int insert(AppInput,String)
+~ int inserts(List<AppInput>,String)
+}
+class com.welab.collect.service.impl.AppsflyerServiceImpl {
+- AppflyerDataMapper appflyerDataMapper
++ void insertAppsflyerToDB(AppflyerData)
+}
+class com.welab.collect.controller.AdminOperationTrackController {
+- BaseAdminOperationTrackService adminOperationTrackService
++ Response addSystemEvent(Long,String,String,AdminOperationTrackDto)
++ Response<PageInfo<AdminOperationTrack>> getPageByPlatformName(String,Integer,Integer)
+}
+class com.welab.collect.config.Swagger2Config {
++ Docket createRestApi()
+- ApiInfo apiInfo()
+- List<Parameter> buildHeader()
+}
+class com.welab.collect.app.base.BaseClickStatisticsService {
+- ClickStatisticsMapper clickStatisticsMapper
++ int insert(ClickStatistics)
+}
+class com.welab.collect.app.base.BaseAppsflyerInAppDataService {
+- AppsflyerInAppDataMapper appsflyerInAppDataMapper
++ void addAppsflyerInAppData(List<AppsflyerInAppData>)
++ void add(AppsflyerInAppData)
++ Date getLatestReportDate()
+}
+class com.welab.collect.model.AppsflyerInAppData {
+- Long id
+- Boolean isOrganic
+- String attributedTouchType
+- Date attributedTouchTime
+- Date installTime
+- Date eventTime
+- String eventName
+- String eventValue
+- String eventSource
+- String partner
+- String mediaSource
+- String channel
+- String campaign
+- String campaignId
+- String adset
+- String adsetId
+- String ad
+- String adId
+- String adType
+- String siteId
+- String subSiteId
+- String subParam1
+- String subParam2
+- String costModel
+- String costValue
+- String costCurrency
+- String region
+- String countryCode
+- String state
+- String city
+- String postalCode
+- String dma
+- String ip
+- String wifi
+- String operator
+- String carrier
+- String language
+- String appsflyerId
+- String advertisingId
+- Long customerUserId
+- String platform
+- String osVersion
+- String appVersion
+- String sdkVersion
+- String appId
+- String isRetargeting
+- String attributionLookback
+- String isPrimaryAttribution
+- String blockedReasonRule
+- String conversionType
+- String matchType
+- String campaignType
+- Date deviceDownloadTime
+- String deviceModel
+- String deviceCategory
+- Date createdAt
++ <<Create>> AppsflyerInAppData()
++ <<Create>> AppsflyerInAppData(String[],Boolean)
++ Long getId()
++ void setId(Long)
++ Boolean getIsOrganic()
++ void setIsOrganic(Boolean)
++ String getAttributedTouchType()
++ void setAttributedTouchType(String)
++ Date getAttributedTouchTime()
++ void setAttributedTouchTime(Date)
++ Date getInstallTime()
++ void setInstallTime(Date)
++ Date getEventTime()
++ void setEventTime(Date)
++ String getEventName()
++ void setEventName(String)
++ String getEventValue()
++ void setEventValue(String)
++ String getEventSource()
++ void setEventSource(String)
++ String getPartner()
++ void setPartner(String)
++ String getMediaSource()
++ void setMediaSource(String)
++ String getChannel()
++ void setChannel(String)
++ String getCampaign()
++ void setCampaign(String)
++ String getCampaignId()
++ void setCampaignId(String)
++ String getAdset()
++ void setAdset(String)
++ String getAdsetId()
++ void setAdsetId(String)
++ String getAd()
++ void setAd(String)
++ String getAdId()
++ void setAdId(String)
++ String getAdType()
++ void setAdType(String)
++ String getSiteId()
++ void setSiteId(String)
++ String getSubSiteId()
++ void setSubSiteId(String)
++ String getSubParam1()
++ void setSubParam1(String)
++ String getSubParam2()
++ void setSubParam2(String)
++ String getCostModel()
++ void setCostModel(String)
++ String getCostValue()
++ void setCostValue(String)
++ String getCostCurrency()
++ void setCostCurrency(String)
++ String getRegion()
++ void setRegion(String)
++ String getCountryCode()
++ void setCountryCode(String)
++ String getState()
++ void setState(String)
++ String getCity()
++ void setCity(String)
++ String getPostalCode()
++ void setPostalCode(String)
++ String getDma()
++ void setDma(String)
++ String getIp()
++ void setIp(String)
++ String getWifi()
++ void setWifi(String)
++ String getOperator()
++ void setOperator(String)
++ String getCarrier()
++ void setCarrier(String)
++ String getLanguage()
++ void setLanguage(String)
++ String getAppsflyerId()
++ void setAppsflyerId(String)
++ String getAdvertisingId()
++ void setAdvertisingId(String)
++ Long getCustomerUserId()
++ void setCustomerUserId(Long)
++ String getPlatform()
++ void setPlatform(String)
++ String getOsVersion()
++ void setOsVersion(String)
++ String getAppVersion()
++ void setAppVersion(String)
++ String getSdkVersion()
++ void setSdkVersion(String)
++ String getAppId()
++ void setAppId(String)
++ String getIsRetargeting()
++ void setIsRetargeting(String)
++ String getAttributionLookback()
++ void setAttributionLookback(String)
++ String getIsPrimaryAttribution()
++ void setIsPrimaryAttribution(String)
++ String getBlockedReasonRule()
++ void setBlockedReasonRule(String)
++ String getConversionType()
++ void setConversionType(String)
++ String getMatchType()
++ void setMatchType(String)
++ String getCampaignType()
++ void setCampaignType(String)
++ Date getDeviceDownloadTime()
++ void setDeviceDownloadTime(Date)
++ String getDeviceModel()
++ void setDeviceModel(String)
++ String getDeviceCategory()
++ void setDeviceCategory(String)
++ Date getCreatedAt()
++ void setCreatedAt(Date)
+}
+class com.welab.collect.job.AppsFlyerInAppDataEventJob {
+- BaseAppsflyerInAppDataService baseAppsflyerInAppDataService
+- AppsFlyerInAppDataService appsFlyerInAppDataService
+- String SERVER_ENV
++ void execute(ShardingContext)
+}
+class com.welab.collect.model.AppEventDetail {
+- Long id
+- Long appEventId
+- Integer type
+- String content
+- Date createdAt
+- Date updatedAt
++ Long getId()
++ void setId(Long)
++ Long getAppEventId()
++ void setAppEventId(Long)
++ Integer getType()
++ void setType(Integer)
++ String getContent()
++ void setContent(String)
++ Date getCreatedAt()
++ void setCreatedAt(Date)
++ Date getUpdatedAt()
++ void setUpdatedAt(Date)
+}
+class com.welab.collect.dto.AppInputListDto {
+- {static} long serialVersionUID
+- AppInputDto[] appInputDtos
+- Long time
+}
+class com.welab.collect.test.BaseAdminOperationTrackServiceTest {
+- BaseAdminOperationTrackService adminOperationTrackService
++ void addAdminOperationTrack()
++ void getPageByPlatformName()
+}
+class com.welab.collect.job.AppsflyerPostAttributionJob {
+- BaseAppsflyerPostAttributionService baseAppsflyerPostAttributionService
+- AppsflyerPostAttributionService appsflyerPostAttributionService
+- String SERVER_ENV
++ void execute(ShardingContext)
+}
+class com.welab.collect.filter.LogFilter {
+- {static} Logger LOGGER
+- {static} String NOTIFICATION_PREFIX
+- {static} String REQUEST_PREFIX
+- {static} String RESPONSE_PREFIX
+- AtomicLong _id
+# void doFilterInternal(HttpServletRequest,HttpServletResponse,FilterChain)
++ void destroy()
+- void log(StringBuilder)
+- StringBuilder prefixId(StringBuilder,long)
+- void printRequestLine(StringBuilder,String,long,String,String)
+- void printResponseLine(StringBuilder,String,long,int)
+- void printPrefixedHeaders(StringBuilder,long,String,HttpServletRequest)
+}
+class com.welab.collect.model.AdminOperationTrack {
+- Long id
+- Long adminId
+- String mobile
+- String email
+- String platformName
+- String activity
+- String activityDesc
+- Date createdAt
++ Long getId()
++ void setId(Long)
++ Long getAdminId()
++ void setAdminId(Long)
++ String getMobile()
++ void setMobile(String)
++ String getEmail()
++ void setEmail(String)
++ String getPlatformName()
++ void setPlatformName(String)
++ String getActivity()
++ void setActivity(String)
++ String getActivityDesc()
++ void setActivityDesc(String)
++ Date getCreatedAt()
++ void setCreatedAt(Date)
+}
+class com.welab.collect.app.base.BaseSystemEventService {
+- SystemEventMapper systemEventMapper
++ int inserts(List<SystemEvent>)
+}
+class com.welab.collect.model.AppflyerData {
+- Long id
+- Long orgId
+- String deviceModel
+- Date eventTime
+- Boolean wifi
+- String countryCode
+- String platform
+- String city
+- String apiVersion
+- Boolean isRetargeting
+- String customerUserId
+- Date createdAt
+- Date updatedAt
+- String eventvalue
+- String operator
+- String carrier
+- String keywordMatchType
+- String deeplinkUrl
+- String phoneNumber
+- String loanNumber
+- Long userId
+- String mediaSource
+- String partner
+- String channel
+- String campaign
+- String campaignId
+- String deviceCategory
+- String ip
+- String postalCode
+- String siteId
++ Long getId()
++ void setId(Long)
++ Long getOrgId()
++ void setOrgId(Long)
++ String getDeviceModel()
++ void setDeviceModel(String)
++ Date getEventTime()
++ void setEventTime(Date)
++ Boolean getWifi()
++ void setWifi(Boolean)
++ String getCountryCode()
++ void setCountryCode(String)
++ String getPlatform()
++ void setPlatform(String)
++ String getCity()
++ void setCity(String)
++ String getApiVersion()
++ void setApiVersion(String)
++ Boolean getIsRetargeting()
++ void setIsRetargeting(Boolean)
++ String getCustomerUserId()
++ void setCustomerUserId(String)
++ Date getCreatedAt()
++ void setCreatedAt(Date)
++ Date getUpdatedAt()
++ void setUpdatedAt(Date)
++ String getEventvalue()
++ void setEventvalue(String)
++ String getOperator()
++ void setOperator(String)
++ String getCarrier()
++ void setCarrier(String)
++ String getKeywordMatchType()
++ void setKeywordMatchType(String)
++ String getDeeplinkUrl()
++ void setDeeplinkUrl(String)
++ String getPhoneNumber()
++ void setPhoneNumber(String)
++ String getLoanNumber()
++ void setLoanNumber(String)
++ Long getUserId()
++ void setUserId(Long)
++ String getMediaSource()
++ void setMediaSource(String)
++ String getPartner()
++ void setPartner(String)
++ String getChannel()
++ void setChannel(String)
++ String getCampaign()
++ void setCampaign(String)
++ String getCampaignId()
++ void setCampaignId(String)
++ String getDeviceCategory()
++ void setDeviceCategory(String)
++ String getIp()
++ void setIp(String)
++ String getPostalCode()
++ void setPostalCode(String)
++ String getSiteId()
++ void setSiteId(String)
+}
+class com.welab.collect.dto.AdminOperationTrackDto {
+- String email
+- String activity
+- String activityDesc
+}
+class com.welab.collect.controller.AwdaInsightController {
+- BaseAwdaInsightService baseAwdaInsightService
++ Response addAwdaInsight(Long,AwdaInsight)
+}
+class com.welab.collect.app.service.SystemEventService {
+- BaseSystemEventService systemEventService
+- JedisCluster jedisCluster
+- {static} String PREFIX
+- {static} String PREFIX_LOCK
+- {static} Integer MAX_LEN
+- {static} Integer LOCK_TIME
++ Long pushRedis(SystemEvent)
++ List<SystemEvent> getSystemEvents(int)
++ int addSystemEvent(List<SystemEvent>)
+}
+interface com.welab.collect.mapper.AppsflyerInAppDataMapper {
+~ int inserts(List<AppsflyerInAppData>)
+~ int insert(AppsflyerInAppData)
+~ Date selectLatestReportDate()
+}
+class com.welab.collect.model.ClickStatistics {
+- Long id
+- Long userId
+- Long clickId
+- Byte type
+- Date createdAt
+}
+class com.welab.collect.dto.AwdaInsightDTO {
+- Long userId
+- String pageTitle
+}
+class com.welab.collect.controller.SystemEventController {
+- SystemEventService systemEventService
++ Response addSystemEvent(Long,String,String,SystemEventDto)
+- SystemEvent toSystemEvent(SystemEventDto,Long,String,String)
+}
+class com.welab.collect.test.BaseAppEventServiceTest {
+- BaseAppEventService baseAppEventService
++ void addAppEvents()
++ void addAppEvent()
+}
+enum com.welab.collect.enums.OptLogTableNameEnum {
++  COLLECTION_RULE
++  TASK_ASSIGN_RULE
++  REPAY_CHANNEL
++  MARKETING_PARTNER_LIST
++  FINANCE_CREDIT_USER_ACCOUNT
++  KOMODO_CREDIT_USER_BLACKLIST
++  MARKETING_AHASS_OPT_RULE
++  MARKETING_BACKSTAGE_CONFIGS
++  MARKETING_INSURANCE_CONFIG
++  FINANCE_INSURANCE_RECORD
++  FINANCE_CREDIT_CONFIG
++  MARKETING_CREDIT_LIMIT_APPLY_CONFIG
++  WORKORDER_ISSUE
++  FUND_MATCH_RULE_TOB
++  APPROVAL_APPROVAL_KYC_CONFIG
++  FINANCE_CREDIT_USER_ACCOUNT_INFO
++  APPROVAL_GOLD_FISH_CRITERIA
++  COLLECTION_BUYER_INFO
++  KOMODO_TB_RATE_CONFIG
++  APPROVAL_APPROVAL_SCORE_CONFIG
++  APPROVAL_APPROVAL_CONFIG
++  KOMODO_CONFIGS
+- String tableName
+}
+class com.welab.collect.dto.ListOptUnityLogDTO {
+- Long bizId
+- String tableName
+- Integer pageSize
+- Integer pageNum
+}
+enum com.welab.collect.enums.CollectEventTypesEnum {
++  LOGIN_SUCCESS
++  LOGIN_FAIL
++  PASSWORD_FAIL
++  PASSWORD_UPDATE
++  PASSWORD_ADD
++  OPEN_APP
++  BACK_APP
++  PROMOTION_CODE_SUCCESS
++  PROMOTION_CODE_FAIL
++  ADD_USER_PROFILES
++  USER_PROFILES_POSTCODE
++  ADD_WORK_PROFILES
++  WORK_PROFILES_POSTCODE
++  ADD_CONTACTS
++  LIVING_SUCCESS
++  LIVING_FAIL
++  REPAYMENT_PAGE
++  PROMOTION_INFO_PAGE
++  LONG_TENOR_PAGE
++  SHORT_TENOR_PAGE
++  BANNER_CLICK
++  NOTIFICATION_CLICK
+- String typeName
+- String typeValue
+- <<Create>> CollectEventTypesEnum(String,String)
++ String getTypeValue()
++ {static} String getTypeValue(CollectEventTypesEnum)
+}
+class com.welab.collect.app.facade.marketing.NotificationServiceFacade {
+- NotificationService notificationService
++ void updateNotificationTotalClick(String)
+}
+class com.welab.collect.model.AwdaInsight {
+- Long id
+- Long userId
+- String pageTitle
+- Date createdAt
++ Long getId()
++ void setId(Long)
++ Long getUserId()
++ void setUserId(Long)
++ String getPageTitle()
++ void setPageTitle(String)
++ Date getCreatedAt()
++ void setCreatedAt(Date)
+}
+class com.welab.collect.app.base.BaseAwdaInsightService {
+- AwdaInsightMapper awdaInsightMapper
++ int insert(AwdaInsight)
++ AwdaInsight selectOneByUserId(Long)
+}
+interface com.welab.collect.mapper.AppEventMapper {
+~ int insert(AppEvent,String)
+}
+class com.welab.collect.job.TransferData2MonthTableJob {
+- WelabSeaDynamicDbService welabSeaDynamicDbService
+- JdbcTemplate jdbcTemplate
++ void execute(ShardingContext)
+}
+interface com.welab.collect.common.Urls {
+~ String ROOT
+~ String ROOT_DESC
+~ String V1
+~ String V3
+~ String V3_AUTH
+~ String V3_NO_AUTH
+}
+interface com.welab.collect.common.Urls$AppInput {
+~ String V1_APP_INPUT
+~ String V1_APP_INPUT_ADD
+~ String V1_APP_INPUT_ADD_DESC
+~ String V1_APP_INPUT_ADD_LIST
+~ String V1_APP_INPUT_ADD_LIST_DESC
+}
+interface com.welab.collect.common.Urls$Appsflyer {
+~ String APPSFLYER
+~ String V3_NO_AUTH_INSERT_APPSFLYER
+~ String V3_NO_AUTH_INSERT_APPSFLYER_DESC
+}
+interface com.welab.collect.common.Urls$AppEvent {
+~ String V1_APP_EVENT
+~ String V1_APP_EVENT_ADD_LIST
+~ String V1_APP_EVENT_ADD_LIST_DESC
+}
+interface com.welab.collect.common.Urls$SystemEvent {
+~ String ROOT_DESC
+~ String V1_SYSTEM_EVENT
+~ String V1_SYSTEM_EVENT_ADD
+~ String V1_SYSTEM_EVENT_ADD_DESC
+}
+interface com.welab.collect.common.Urls$AdminOperationTrack {
+~ String V3_ADMIN_OPERATION_TRACK
+~ String V3_ADMIN_OPERATION_TRACK_DESC
+~ String V3_AUTH_ADMIN_OPERATION_TRACK
+~ String V3_AUTH_ADMIN_OPERATION_TRACK_DESC
+}
+interface com.welab.collect.common.Urls$OptUnityLog {
+~ String V3_LIST_OPT_UNITY_LOG
+~ String V3_LIST_OPT_UNITY_LOG_DESC
+}
+interface com.welab.collect.common.Urls$AwdaInsight {
+~ String V3_AWDA_INSIGHT
+~ String ADD
+~ String ADD_DESC
+}
+class com.welab.collect.model.AppsflyerPostAttribution {
+- Long id
+- String dataSource
+- String attributedTouchType
+- Date attributedTouchTime
+- Date installTime
+- Date eventTime
+- String eventName
+- String eventValue
+- String eventSource
+- String partner
+- String mediaSource
+- String channel
+- String campaign
+- String campaignId
+- String adset
+- String adsetId
+- String ad
+- String adId
+- String adType
+- String siteId
+- String subSiteId
+- String subParam1
+- String subParam2
+- String costModel
+- String costValue
+- String costCurrency
+- String region
+- String countryCode
+- String state
+- String city
+- String postalCode
+- String dma
+- String ip
+- String wifi
+- String operator
+- String carrier
+- String language
+- String appsflyerId
+- String advertisingId
+- Long customerUserId
+- String platform
+- String osVersion
+- String appVersion
+- String sdkVersion
+- String appId
+- String isRetargeting
+- String attributionLookback
+- String isPrimaryAttribution
+- Date detectionDate
+- Date googlePlayClickTime
+- String matchType
+- Date googlePlayInstallBeginTime
+- String fraudReason
+- String rejectedReason
+- String deviceModel
+- String fraudReasons
+- String fraudSubReason
+- Date installTimeTz
+- String deviceCategory
+- Date eventTimeTz
+- Date createdAt
++ <<Create>> AppsflyerPostAttribution()
++ <<Create>> AppsflyerPostAttribution(String[],String)
++ Long getId()
++ void setId(Long)
++ String getDataSource()
++ void setDataSource(String)
++ String getAttributedTouchType()
++ void setAttributedTouchType(String)
++ Date getAttributedTouchTime()
++ void setAttributedTouchTime(Date)
++ Date getInstallTime()
++ void setInstallTime(Date)
++ Date getEventTime()
++ void setEventTime(Date)
++ String getEventName()
++ void setEventName(String)
++ String getEventValue()
++ void setEventValue(String)
++ String getEventSource()
++ void setEventSource(String)
++ String getPartner()
++ void setPartner(String)
++ String getMediaSource()
++ void setMediaSource(String)
++ String getChannel()
++ void setChannel(String)
++ String getCampaign()
++ void setCampaign(String)
++ String getCampaignId()
++ void setCampaignId(String)
++ String getAdset()
++ void setAdset(String)
++ String getAdsetId()
++ void setAdsetId(String)
++ String getAd()
++ void setAd(String)
++ String getAdId()
++ void setAdId(String)
++ String getAdType()
++ void setAdType(String)
++ String getSiteId()
++ void setSiteId(String)
++ String getSubSiteId()
++ void setSubSiteId(String)
++ String getSubParam1()
++ void setSubParam1(String)
++ String getSubParam2()
++ void setSubParam2(String)
++ String getCostModel()
++ void setCostModel(String)
++ String getCostValue()
++ void setCostValue(String)
++ String getCostCurrency()
++ void setCostCurrency(String)
++ String getRegion()
++ void setRegion(String)
++ String getCountryCode()
++ void setCountryCode(String)
++ String getState()
++ void setState(String)
++ String getCity()
++ void setCity(String)
++ String getPostalCode()
++ void setPostalCode(String)
++ String getDma()
++ void setDma(String)
++ String getIp()
++ void setIp(String)
++ String getWifi()
++ void setWifi(String)
++ String getOperator()
++ void setOperator(String)
++ String getCarrier()
++ void setCarrier(String)
++ String getLanguage()
++ void setLanguage(String)
++ String getAppsflyerId()
++ void setAppsflyerId(String)
++ String getAdvertisingId()
++ void setAdvertisingId(String)
++ Long getCustomerUserId()
++ void setCustomerUserId(Long)
++ String getPlatform()
++ void setPlatform(String)
++ String getOsVersion()
++ void setOsVersion(String)
++ String getAppVersion()
++ void setAppVersion(String)
++ String getSdkVersion()
++ void setSdkVersion(String)
++ String getAppId()
++ void setAppId(String)
++ String getIsRetargeting()
++ void setIsRetargeting(String)
++ String getAttributionLookback()
++ void setAttributionLookback(String)
++ String getIsPrimaryAttribution()
++ void setIsPrimaryAttribution(String)
++ Date getDetectionDate()
++ void setDetectionDate(Date)
++ Date getGooglePlayClickTime()
++ void setGooglePlayClickTime(Date)
++ String getMatchType()
++ void setMatchType(String)
++ Date getGooglePlayInstallBeginTime()
++ void setGooglePlayInstallBeginTime(Date)
++ String getFraudReason()
++ void setFraudReason(String)
++ String getRejectedReason()
++ void setRejectedReason(String)
++ String getDeviceModel()
++ void setDeviceModel(String)
++ String getFraudReasons()
++ void setFraudReasons(String)
++ Date getCreatedAt()
++ void setCreatedAt(Date)
++ String getFraudSubReason()
++ void setFraudSubReason(String)
++ Date getInstallTimeTz()
++ void setInstallTimeTz(Date)
++ String getDeviceCategory()
++ void setDeviceCategory(String)
++ Date getEventTimeTz()
++ void setEventTimeTz(Date)
+}
+class com.welab.collect.app.service.AppsflyerPostAttributionService {
+- BaseAppsflyerPostAttributionService baseAppsflyerPostAttributionService
+- AppsFlyerReportCmdExcute appsFlyerReportCmdExcute
+- String POST_ATTRIBUTION_INSTALLS_URL
+- String POST_ATTRIBUTION_IN_APP_URL
++ void addReportDataList(String,String)
+- void addReportDataList(String[],String)
+}
+enum com.welab.collect.enums.YesNotEnum {
++  YES
++  NOT
++ int val
+}
+class com.welab.collect.app.base.BaseAppEventDetailService {
+- AppEventDetailMapper appEventDetailMapper
++ void save(AppEventDetail)
+}
+class com.welab.collect.app.base.BaseAppsflyerUninstallDataService {
+- AppsflyerReportlDataMapper appsflyerReportlDataMapper
++ void addAppsflyerReportlData(List<AppsflyerReportlData>)
++ void add(AppsflyerReportlData)
++ Date getLatestReportDate()
+}
+class com.welab.collect.app.base.BaseAdminOperationTrackService {
+- AdminOperationTrackMapper adminOperationTrackMapper
++ Long addAdminOperationTrack(AdminOperationTrack)
++ PageInfo<AdminOperationTrack> getPageByPlatformName(String,int,int)
+}
+class com.welab.collect.model.AppflyerDataExample {
+# String orderByClause
+# boolean distinct
+# List<Criteria> oredCriteria
++ <<Create>> AppflyerDataExample()
++ void setOrderByClause(String)
++ String getOrderByClause()
++ void setDistinct(boolean)
++ boolean isDistinct()
++ List<Criteria> getOredCriteria()
++ void or(Criteria)
++ Criteria or()
++ Criteria createCriteria()
+# Criteria createCriteriaInternal()
++ void clear()
+}
+abstract class com.welab.collect.model.AppflyerDataExample$GeneratedCriteria {
+# List<Criterion> criteria
+# <<Create>> GeneratedCriteria()
++ boolean isValid()
++ List<Criterion> getAllCriteria()
++ List<Criterion> getCriteria()
+# void addCriterion(String)
+# void addCriterion(String,Object,String)
+# void addCriterion(String,Object,Object,String)
++ Criteria andIdIsNull()
++ Criteria andIdIsNotNull()
++ Criteria andIdEqualTo(Long)
++ Criteria andIdNotEqualTo(Long)
++ Criteria andIdGreaterThan(Long)
++ Criteria andIdGreaterThanOrEqualTo(Long)
++ Criteria andIdLessThan(Long)
++ Criteria andIdLessThanOrEqualTo(Long)
++ Criteria andIdIn(List<Long>)
++ Criteria andIdNotIn(List<Long>)
++ Criteria andIdBetween(Long,Long)
++ Criteria andIdNotBetween(Long,Long)
++ Criteria andOrgIdIsNull()
++ Criteria andOrgIdIsNotNull()
++ Criteria andOrgIdEqualTo(Long)
++ Criteria andOrgIdNotEqualTo(Long)
++ Criteria andOrgIdGreaterThan(Long)
++ Criteria andOrgIdGreaterThanOrEqualTo(Long)
++ Criteria andOrgIdLessThan(Long)
++ Criteria andOrgIdLessThanOrEqualTo(Long)
++ Criteria andOrgIdIn(List<Long>)
++ Criteria andOrgIdNotIn(List<Long>)
++ Criteria andOrgIdBetween(Long,Long)
++ Criteria andOrgIdNotBetween(Long,Long)
++ Criteria andDeviceModelIsNull()
++ Criteria andDeviceModelIsNotNull()
++ Criteria andDeviceModelEqualTo(String)
++ Criteria andDeviceModelNotEqualTo(String)
++ Criteria andDeviceModelGreaterThan(String)
++ Criteria andDeviceModelGreaterThanOrEqualTo(String)
++ Criteria andDeviceModelLessThan(String)
++ Criteria andDeviceModelLessThanOrEqualTo(String)
++ Criteria andDeviceModelLike(String)
++ Criteria andDeviceModelNotLike(String)
++ Criteria andDeviceModelIn(List<String>)
++ Criteria andDeviceModelNotIn(List<String>)
++ Criteria andDeviceModelBetween(String,String)
++ Criteria andDeviceModelNotBetween(String,String)
++ Criteria andEventTimeIsNull()
++ Criteria andEventTimeIsNotNull()
++ Criteria andEventTimeEqualTo(Date)
++ Criteria andEventTimeNotEqualTo(Date)
++ Criteria andEventTimeGreaterThan(Date)
++ Criteria andEventTimeGreaterThanOrEqualTo(Date)
++ Criteria andEventTimeLessThan(Date)
++ Criteria andEventTimeLessThanOrEqualTo(Date)
++ Criteria andEventTimeIn(List<Date>)
++ Criteria andEventTimeNotIn(List<Date>)
++ Criteria andEventTimeBetween(Date,Date)
++ Criteria andEventTimeNotBetween(Date,Date)
++ Criteria andWifiIsNull()
++ Criteria andWifiIsNotNull()
++ Criteria andWifiEqualTo(Boolean)
++ Criteria andWifiNotEqualTo(Boolean)
++ Criteria andWifiGreaterThan(Boolean)
++ Criteria andWifiGreaterThanOrEqualTo(Boolean)
++ Criteria andWifiLessThan(Boolean)
++ Criteria andWifiLessThanOrEqualTo(Boolean)
++ Criteria andWifiIn(List<Boolean>)
++ Criteria andWifiNotIn(List<Boolean>)
++ Criteria andWifiBetween(Boolean,Boolean)
++ Criteria andWifiNotBetween(Boolean,Boolean)
++ Criteria andCountryCodeIsNull()
++ Criteria andCountryCodeIsNotNull()
++ Criteria andCountryCodeEqualTo(String)
++ Criteria andCountryCodeNotEqualTo(String)
++ Criteria andCountryCodeGreaterThan(String)
++ Criteria andCountryCodeGreaterThanOrEqualTo(String)
++ Criteria andCountryCodeLessThan(String)
++ Criteria andCountryCodeLessThanOrEqualTo(String)
++ Criteria andCountryCodeLike(String)
++ Criteria andCountryCodeNotLike(String)
++ Criteria andCountryCodeIn(List<String>)
++ Criteria andCountryCodeNotIn(List<String>)
++ Criteria andCountryCodeBetween(String,String)
++ Criteria andCountryCodeNotBetween(String,String)
++ Criteria andPlatformIsNull()
++ Criteria andPlatformIsNotNull()
++ Criteria andPlatformEqualTo(String)
++ Criteria andPlatformNotEqualTo(String)
++ Criteria andPlatformGreaterThan(String)
++ Criteria andPlatformGreaterThanOrEqualTo(String)
++ Criteria andPlatformLessThan(String)
++ Criteria andPlatformLessThanOrEqualTo(String)
++ Criteria andPlatformLike(String)
++ Criteria andPlatformNotLike(String)
++ Criteria andPlatformIn(List<String>)
++ Criteria andPlatformNotIn(List<String>)
++ Criteria andPlatformBetween(String,String)
++ Criteria andPlatformNotBetween(String,String)
++ Criteria andCityIsNull()
++ Criteria andCityIsNotNull()
++ Criteria andCityEqualTo(String)
++ Criteria andCityNotEqualTo(String)
++ Criteria andCityGreaterThan(String)
++ Criteria andCityGreaterThanOrEqualTo(String)
++ Criteria andCityLessThan(String)
++ Criteria andCityLessThanOrEqualTo(String)
++ Criteria andCityLike(String)
++ Criteria andCityNotLike(String)
++ Criteria andCityIn(List<String>)
++ Criteria andCityNotIn(List<String>)
++ Criteria andCityBetween(String,String)
++ Criteria andCityNotBetween(String,String)
++ Criteria andApiVersionIsNull()
++ Criteria andApiVersionIsNotNull()
++ Criteria andApiVersionEqualTo(String)
++ Criteria andApiVersionNotEqualTo(String)
++ Criteria andApiVersionGreaterThan(String)
++ Criteria andApiVersionGreaterThanOrEqualTo(String)
++ Criteria andApiVersionLessThan(String)
++ Criteria andApiVersionLessThanOrEqualTo(String)
++ Criteria andApiVersionLike(String)
++ Criteria andApiVersionNotLike(String)
++ Criteria andApiVersionIn(List<String>)
++ Criteria andApiVersionNotIn(List<String>)
++ Criteria andApiVersionBetween(String,String)
++ Criteria andApiVersionNotBetween(String,String)
++ Criteria andIsRetargetingIsNull()
++ Criteria andIsRetargetingIsNotNull()
++ Criteria andIsRetargetingEqualTo(Boolean)
++ Criteria andIsRetargetingNotEqualTo(Boolean)
++ Criteria andIsRetargetingGreaterThan(Boolean)
++ Criteria andIsRetargetingGreaterThanOrEqualTo(Boolean)
++ Criteria andIsRetargetingLessThan(Boolean)
++ Criteria andIsRetargetingLessThanOrEqualTo(Boolean)
++ Criteria andIsRetargetingIn(List<Boolean>)
++ Criteria andIsRetargetingNotIn(List<Boolean>)
++ Criteria andIsRetargetingBetween(Boolean,Boolean)
++ Criteria andIsRetargetingNotBetween(Boolean,Boolean)
++ Criteria andCustomerUserIdIsNull()
++ Criteria andCustomerUserIdIsNotNull()
++ Criteria andCustomerUserIdEqualTo(String)
++ Criteria andCustomerUserIdNotEqualTo(String)
++ Criteria andCustomerUserIdGreaterThan(String)
++ Criteria andCustomerUserIdGreaterThanOrEqualTo(String)
++ Criteria andCustomerUserIdLessThan(String)
++ Criteria andCustomerUserIdLessThanOrEqualTo(String)
++ Criteria andCustomerUserIdLike(String)
++ Criteria andCustomerUserIdNotLike(String)
++ Criteria andCustomerUserIdIn(List<String>)
++ Criteria andCustomerUserIdNotIn(List<String>)
++ Criteria andCustomerUserIdBetween(String,String)
++ Criteria andCustomerUserIdNotBetween(String,String)
++ Criteria andCreatedAtIsNull()
++ Criteria andCreatedAtIsNotNull()
++ Criteria andCreatedAtEqualTo(Date)
++ Criteria andCreatedAtNotEqualTo(Date)
++ Criteria andCreatedAtGreaterThan(Date)
++ Criteria andCreatedAtGreaterThanOrEqualTo(Date)
++ Criteria andCreatedAtLessThan(Date)
++ Criteria andCreatedAtLessThanOrEqualTo(Date)
++ Criteria andCreatedAtIn(List<Date>)
++ Criteria andCreatedAtNotIn(List<Date>)
++ Criteria andCreatedAtBetween(Date,Date)
++ Criteria andCreatedAtNotBetween(Date,Date)
++ Criteria andUpdatedAtIsNull()
++ Criteria andUpdatedAtIsNotNull()
++ Criteria andUpdatedAtEqualTo(Date)
++ Criteria andUpdatedAtNotEqualTo(Date)
++ Criteria andUpdatedAtGreaterThan(Date)
++ Criteria andUpdatedAtGreaterThanOrEqualTo(Date)
++ Criteria andUpdatedAtLessThan(Date)
++ Criteria andUpdatedAtLessThanOrEqualTo(Date)
++ Criteria andUpdatedAtIn(List<Date>)
++ Criteria andUpdatedAtNotIn(List<Date>)
++ Criteria andUpdatedAtBetween(Date,Date)
++ Criteria andUpdatedAtNotBetween(Date,Date)
++ Criteria andEventvalueIsNull()
++ Criteria andEventvalueIsNotNull()
++ Criteria andEventvalueEqualTo(String)
++ Criteria andEventvalueNotEqualTo(String)
++ Criteria andEventvalueGreaterThan(String)
++ Criteria andEventvalueGreaterThanOrEqualTo(String)
++ Criteria andEventvalueLessThan(String)
++ Criteria andEventvalueLessThanOrEqualTo(String)
++ Criteria andEventvalueLike(String)
++ Criteria andEventvalueNotLike(String)
++ Criteria andEventvalueIn(List<String>)
++ Criteria andEventvalueNotIn(List<String>)
++ Criteria andEventvalueBetween(String,String)
++ Criteria andEventvalueNotBetween(String,String)
++ Criteria andOperatorIsNull()
++ Criteria andOperatorIsNotNull()
++ Criteria andOperatorEqualTo(String)
++ Criteria andOperatorNotEqualTo(String)
++ Criteria andOperatorGreaterThan(String)
++ Criteria andOperatorGreaterThanOrEqualTo(String)
++ Criteria andOperatorLessThan(String)
++ Criteria andOperatorLessThanOrEqualTo(String)
++ Criteria andOperatorLike(String)
++ Criteria andOperatorNotLike(String)
++ Criteria andOperatorIn(List<String>)
++ Criteria andOperatorNotIn(List<String>)
++ Criteria andOperatorBetween(String,String)
++ Criteria andOperatorNotBetween(String,String)
++ Criteria andCarrierIsNull()
++ Criteria andCarrierIsNotNull()
++ Criteria andCarrierEqualTo(String)
++ Criteria andCarrierNotEqualTo(String)
++ Criteria andCarrierGreaterThan(String)
++ Criteria andCarrierGreaterThanOrEqualTo(String)
++ Criteria andCarrierLessThan(String)
++ Criteria andCarrierLessThanOrEqualTo(String)
++ Criteria andCarrierLike(String)
++ Criteria andCarrierNotLike(String)
++ Criteria andCarrierIn(List<String>)
++ Criteria andCarrierNotIn(List<String>)
++ Criteria andCarrierBetween(String,String)
++ Criteria andCarrierNotBetween(String,String)
++ Criteria andKeywordMatchTypeIsNull()
++ Criteria andKeywordMatchTypeIsNotNull()
++ Criteria andKeywordMatchTypeEqualTo(String)
++ Criteria andKeywordMatchTypeNotEqualTo(String)
++ Criteria andKeywordMatchTypeGreaterThan(String)
++ Criteria andKeywordMatchTypeGreaterThanOrEqualTo(String)
++ Criteria andKeywordMatchTypeLessThan(String)
++ Criteria andKeywordMatchTypeLessThanOrEqualTo(String)
++ Criteria andKeywordMatchTypeLike(String)
++ Criteria andKeywordMatchTypeNotLike(String)
++ Criteria andKeywordMatchTypeIn(List<String>)
++ Criteria andKeywordMatchTypeNotIn(List<String>)
++ Criteria andKeywordMatchTypeBetween(String,String)
++ Criteria andKeywordMatchTypeNotBetween(String,String)
++ Criteria andDeeplinkUrlIsNull()
++ Criteria andDeeplinkUrlIsNotNull()
++ Criteria andDeeplinkUrlEqualTo(String)
++ Criteria andDeeplinkUrlNotEqualTo(String)
++ Criteria andDeeplinkUrlGreaterThan(String)
++ Criteria andDeeplinkUrlGreaterThanOrEqualTo(String)
++ Criteria andDeeplinkUrlLessThan(String)
++ Criteria andDeeplinkUrlLessThanOrEqualTo(String)
++ Criteria andDeeplinkUrlLike(String)
++ Criteria andDeeplinkUrlNotLike(String)
++ Criteria andDeeplinkUrlIn(List<String>)
++ Criteria andDeeplinkUrlNotIn(List<String>)
++ Criteria andDeeplinkUrlBetween(String,String)
++ Criteria andDeeplinkUrlNotBetween(String,String)
++ Criteria andPhoneNumberIsNull()
++ Criteria andPhoneNumberIsNotNull()
++ Criteria andPhoneNumberEqualTo(String)
++ Criteria andPhoneNumberNotEqualTo(String)
++ Criteria andPhoneNumberGreaterThan(String)
++ Criteria andPhoneNumberGreaterThanOrEqualTo(String)
++ Criteria andPhoneNumberLessThan(String)
++ Criteria andPhoneNumberLessThanOrEqualTo(String)
++ Criteria andPhoneNumberLike(String)
++ Criteria andPhoneNumberNotLike(String)
++ Criteria andPhoneNumberIn(List<String>)
++ Criteria andPhoneNumberNotIn(List<String>)
++ Criteria andPhoneNumberBetween(String,String)
++ Criteria andPhoneNumberNotBetween(String,String)
++ Criteria andLoanNumberIsNull()
++ Criteria andLoanNumberIsNotNull()
++ Criteria andLoanNumberEqualTo(String)
++ Criteria andLoanNumberNotEqualTo(String)
++ Criteria andLoanNumberGreaterThan(String)
++ Criteria andLoanNumberGreaterThanOrEqualTo(String)
++ Criteria andLoanNumberLessThan(String)
++ Criteria andLoanNumberLessThanOrEqualTo(String)
++ Criteria andLoanNumberLike(String)
++ Criteria andLoanNumberNotLike(String)
++ Criteria andLoanNumberIn(List<String>)
++ Criteria andLoanNumberNotIn(List<String>)
++ Criteria andLoanNumberBetween(String,String)
++ Criteria andLoanNumberNotBetween(String,String)
++ Criteria andUserIdIsNull()
++ Criteria andUserIdIsNotNull()
++ Criteria andUserIdEqualTo(Long)
++ Criteria andUserIdNotEqualTo(Long)
++ Criteria andUserIdGreaterThan(Long)
++ Criteria andUserIdGreaterThanOrEqualTo(Long)
++ Criteria andUserIdLessThan(Long)
++ Criteria andUserIdLessThanOrEqualTo(Long)
++ Criteria andUserIdIn(List<Long>)
++ Criteria andUserIdNotIn(List<Long>)
++ Criteria andUserIdBetween(Long,Long)
++ Criteria andUserIdNotBetween(Long,Long)
++ Criteria andMediaSourceIsNull()
++ Criteria andMediaSourceIsNotNull()
++ Criteria andMediaSourceEqualTo(String)
++ Criteria andMediaSourceNotEqualTo(String)
++ Criteria andMediaSourceGreaterThan(String)
++ Criteria andMediaSourceGreaterThanOrEqualTo(String)
++ Criteria andMediaSourceLessThan(String)
++ Criteria andMediaSourceLessThanOrEqualTo(String)
++ Criteria andMediaSourceLike(String)
++ Criteria andMediaSourceNotLike(String)
++ Criteria andMediaSourceIn(List<String>)
++ Criteria andMediaSourceNotIn(List<String>)
++ Criteria andMediaSourceBetween(String,String)
++ Criteria andMediaSourceNotBetween(String,String)
++ Criteria andPartnerIsNull()
++ Criteria andPartnerIsNotNull()
++ Criteria andPartnerEqualTo(String)
++ Criteria andPartnerNotEqualTo(String)
++ Criteria andPartnerGreaterThan(String)
++ Criteria andPartnerGreaterThanOrEqualTo(String)
++ Criteria andPartnerLessThan(String)
++ Criteria andPartnerLessThanOrEqualTo(String)
++ Criteria andPartnerLike(String)
++ Criteria andPartnerNotLike(String)
++ Criteria andPartnerIn(List<String>)
++ Criteria andPartnerNotIn(List<String>)
++ Criteria andPartnerBetween(String,String)
++ Criteria andPartnerNotBetween(String,String)
++ Criteria andChannelIsNull()
++ Criteria andChannelIsNotNull()
++ Criteria andChannelEqualTo(String)
++ Criteria andChannelNotEqualTo(String)
++ Criteria andChannelGreaterThan(String)
++ Criteria andChannelGreaterThanOrEqualTo(String)
++ Criteria andChannelLessThan(String)
++ Criteria andChannelLessThanOrEqualTo(String)
++ Criteria andChannelLike(String)
++ Criteria andChannelNotLike(String)
++ Criteria andChannelIn(List<String>)
++ Criteria andChannelNotIn(List<String>)
++ Criteria andChannelBetween(String,String)
++ Criteria andChannelNotBetween(String,String)
++ Criteria andCampaignIsNull()
++ Criteria andCampaignIsNotNull()
++ Criteria andCampaignEqualTo(String)
++ Criteria andCampaignNotEqualTo(String)
++ Criteria andCampaignGreaterThan(String)
++ Criteria andCampaignGreaterThanOrEqualTo(String)
++ Criteria andCampaignLessThan(String)
++ Criteria andCampaignLessThanOrEqualTo(String)
++ Criteria andCampaignLike(String)
++ Criteria andCampaignNotLike(String)
++ Criteria andCampaignIn(List<String>)
++ Criteria andCampaignNotIn(List<String>)
++ Criteria andCampaignBetween(String,String)
++ Criteria andCampaignNotBetween(String,String)
++ Criteria andCampaignIdIsNull()
++ Criteria andCampaignIdIsNotNull()
++ Criteria andCampaignIdEqualTo(String)
++ Criteria andCampaignIdNotEqualTo(String)
++ Criteria andCampaignIdGreaterThan(String)
++ Criteria andCampaignIdGreaterThanOrEqualTo(String)
++ Criteria andCampaignIdLessThan(String)
++ Criteria andCampaignIdLessThanOrEqualTo(String)
++ Criteria andCampaignIdLike(String)
++ Criteria andCampaignIdNotLike(String)
++ Criteria andCampaignIdIn(List<String>)
++ Criteria andCampaignIdNotIn(List<String>)
++ Criteria andCampaignIdBetween(String,String)
++ Criteria andCampaignIdNotBetween(String,String)
++ Criteria andDeviceCategoryIsNull()
++ Criteria andDeviceCategoryIsNotNull()
++ Criteria andDeviceCategoryEqualTo(String)
++ Criteria andDeviceCategoryNotEqualTo(String)
++ Criteria andDeviceCategoryGreaterThan(String)
++ Criteria andDeviceCategoryGreaterThanOrEqualTo(String)
++ Criteria andDeviceCategoryLessThan(String)
++ Criteria andDeviceCategoryLessThanOrEqualTo(String)
++ Criteria andDeviceCategoryLike(String)
++ Criteria andDeviceCategoryNotLike(String)
++ Criteria andDeviceCategoryIn(List<String>)
++ Criteria andDeviceCategoryNotIn(List<String>)
++ Criteria andDeviceCategoryBetween(String,String)
++ Criteria andDeviceCategoryNotBetween(String,String)
++ Criteria andIpIsNull()
++ Criteria andIpIsNotNull()
++ Criteria andIpEqualTo(String)
++ Criteria andIpNotEqualTo(String)
++ Criteria andIpGreaterThan(String)
++ Criteria andIpGreaterThanOrEqualTo(String)
++ Criteria andIpLessThan(String)
++ Criteria andIpLessThanOrEqualTo(String)
++ Criteria andIpLike(String)
++ Criteria andIpNotLike(String)
++ Criteria andIpIn(List<String>)
++ Criteria andIpNotIn(List<String>)
++ Criteria andIpBetween(String,String)
++ Criteria andIpNotBetween(String,String)
++ Criteria andPostalCodeIsNull()
++ Criteria andPostalCodeIsNotNull()
++ Criteria andPostalCodeEqualTo(String)
++ Criteria andPostalCodeNotEqualTo(String)
++ Criteria andPostalCodeGreaterThan(String)
++ Criteria andPostalCodeGreaterThanOrEqualTo(String)
++ Criteria andPostalCodeLessThan(String)
++ Criteria andPostalCodeLessThanOrEqualTo(String)
++ Criteria andPostalCodeLike(String)
++ Criteria andPostalCodeNotLike(String)
++ Criteria andPostalCodeIn(List<String>)
++ Criteria andPostalCodeNotIn(List<String>)
++ Criteria andPostalCodeBetween(String,String)
++ Criteria andPostalCodeNotBetween(String,String)
++ Criteria andSiteIdIsNull()
++ Criteria andSiteIdIsNotNull()
++ Criteria andSiteIdEqualTo(String)
++ Criteria andSiteIdNotEqualTo(String)
++ Criteria andSiteIdGreaterThan(String)
++ Criteria andSiteIdGreaterThanOrEqualTo(String)
++ Criteria andSiteIdLessThan(String)
++ Criteria andSiteIdLessThanOrEqualTo(String)
++ Criteria andSiteIdLike(String)
++ Criteria andSiteIdNotLike(String)
++ Criteria andSiteIdIn(List<String>)
++ Criteria andSiteIdNotIn(List<String>)
++ Criteria andSiteIdBetween(String,String)
++ Criteria andSiteIdNotBetween(String,String)
+}
+class com.welab.collect.model.AppflyerDataExample$Criteria {
+# <<Create>> Criteria()
+}
+class com.welab.collect.model.AppflyerDataExample$Criterion {
+- String condition
+- Object value
+- Object secondValue
+- boolean noValue
+- boolean singleValue
+- boolean betweenValue
+- boolean listValue
+- String typeHandler
+# <<Create>> Criterion(String)
+# <<Create>> Criterion(String,Object,String)
+# <<Create>> Criterion(String,Object)
+# <<Create>> Criterion(String,Object,Object,String)
+# <<Create>> Criterion(String,Object,Object)
++ String getCondition()
++ Object getValue()
++ Object getSecondValue()
++ boolean isNoValue()
++ boolean isSingleValue()
++ boolean isBetweenValue()
++ boolean isListValue()
++ String getTypeHandler()
+}
+class com.welab.collect.dto.AddOptUnityLogCmd {
+- Long bizId
+- String tableName
+- Long operatorAdminId
+- Long createAdminId
+- String operateType
+- String unityMatter
+- String unityContent
+}
+interface com.welab.collect.service.IAwdaInsightService {
+~ void addAwdaInsight(AwdaInsightDTO)
+~ boolean canSubmit(Long)
+}
+class com.welab.collect.job.AppsFlyerReportDataEventJob {
+- BaseAppsflyerUninstallDataService baseAppsflyerUninstallDataService
+- AppsFlyerUninstallDataService appsFlyerUninstallDataService
+- String SERVER_ENV
++ void execute(ShardingContext)
+}
+class com.welab.collect.service.impl.OptUnityLogServiceImpl {
+- BaseOptUnityLogService baseOptUnityLogService
+- UserService userService
++ PageInfo<OptUnityLogDto> listOptUnityLog(PageRequestDTO<ListOptUnityLogCmd>)
+- void convertUserInfo(List<OptUnityLogDto>)
++ Response addOptUnityLog(AddOptUnityLogCmd)
++ Response<OptUnityLog> compareAndCreateUpdateLog(OptLogBase,OptLogBase)
+}
+interface com.welab.collect.mapper.AppflyerDataMapper {
+~ long countByExample(AppflyerDataExample)
+~ int deleteByPrimaryKey(Long)
+~ int insert(AppflyerData)
+~ int insertSelective(AppflyerData)
+~ List<AppflyerData> selectByExample(AppflyerDataExample)
+~ AppflyerData selectByPrimaryKey(Long)
+~ int updateByExampleSelective(AppflyerData,AppflyerDataExample)
+~ int updateByExample(AppflyerData,AppflyerDataExample)
+~ int updateByPrimaryKeySelective(AppflyerData)
+~ int updateByPrimaryKey(AppflyerData)
+}
+class com.welab.collect.app.base.BaseOptUnityLogService {
+- OptUnityLogMapper optUnityLogMapper
++ void insertSelective(OptUnityLog)
++ PageInfo<OptUnityLogDto> listOptUnityLog(PageRequestDTO<ListOptUnityLogCmd>)
+}
+interface com.welab.collect.service.AppInputDubboService {
+~ void addAppInput(AppInputListCmd)
+}
+class com.welab.collect.dto.ListOptUnityLogVO {
+- String operatorEmail
+- String operatorMobile
+- String creatorEmail
+- String creatorMobile
+- String operateType
+- String unityContent
+- Date createdAt
+}
+class com.welab.collect.model.AppsflyerReportlData {
+- Long id
+- String attributedTouchType
+- Date attributedTouchTime
+- Date installTime
+- Date eventTime
+- String eventName
+- String eventSource
+- String partner
+- String mediaSource
+- String channel
+- String campaign
+- String campaignId
+- String adset
+- String adsetId
+- String ad
+- String adId
+- String adType
+- String siteId
+- String subSiteId
+- String subParam1
+- String subParam2
+- String costModel
+- String costValue
+- String costCurrency
+- String region
+- String countryCode
+- String state
+- String city
+- String postalCode
+- String dma
+- String ip
+- String wifi
+- String operator
+- String carrier
+- String language
+- String appsflyerId
+- String advertisingId
+- String platform
+- String osVersion
+- String appVersion
+- String sdkVersion
+- String appId
+- String isRetargeting
+- String attributionLookback
++ <<Create>> AppsflyerReportlData()
++ <<Create>> AppsflyerReportlData(String[],String)
++ Long getId()
++ void setId(Long)
++ String getAttributedTouchType()
++ void setAttributedTouchType(String)
++ Date getAttributedTouchTime()
++ void setAttributedTouchTime(Date)
++ Date getInstallTime()
++ void setInstallTime(Date)
++ Date getEventTime()
++ void setEventTime(Date)
++ String getEventName()
++ void setEventName(String)
++ String getEventSource()
++ void setEventSource(String)
++ String getPartner()
++ void setPartner(String)
++ String getMediaSource()
++ void setMediaSource(String)
++ String getChannel()
++ void setChannel(String)
++ String getCampaign()
++ void setCampaign(String)
++ String getCampaignId()
++ void setCampaignId(String)
++ String getAdset()
++ void setAdset(String)
++ String getAdsetId()
++ void setAdsetId(String)
++ String getAd()
++ void setAd(String)
++ String getAdId()
++ void setAdId(String)
++ String getAdType()
++ void setAdType(String)
++ String getSiteId()
++ void setSiteId(String)
++ String getSubSiteId()
++ void setSubSiteId(String)
++ String getSubParam1()
++ void setSubParam1(String)
++ String getCostModel()
++ void setCostModel(String)
++ String getRegion()
++ void setRegion(String)
++ String getCountryCode()
++ void setCountryCode(String)
++ String getState()
++ void setState(String)
++ String getCity()
++ void setCity(String)
++ String getPostalCode()
++ void setPostalCode(String)
++ String getDma()
++ void setDma(String)
++ String getIp()
++ void setIp(String)
++ String getLanguage()
++ void setLanguage(String)
++ String getAppsflyerId()
++ void setAppsflyerId(String)
++ String getAdvertisingId()
++ void setAdvertisingId(String)
++ String getPlatform()
++ void setPlatform(String)
++ String getAppId()
++ void setAppId(String)
++ String getAttributionLookback()
++ void setAttributionLookback(String)
+}
+enum com.welab.collect.enums.EventDetailEnum {
++  CHECK_UPCOMING_TENOR
++  UNCHECK_UPCOMING_TENOR
+- Integer type
+- String event
+- String desc
++ {static} EventDetailEnum getDetailEnum(String)
+}
+interface com.welab.collect.mapper.AwdaInsightMapper {
+~ int insert(AwdaInsight)
+~ AwdaInsight selectOneByUserId(Long)
+}
+interface com.welab.collect.mapper.ClickStatisticsMapper {
+~ int insert(ClickStatistics)
+}
+class com.welab.collect.dto.AppInputListCmd {
+- {static} long serialVersionUID
+- AppInputListDto appInputListDto
+- Long userId
+- Long orgId
+}
+class com.welab.collect.dto.AppsflyerDTO {
+- String customerUserId
+- String deviceModel
+- Date eventTime
+- boolean wifi
+- String countryCode
+- String platform
+- String city
+- String apiVersion
+- boolean isRetargeting
+- String eventValue
+- String operator
+- String carrier
+- String keywordMatchType
+- String deeplinkUrl
+- String mediaSource
+- String partner
+- String channel
+- String campaign
+- String campaignId
+- String deviceCategory
+- String ip
+- String postalCode
+- String afSiteid
++ {static} AppflyerData toAppflyerData(AppsflyerDTO)
+}
+class com.welab.collect.app.facade.marketing.BannerServiceFacade {
+- BannerService bannerService
++ void updateBannerTotalClick(String)
+}
+enum com.welab.collect.enums.EventDetailTypeEnum {
++  LOAN_NUMBER
+- Integer type
+- String desc
+}
+class com.welab.collect.job.SystemEventJob {
+- SystemEventService systemEventService
++ void execute(ShardingContext)
+}
+interface com.welab.collect.service.AppsflyerService {
+~ void insertAppsflyerToDB(AppflyerData)
+}
+class com.welab.collect.test.AppsflyerServiceImplTest {
+- AppsflyerServiceImpl appsflyerService
++ void insertAppsflyerTest()
+}
+class com.welab.collect.dto.SystemEventDto {
+- String loanNumber
+- String path
+}
+class com.welab.collect.service.impl.AwdaInsightServiceImpl {
+- BaseAwdaInsightService baseAwdaInsightService
++ void addAwdaInsight(AwdaInsightDTO)
++ boolean canSubmit(Long)
+}
+class com.welab.collect.test.AppInputDubboServiceImplTest {
+- AppInputDubboServiceImpl appInputDubboService
+- {static} String APP_INPUT_KEY
++ void addAppInput()
++ void addAppInputParameterError()
+}
+class com.welab.collect.app.base.BaseAppEventService {
+- AppEventMapper appEventMapper
++ Long addAppEvent(AppEvent,Long)
++ void addAppEvent(AppEvent[],Long)
+}
+abstract class com.welab.collect.base.OptLogBase {
++ {abstract}Long getId()
++ {abstract}OptLogTableNameEnum getTableName()
++ {abstract}Map<String,String> listFieldMapping()
++ OptUnityLog createLog(String,T)
+- OptUnityLog comparatorObject(String,Object)
+- {static} Map<String,Object> changeValueToMap(Object)
+}
+class com.welab.collect.base.OptLogBase$ModifyInfo {
+- String fieldName
+- String before
+- String after
+}
+interface com.welab.collect.mapper.OptUnityLogMapper {
+~ int deleteByPrimaryKey(Long)
+~ int insert(OptUnityLog)
+~ int insertSelective(OptUnityLog)
+~ OptUnityLog selectByPrimaryKey(Long)
+~ int updateByPrimaryKeySelective(OptUnityLog)
+~ int updateByPrimaryKey(OptUnityLog)
+~ List<OptUnityLog> listLogByBizIdAndTableName(Long,String)
+~ List<OptUnityLogDto> listOptUnityLog(ListOptUnityLogCmd)
+}
+interface com.welab.collect.mapper.AppEventDetailMapper {
+~ int insert(AppEventDetail)
+}
+
+
+java.io.Serializable <|.. com.welab.collect.dto.OptUnityLogDto
+com.welab.collect.service.CollectEventService <|.. com.welab.collect.service.impl.CollectEventServiceImpl
+java.io.Serializable <|.. com.welab.collect.dto.OptUnityLog
+com.welab.collect.test.base.SimpleTest <|-- com.welab.collect.test.AppsFlyerReportlDataServiceTest
+com.welab.collect.test.base.SimpleTest <|-- com.welab.collect.test.BaseAppInputServiceTest
+com.welab.common.exception.FastRuntimeException <|-- com.welab.collect.exception.CollectException
+java.io.Serializable <|.. com.welab.collect.dto.CollectEventDTO
+com.welab.collect.service.AppInputDubboService <|.. com.welab.collect.service.impl.AppInputDubboServiceImpl
+com.welab.collect.test.base.SimpleTest <|-- com.welab.collect.test.OptUnityLogServiceTest
+com.welab.collect.test.OptUnityLogServiceTest +.. com.welab.collect.test.OptUnityLogServiceTest$ObjA
+com.welab.collect.test.OptLogBase <|-- com.welab.collect.test.OptUnityLogServiceTest$ObjA
+com.welab.collect.test.OptUnityLogServiceTest +.. com.welab.collect.test.OptUnityLogServiceTest$ObjB
+com.welab.collect.test.OptLogBase <|-- com.welab.collect.test.OptUnityLogServiceTest$ObjB
+com.welab.collect.test.base.SimpleTest <|-- com.welab.collect.test.SystemEventServiceTest
+com.welab.collect.test.base.SimpleTest <|-- com.welab.collect.test.CollectEventServiceImplTest
+java.io.Serializable <|.. com.welab.collect.dto.AppInputDto
+java.io.Serializable <|.. com.welab.collect.dto.ListOptUnityLogCmd
+com.welab.collect.service.AppsflyerService <|.. com.welab.collect.service.impl.AppsflyerServiceImpl
+com.dangdang.ddframe.job.api.simple.SimpleJob <|.. com.welab.collect.job.AppsFlyerInAppDataEventJob
+java.io.Serializable <|.. com.welab.collect.dto.AppInputListDto
+com.welab.collect.test.base.SimpleTest <|-- com.welab.collect.test.BaseAdminOperationTrackServiceTest
+com.dangdang.ddframe.job.api.simple.SimpleJob <|.. com.welab.collect.job.AppsflyerPostAttributionJob
+org.springframework.web.filter.OncePerRequestFilter <|-- com.welab.collect.filter.LogFilter
+java.io.Serializable <|.. com.welab.collect.dto.AwdaInsightDTO
+com.welab.collect.test.base.SimpleTest <|-- com.welab.collect.test.BaseAppEventServiceTest
+java.io.Serializable <|.. com.welab.collect.dto.ListOptUnityLogDTO
+com.dangdang.ddframe.job.api.simple.SimpleJob <|.. com.welab.collect.job.TransferData2MonthTableJob
+com.welab.collect.common.Urls +.. com.welab.collect.common.Urls$AppInput
+com.welab.collect.common.Urls +.. com.welab.collect.common.Urls$Appsflyer
+com.welab.collect.common.Urls +.. com.welab.collect.common.Urls$AppEvent
+com.welab.collect.common.Urls +.. com.welab.collect.common.Urls$SystemEvent
+com.welab.collect.common.Urls +.. com.welab.collect.common.Urls$AdminOperationTrack
+com.welab.collect.common.Urls +.. com.welab.collect.common.Urls$OptUnityLog
+com.welab.collect.common.Urls +.. com.welab.collect.common.Urls$AwdaInsight
+com.welab.collect.model.AppflyerDataExample +.. com.welab.collect.model.AppflyerDataExample$GeneratedCriteria
+com.welab.collect.model.AppflyerDataExample +.. com.welab.collect.model.AppflyerDataExample$Criteria
+com.welab.collect.model.GeneratedCriteria <|-- com.welab.collect.model.AppflyerDataExample$Criteria
+com.welab.collect.model.AppflyerDataExample +.. com.welab.collect.model.AppflyerDataExample$Criterion
+java.io.Serializable <|.. com.welab.collect.dto.AddOptUnityLogCmd
+com.dangdang.ddframe.job.api.simple.SimpleJob <|.. com.welab.collect.job.AppsFlyerReportDataEventJob
+com.welab.collect.service.OptUnityLogService <|.. com.welab.collect.service.impl.OptUnityLogServiceImpl
+java.io.Serializable <|.. com.welab.collect.dto.ListOptUnityLogVO
+java.io.Serializable <|.. com.welab.collect.dto.AppInputListCmd
+com.dangdang.ddframe.job.api.simple.SimpleJob <|.. com.welab.collect.job.SystemEventJob
+com.welab.collect.test.base.SimpleTest <|-- com.welab.collect.test.AppsflyerServiceImplTest
+com.welab.collect.service.IAwdaInsightService <|.. com.welab.collect.service.impl.AwdaInsightServiceImpl
+com.welab.collect.test.base.SimpleTest <|-- com.welab.collect.test.AppInputDubboServiceImplTest
+java.io.Serializable <|.. com.welab.collect.base.OptLogBase
+com.welab.collect.base.OptLogBase +.. com.welab.collect.base.OptLogBase$ModifyInfo
+com.welab.collect.base.Serializable <|.. com.welab.collect.base.OptLogBase$ModifyInfo
+@enduml

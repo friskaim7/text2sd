@@ -1,0 +1,971 @@
+@startuml
+class com.welab.collection.test.ScaffoldTest {
+- DefaultConfigService config
+- String ZOOKEEPER_URL
++ void test1()
++ void appId()
+}
+class com.welab.collection.service.impl.PlanAllocateUserServiceTest {
+- PlanAllocateUserService planAllocateUserService
++ void testAddUser()
++ void testListUser()
++ void delUser()
++ void testlistCollectionPlan()
++ void testlistCollectionPlanOrderBy()
++ void testcancelPlan()
++ void testlistTask()
++ void testallocate()
++ void testaddCancelReason()
++ void testpushAppMsg()
+}
+class com.welab.collection.controller.CollectionUserController {
+- OverdueQueryServiceFacade overdueQueryServiceFacade
++ Response<PageInfo<CollectionUserListVO>> getCollectionLoansPage(CollectionUserListQry)
++ Response<PageInfo<UserUnsettledLoanDto>> listUserUnsettledLoan(ListUserUnsettledLoanDto)
+}
+class com.welab.collection.vo.request.ApplyEPlanDTO {
+- Integer reason
+- Long applyUserId
+- String optName
+~ List<TryEPlanDetailDTO> tryEPlanDetailList
+}
+class com.welab.collection.controller.TagsControllerTest {
+~ TagsController tagsController
++ void testTagsList()
++ void testAddTag()
++ void testSaveTag()
++ void testUpdateTagStatus()
++ void testMakeTagByExcel()
++ void testQueryImportLog()
+}
+class com.welab.collection.controller.DocumentController {
+- ApplicationServiceFacade applicationServiceFacade
++ Response<CategoryDocumentVO> list(Long)
+}
+class com.welab.collection.service.impl.MatchingConfigTest {
+- MatchingConfigMapper matchingConfigMapper
++ void testImport()
+}
+class com.welab.collection.controller.CollectionLoansController {
+- CollectionLoansServiceImpl collectionLoansService
+- DuesService duesService
+- WedefendReqService wedefendReqService
+- LoansService loansService
+- AccountService accountService
+- UserService userService
+- AgencyCallResultService agencyCallResultService
+- DuesQueryServiceFacade duesQueryServiceFacade
+- WefendInfoServiceFacade wefendInfoServiceFacade
+- LoansLogServiceFacade loansLogServiceFacade
++ Response<PageInfo<CollectionLoansExt>> getCollectionLoansPage(QueryCollectionLoansVo)
++ Response<Integer> getCollectionLoansCount()
++ Response<String[]> getPeriods(String)
++ Response<List<Map>> getSecondProductCodes(String)
++ Response<String> getGojekAddress(WefendInfoServiceFacade.ApprovalWefendInfoQry)
++ Response<Map<String,Object>> getRepayPlan(String)
++ Response<Response<List<LoanDuesDTO>>> getRepayFPlan(Long,String)
++ Response<Response<List<LoanDuesDTO>>> getEPlan(Long)
++ Response<Map<String,Object>> gpsHome(String)
++ Response<List<VirtualAccountVO>> virtualAccount(String,Long)
++ Response userGps(String,Long)
++ Response importAgencyCallResult(Long,MultipartFile)
++ Response<List<LoansLogVO>> callLog(ApprovalLoansLogQry)
+}
+class com.welab.collection.service.impl.ActionServiceTest {
+- AppPushActionServiceImpl appPushActionService
+~ EmailActionServiceImpl emailActionService
+~ SmsActionServiceImpl smsActionService
++ void testPushApp()
++ void testEmail()
++ void tesSms()
+}
+class com.welab.collection.test.test {
++ {static} void main(String[])
+}
+class com.welab.collection.test.ExcelTest2 {
++ {static} void aa()
++ {static} void main(String[])
++ {static} void json()
+}
+class com.welab.collection.config.ServiceModelToSwagger2MapperExt {
+- ServiceModelToSwagger2Mapper mapper
+- ModelMapper modelMap
+- {static} Model copyAndOverwrite(Model,Map<String,ModelProperty>)
+- {static} ModelProperty buildProp(Model)
++ Swagger mapDocumentation(Documentation)
+- void processRequestAndResponseVo(Swagger,Map<String,Map<String,String>>)
+- void processPropMap(Swagger,Map<String,Map<String,String>>,Map<String,String>)
+- void processProp(Map<String,Map<String,String>>,Documentation,Map<String,Model>,Map<String,String>)
+}
+class com.welab.collection.ApplicationTest {
+}
+class com.welab.collection.test.Test1 {
++ {static} void main(String[])
+}
+class com.welab.collection.test.Test1$Person {
+- int id
+- String name
+- int age
+}
+class com.welab.collection.service.impl.mogo.KreddoTaskCollectionServiceTest {
+- KreddoTaskCollectionService kreddoTaskCollectionService
+- MessageHandle messageHandle
+- TaskAssignManager taskAssignManager
++ void selectTotalAmountDueGroupByUserId()
++ void testBatchUpdate()
++ void testQuery()
++ void testQuery2()
++ void testFindKreddoTaskCollection()
+}
+class com.welab.collection.controller.FdcsController {
+- FdcManager fdcManager
++ Response<Map<String,Object>> getFdcReport(FdcQryVO)
++ Response<Map<String,Object>> updateFdcByNik(UserNikDTO,Long)
+}
+class com.welab.collection.controller.CollectionPlanApplyLogController {
+- CollectionPlanApplyLogManager collectionPlanApplyLogManager
++ Response<PageInfo<CollectionPlanApplyLogVO>> selectPage(CollectionPlanApplyQryVO)
+}
+class com.welab.collection.test.SendDirectMsgListener {
++ void doConsumer(String,String,Message)
++ ConsumerMetaDataInfo generatorConsumerMetaDataInfo()
+}
+class com.welab.collection.Application {
++ {static} void main(String[])
+}
+class com.welab.collection.service.impl.TaskAssignTest {
+- TaskAssignManager taskAssignManager
+- TaskAssignRuleExtMapper taskAssignRuleExtMapper
++ void insertRule()
++ void updateRule()
++ void getDetail()
++ void selectPage()
++ void aa()
+}
+class com.welab.collection.test.MqProducerTest {
+- MessageProducer messageProducer
++ void testProducer()
+}
+class com.welab.collection.vo.request.CollectionVoiceVO {
+- Date startDate
+- Date endDate
+- String extAgent
+- String phoneNumberLike
+}
+class com.welab.collection.test.TestSort {
++ {static} void main(String[])
+}
+class com.welab.collection.controller.PhoneVerifyController {
+- ApprovalApplyInfoServiceFacade approvalApplyInfoServiceFacade
+- WhatsAppServiceFacade whatsAppServiceFacade
++ Response<PageInfo<LoanWhatsAppVO>> getContacts(ContactsQryVO)
++ Response<PageInfo<WhatsAppMessageVo>> finalPvMsg(FinalPvMsgQryVO)
+}
+class com.welab.collection.test.CollectionRuleLogTest {
++ CollectionRuleServiceImpl collectionRuleServiceImpl
+- TaskAssignManager taskAssignManager
++ void testStatuesModify()
++ void testUpdateCollectionRule()
++ void testListOptUnityLog()
++ void testUpdateStatus()
++ void testSaveTaskAssig()
+}
+class com.welab.collection.test.P {
++ <<Create>> P()
+}
+class com.welab.collection.test.MessageProducerTest {
+- MessageProducer messageProducer
++ void testSendDirectMsg()
++ void testSendDelayMsg()
++ void testSendFanoutMsg()
+}
+class com.welab.collection.test.MessageProducerTest$SendFanoutMsgDTO {
+- String loanNumber
+- Integer status
+- Integer id
+}
+class com.welab.collection.test.MessageProducerTest$SendDelayMsgDTO {
+- String loanNumber
+- Integer status
+- Integer id
+}
+class com.welab.collection.test.MessageProducerTest$SendDirectMsgDTO {
+- String loanNumber
+- BigDecimal amount
+- Integer status
+- Integer id
+}
+class com.welab.collection.controller.CollectionDataReportController {
+- AwdaAccountsAssignmentsReportCmdExe awdaAccountsAssignmentsReportCmdExe
+- AssignmentReportsService assignmentReportsService
+- CallResultReportsService callResultReportsService
+- RobocollReportsService robocollReportsService
+- TaskFileReportService taskFileReportService
+- AwdaRobocollReportCmdExe awdaRobocollReportCmdExe
+- AwdaCallResultReportCmdExe awdaCallResultReportCmdExe
+- TaskFileReportCmdExe taskFileReportCmdExe
+- LogManualHitReportingService logManualHitReportingService
+- UserServiceFacade userServiceFacade
++ Response<String> doAssignmentReporting(String,LocalDate)
++ Response<String> doRobocollReporting(String,LocalDate)
++ Response<String> doCallResultReporting(String,LocalDate)
++ Response<String> doTaskFileReporting(String,Date)
++ Response<Object> logManualReporting()
++ Response downloadExcel(LocalDate,String,HttpServletResponse)
+}
+class com.welab.collection.controller.CollectionLoansControllerTest {
++ void testLoansList()
+}
+class com.welab.collection.service.impl.MessageHandleTest {
+~ MessageHandle messageHandle
+~ JedisCluster jedisCluster
++ void testEmail()
+}
+class com.welab.collection.controller.BuyerInfoController {
+- BuyerInfoManager buyerInfoManager
+- PayServiceFacade payServiceFacade
++ Response<PageInfo<BuyerInfo>> findPageList(BuyerInfoQryVO)
++ Response<Void> save(BuyerInfoVO,Long)
++ Response<List<BankVO>> bankList()
+}
+class com.welab.collection.test.TestSort2 {
++ {static} void main(String[])
+}
+class com.welab.collection.test.ql.Function {
++ {static} int getDpd(Map<String,Object>)
++ {static} boolean isUfi(Map<String,Object>)
+}
+class com.welab.collection.test.CollectionReportTest {
+~ AwdaAccountsAssignmentsReportCmdExe awdaAccountsAssignmentsReportCmdExe
+~ AssignmentReportsService assignmentReportsService
+~ AwdaRobocollReportCmdExe robocollReportCmdExe
+~ AwdaCallResultReportCmdExe awdaCallResultReportCmdExe
+~ TaskFileReportCmdExe taskFileReportCmdExe
+- RobocollReportsService robocollReportsService
+- CallResultReportsService callResultReportsService
+~ TaskFileReportService taskFileReportService
++ void assignmentTest()
++ void robocollTest()
++ void callResultTest()
++ void taskFileTest()
+}
+class com.welab.collection.controller.DecisionControllerTest {
++ void testList()
++ void testSave()
++ void testUpdateStatus()
++ void testGetMessageKeys()
+}
+class com.welab.collection.service.impl.CollectionNotesServiceTest {
+- CollectionNotesService collectionNotesService
++ void save()
++ void update()
++ void get()
+}
+class com.welab.collection.controller.CollectionRuleControllerTest {
++ void testRuleList()
++ void testSaveRule()
++ void testUpdateStatus()
+}
+class com.welab.collection.controller.CollectionNotesController {
+- CollectionNotesService collectionNotesService
++ Response<Void> saveOrUpdate(CollectionNotesCmd,Long)
+}
+class com.welab.collection.service.impl.BaseTagsServiceTest {
+- BaseTagsService tagsService
++ void getTags()
++ void addOrUpdateTags()
+}
+class com.welab.collection.service.impl.FcSystemServiceTest {
+- FcSystemController fcSystemController
++ void importAllocateInfo()
++ void uploadDocument()
++ void listDocumentByUserId()
++ void listLoanPendingPtpDone()
++ void listUserKelurahan()
++ void listRepaymentHistoryCollection()
++ void listRepaymentScheduleInfoDetail()
++ void listRepaymentScheduleInfo()
++ void resultCommit()
++ void getResultCommit()
++ void listResultSelect()
+}
+class com.welab.collection.vo.request.UserNikDTO {
+- String nik
+}
+class com.welab.collection.test.SendFanoutMsgListener2 {
++ void doConsumer(String,String,Message)
++ ConsumerMetaDataInfo generatorConsumerMetaDataInfo()
+}
+class com.welab.collection.controller.UserNotesController {
+- UserNotesServiceManager userNotesServiceManager
++ Response<PageInfo<UserNotesVO>> notesPageList(UserNotesQryVO)
+}
+class com.welab.collection.test.ExcelTest {
++ {static} void main(String[])
+}
+class com.welab.collection.test.Test3 {
++ {static} void main(String[])
+}
+class com.welab.collection.controller.DecisionController {
+- DecisionServiceImpl decisionService
+- DecisionLogServiceImpl decisionLogService
++ Response getDcisionTypes()
++ Response<PageInfo<Decision>> getList(QueryDcisionVo)
++ Response saveDecision(Decision)
++ Response updateStatus(Decision)
++ Response<List<String>> getMessageKeys(String)
++ Response<DecisionTypeCount> count(String,String)
++ Response getDcisionSendTypes()
+}
+class com.welab.collection.service.impl.CollectionRuleTest {
+- CollectionRuleServiceImpl collectionRuleService
+- CollectionRuleJob collectionRuleJob
+- ConfigsService komodoConfigsService
+- CollectionLoansServiceImpl collectionLoansServiceImpl
++ void test()
++ void testJob()
++ void testGetCollectionRule()
++ void testConfig()
++ void testSave()
+}
+class com.welab.collection.service.impl.CollectionZipCodeTest {
+- CollectionZipCodeMapper collectionZipCodeMapper
++ void testImport()
++ void testImport2()
+}
+class com.welab.collection.test.SendDelayMsgListener {
++ void doConsumer(String,String,Message)
++ ConsumerMetaDataInfo generatorConsumerMetaDataInfo()
+}
+class com.welab.collection.vo.response.CollectionVoiceResponseVO {
+- String extAgent
+- String phoneNumber
+- Date callDate
+- Long docId
+- String fileName
+- String url
+- Date createdAt
+}
+class com.welab.collection.service.impl.BuyerInfoTest {
+- BuyerInfoManager buyerInfoManager
++ void test()
+}
+class com.welab.collection.test.FcUserInfoQryExeTest {
+- FcUserInfoQryExe fcUserInfoQryExe
++ void testQuery()
+}
+class com.welab.collection.test.TestValidation {
++ void testValidation()
+}
+class com.welab.collection.test.TestValidation$ValidationObj {
+- String param1
+- Integer param2
+- String param3
+}
+class com.welab.collection.service.impl.SimpleTest {
++ <<Create>> SimpleTest()
+}
+class com.welab.collection.controller.DuesController {
+- DuesService duesService
++ Response virtualAccount(Long,EditOverdue)
+}
+class com.welab.collection.service.impl.CollmatraLoansServiceTest {
+- CollmatraLoansServiceImpl collmatraLoansService
++ void queryCollmatraLoans()
+}
+class com.welab.collection.controller.CollectionRuleController {
+- CollectionRuleServiceImpl collectionRuleService
++ Response<PageInfo<CollectionRuleVo>> getList(QueryCollectionRuleVo)
++ Response<PageInfo<CollectionRulOptUnityLogVo>> listCollectionRulOptUnityLog(ListOptUnityLogVo)
++ Response saveCollectionRule(SaveCollectionRuleVo,Long)
++ Response updateStatus(CollectionRule,Long)
++ Response delete(Long,Long)
+}
+class com.welab.collection.controller.fc.FcSystemController {
+- FcSystemService fcSystemService
+- UserNotesServiceManager userNotesServiceManager
++ Response<String> importAllocateInfo(MultipartFile)
++ Response<ListDocumentVO> listDocumentByUserId(Long)
++ Response<ListDocumentVO> listDocumentByUserIdCollection(Long)
++ Response<PageInfo<RepaymentHistoryVO>> listRepaymentHistory(Long,Integer,Integer)
++ Response<PageInfo<RepaymentHistoryVO>> listRepaymentHistoryCollection(Long,String,Integer,Integer,Integer)
++ Response<PageInfo<ListLoanPendingPtpDoneVO>> listLoanPendingPtpDone(Long,LoanPendingPtpDoneReqVO)
++ Response<List<String>> listUserKelurahan(Long,Integer)
++ Response resultCommit(ResultCommitDTO)
++ Response<ResultCommitDTO> getResultCommit(String,Integer)
++ Response<List<ListResultSelectVO>> listResultSelect(Integer)
++ Response<PageInfo<RepaymentScheduleInfoDTO>> listRepaymentScheduleInfo(Long,Long,Integer,Integer,Integer)
++ Response<List<RepaymentScheduleInfoDTO>> listRepaymentScheduleInfoDetail(Long,String,Integer)
++ Response uploadDocument(Long,String,String,MultipartFile[])
++ Response<TaskCountVO> taskCount(Long)
++ Response<PageInfo<FcDetailVO>> taskCount(FcDetailReqVO)
++ Response<FcUserDetailVO> personalInfo(Long)
++ Response<String> notes(Long,String)
++ Response<Void> saveNotes(Long,AddFcNotesVO)
+}
+class com.welab.collection.test.C {
++ {static} void main(String[])
+}
+class com.welab.collection.service.impl.DecisionServiceImplTest {
+- DecisionServiceImpl decisionService
++ void getDecisionAll()
++ void addOrUpdateDecision()
+}
+interface com.welab.collection.common.Urls {
+~ String ROOT
+~ String ROOT_DESC
+~ String V1
+~ String V3
+~ String AUTH
+}
+interface com.welab.collection.common.Urls$Tags {
+~ String TAGS_DESC
+~ String V1_TAGS
+~ String V1_TAGS_LIST
+~ String V1_TAGS_LIST_DESC
+~ String V1_TAGS_SAVE
+~ String V1_TAGS_SAVE_DESC
+~ String V1_TAGS_UPDATE_STATUS
+~ String V1_TAGS_UPDATE_STATUS_DESC
+~ String V1_TAGS_MAKE_EXCEL
+~ String V1_TAGS_MAKE_EXCEL_DESC
+~ String V1_TAGS_IMPORT_LOG
+~ String V1_TAGS_IMPORT_LOG_DESC
+}
+interface com.welab.collection.common.Urls$Decision {
+~ String DECISION_DESC
+~ String V1_DECISION
+~ String V1_DECISION_TYPES
+~ String V1_DECISION_TYPES_DESC
+~ String V1_DECISION_LIST
+~ String V1_DECISION_LIST_DESC
+~ String V1_DECISION_SAVE
+~ String V1_DECISION_SAVE_DESC
+~ String V1_DECISION_UPDATE_STATUS
+~ String V1_DECISION_UPDATE_STATUS_DESC
+~ String V1_DECISION_MESSAGE_KEY
+~ String V1_DECISION_MESSAGE_KEY_DESC
+~ String V1_DECISION_COUNT
+~ String V1_DECISION_COUNT_DESC
+~ String V1_DECISION_SEND_TYPES
+~ String V1_DECISION_SEND_TYPES_DESC
+}
+interface com.welab.collection.common.Urls$Rule {
+~ String RULE_DESC
+~ String V1_RULE
+~ String V1_RULE_LIST
+~ String V1_RULE_LIST_DESC
+~ String V1_RULE_SAVE
+~ String V1_RULE_SAVE_DESC
+~ String V1_RULE_UPDATE_STATUS
+~ String V1_RULE_UPDATE_STATUS_DESC
+~ String V1_RULE_DELETE
+~ String V1_RULE_DELETE_DESC
+~ String V1_RULE_LOG_LIST
+~ String V1_RULE_LOG_LIST_DESC
+}
+interface com.welab.collection.common.Urls$Loans {
+~ String LOANS_DESC
+~ String V1_LOANS
+~ String V3_LOANS
+~ String V1_LOANS_LIST
+~ String V1_LOANS_LIST_DESC
+~ String V1_LOANS_COUNT
+~ String V1_LOANS_COUNT_DESC
+~ String V1_LOANS_PERIODS
+~ String V1_LOANS_PERIODS_DESC
+~ String V1_LOANS_SECOND_PRODCODE
+~ String V1_LOANS_SECOND_PRODCODE_DESC
+~ String V1_LOANS_GOJEK_ADDRESS
+~ String V1_LOANS_GOJEK_ADDRESS_DESC
+~ String V1_LOANS_REPAY_PLAN
+~ String V1_LOANS_REPAY_PLAN_DESC
+~ String V1_LOANS_REPAY_FPLAN
+~ String V1_LOANS_REPAY_FPLAN_DESC
+~ String V1_LOANS_GPS_HOME
+~ String V1_LOANS_GPS_HOME_DESC
+~ String V1_LOANS_VIRTUAL_ACCOUNT
+~ String V1_LOANS_VIRTUAL_ACCOUNT_DESC
+~ String V1_LOANS_USER_GPS
+~ String V1_LOANS_USER_GPS_DESC
+~ String V1_LOANS_IMPORT_CALLRESULT
+~ String V1_LOANS_IMPORT_CALLRESULT_DESC
+~ String V1_LOANS_APPROVAL_CALL_LOG
+~ String V1_LOANS_APPROVAL_CALL_LOG_DESC
+~ String V3_LOANS_EPLAN
+~ String V3_LOANS_EPLAN_DESC
+}
+interface com.welab.collection.common.Urls$User {
+~ String DESC
+~ String USER_DESC
+~ String V3_AUTH_USER
+~ String V3_USER_LIST
+~ String V3_USER_LIST_DESC
+~ String V3_LIST_USER_UNSETTLED_LOANS
+~ String V3_LIST_USER_UNSETTLED_LOANS_DESC
+}
+interface com.welab.collection.common.Urls$PauseOverdue {
+~ String PAUSEOVERDUE_DESC
+~ String V1_PAUSE_OVERDUE
+~ String V1_PAUSE_OVERDUE_LIST
+~ String V1_PAUSE_OVERDUE_LIST_DESC
+~ String V1_PAUSE_OVERDUE_PAGE
+~ String V1_PAUSE_OVERDUE_PAGE_DESC
+~ String V1_PAUSE_OVERDUE_SAVE
+~ String V1_PAUSE_OVERDUE_SAVE_DESC
+}
+interface com.welab.collection.common.Urls$Dues {
+~ String EDITOVERDUE_DESC
+~ String V1_EDIT_OVERDUE
+~ String V1_EDIT_OVERDUE_SAVE
+~ String V1_EDIT_OVERDUE_SAVE_DESC
+}
+interface com.welab.collection.common.Urls$Repayment {
+~ String REPAYMENT_DESC
+~ String V1_REPAYMENT
+~ String V3_REPAYMENT
+~ String V1_FIND_REPAYMENT_CODE
+~ String V1_FIND_REPAYMENT_CODE_DESC
+~ String V1_EDIT_REPAYMENT_SAVE
+~ String V1_EDIT_REPAYMENT_SAVE_DESC
+~ String V1_TRY_F_PLAN
+~ String V1_TRY_F_PLAN_DESC
+~ String V1_TRY_C_PLAN
+~ String V1_TRY_E_PLAN_DESC
+~ String V1_TRY_E_PLAN
+~ String V1_TRY_C_PLAN_DESC
+~ String V1_F_PLAN
+~ String V1_F_PLAN_DESC
+~ String V1_C1_PLAN
+~ String V1_C1_PLAN_DESC
+~ String V1_E_PLAN
+~ String V1_E_PLAN_DESC
+~ String V1_batch_TRY_F_PLAN
+~ String V1_batch_TRY_F_PLAN_DESC
+~ String V1_batch_F_PLAN
+~ String V1_batch_F_PLAN_DESC
+~ String V3_TRY_E_PLAN_DESC
+~ String V3_TRY_E_PLAN
+~ String V3_E_PLAN
+~ String V3_E_PLAN_DESC
+~ String V3_CHECK_E_PLAN
+~ String V3_CHECK_E_PLAN_DESC
+}
+interface com.welab.collection.common.Urls$Users {
+~ String V1_USERS
+~ String V1_USERS_DESC
+~ String V1_ADD_USERS
+~ String V1_ADD_USERS_DESC
+~ String V1_Edit_USERS
+~ String V1_Edit_USERS_DESC
+~ String V1_DEL_USERS
+~ String V1_DEL_USERS_DESC
+~ String V1_LIST_USERS
+~ String V1_LIST_USERS_DESC
+}
+interface com.welab.collection.common.Urls$RequestEProgram {
+~ String V1_REQUEST_E_PROGRAM
+~ String V1_REQUEST_E_PROGRAM_DESC
+~ String V1_ALLOCATE
+~ String V1_ALLOCATE_DESC
+~ String V1_LIST_COLLECTION_PLAN
+~ String V1_LIST_COLLECTION_PLAN_DESC
+}
+interface com.welab.collection.common.Urls$Task {
+~ String V1_TASK
+~ String V1_Task_DESC
+~ String V1_ADD_CANCEL_REASON
+~ String V1_ADD_CANCEL_REASON_DESC
+~ String V1_LIST_TASK
+~ String V1_LIST_TASK_DESC
+}
+interface com.welab.collection.common.Urls$CollectionVoiceURL {
+~ String DESC
+~ String V1_COLLECTION_VOICE
+~ String V1_QUERYLIST
+~ String V1_QUERYLIST_DESC
+~ String V1_COLLECTION_VOICE_URL
+~ String V1_COLLECTION_VOICE_URL_DESC
+}
+interface com.welab.collection.common.Urls$CollectionNotesURL {
+~ String DESC
+~ String V1_COLLECTION_NOTES
+~ String V1_COLLECTION_NOTES_DESC
+}
+interface com.welab.collection.common.Urls$CollmatraLoansURL {
+~ String DESC
+~ String V1_COLLMATRA_LOANS
+~ String V1_QUERY_LIST_URL
+~ String V1_QUERY_LIST_URL_DESC
+~ String V1_IMPORT_URL
+~ String V1_IMPORT_URL_DESC
+~ String V1_DELETE_URL
+~ String V1_DELETE_URL_DESC
+~ String V1_DELETE_BY_EXCEL_URL
+~ String V1_DELETE_BY_EXCEL_URL_DESC
+}
+interface com.welab.collection.common.Urls$SellLoans {
+~ String SELL_LOANS_DESC
+~ String SELL_LOANS
+~ String LOANS_LIST_DESC
+~ String LOANS_LIST
+~ String IMPORT_LOANS_DESC
+~ String IMPORT_LOANS
+~ String CLOSE_LOANS_DESC
+~ String CLOSE_LOANS
+~ String LOANS_REPAYMENT_LIST_DESC
+~ String LOANS_REPAYMENT_LIST
+~ String V3_SELL_LOANS
+~ String IMPORT_LIST_DESC
+~ String IMPORT_LIST
+~ String IMPORT_DOWNLOAD_DESC
+~ String IMPORT_DOWNLOAD
+}
+interface com.welab.collection.common.Urls$Fdc {
+~ String FDC_DESC
+~ String V1_FDC
+~ String V1_FDC_QUERY
+~ String V1_FDC_QUERY_DESC
+~ String V3_AUTH_FDC
+~ String V3_UPDATE_FDC_BY_NIK
+~ String V3_UPDATE_FDC_BY_NIK_DESC
+}
+interface com.welab.collection.common.Urls$FC_H5 {
+~ String FC_DESC
+~ String V3_FC
+~ String V3_LIST_DOCUMENT_BY_USER_ID
+~ String V3_LIST_DOCUMENT_BY_USER_ID_DESC
+~ String V3_LIST_REPAYMENT_HISTORY
+~ String V3_LIST_REPAYMENT_HISTORY_DESC
+~ String V3_LIST_LOAN_PENDING_PTP_DONE
+~ String V3_LIST_LOAN_PENDING_PTP_DONE_DESC
+~ String V3_LIST_LIST_USER_KELURAHAN
+~ String V3_LIST_LIST_USER_KELURAHAN_DESC
+~ String V3_FC_RESULT_COMMIT
+~ String V3_FC_RESULT_COMMIT_DESC
+~ String V3_FC_GET_RESULT_COMMIT
+~ String V3_FC_GET_RESULT_COMMIT_DESC
+~ String V3_FC_LIST_RESULT_SELECT
+~ String V3_FC_LIST_RESULT_SELECT_DESC
+~ String V3_LIST_REPAYMENT_SCHEDULE_INFO
+~ String V3_LIST_REPAYMENT_SCHEDULE_INFO_DESC
+~ String V3_LIST_REPAYMENT_SCHEDULE_INFO_DETAIL
+~ String V3_LIST_REPAYMENT_SCHEDULE_INFO_DETAIL_DESC
+~ String V3_UPLOAD_DOCUMENT
+~ String V3_UPLOAD_DOCUMENT_DESC
+~ String V3_FC_TASK_COUNT
+~ String V3_FC_TASK_COUNT_DESC
+~ String V3_FC_DATAIL_PAGE_LIST
+~ String V3_FC_DATAIL_PAGE_LIST_DESC
+~ String V3_FC_PERSONAL_INFO
+~ String V3_FC_PERSONAL_INFO_DESC
+~ String V3_FC_NOTES_INFO
+~ String V3_FC_NOTES_INFO_DESC
+~ String V3_SAVE_FC_NOTES_INFO_DESC
+}
+interface com.welab.collection.common.Urls$FC_COLLECTION {
+~ String FC_DESC
+~ String AUTH_FC
+~ String BASE_AUTH_FC_URL
+~ String V3_IMPORT_ALLOCATE
+~ String V3_IMPORT_ALLOCATE_DESC
+~ String V3_LIST_REPAYMENT_HISTORY_COLLECTION
+~ String V3_LIST_REPAYMENT_HISTORY_COLLECTION_DESC
+~ String V3_LIST_DOCUMENT_BY_USER_ID_COLLECTION
+~ String V3_LIST_DOCUMENT_BY_USER_ID_COLLECTION_DESC
+}
+interface com.welab.collection.common.Urls$Document {
+~ String DOC_DESC
+~ String V3_AUTH_MODULE
+~ String V3_LIST
+~ String V3_LIST_DESC
+}
+interface com.welab.collection.common.Urls$TaskAssign {
+~ String TASK_ASSIGN
+~ String TASK_ASSIGN_DESC
+~ String V3_AUTH_TASK_ASSIGN
+~ String V3_AUTH_TASK_ASSIGN_LIST
+~ String V3_AUTH_TASK_ASSIGN_LIST_DESC
+~ String V3_AUTH_TASK_ASSIGN_SAVE
+~ String V3_AUTH_TASK_ASSIGN_SAVE_DESC
+~ String V3_AUTH_TASK_ASSIGN_DETAIL
+~ String V3_AUTH_TASK_ASSIGN_DETAIL_DESC
+~ String V3_AUTH_TASK_ASSIGN_STATUS
+~ String V3_AUTH_TASK_ASSIGN_STATUS_DESC
+~ String V3_AUTH_TASK_ASSIGN_DELETE
+~ String V3_AUTH_TASK_ASSIGN_DELETE_DESC
+~ String V3_AUTH_TASK_ASSIGN_DETAIL_LOG_LIST
+~ String V3_AUTH_TASK_ASSIGN_DETAIL_DESC_LOG_LIST
+}
+interface com.welab.collection.common.Urls$PhoneVerify {
+~ String PHONE_VERIFY
+~ String PHONE_VERIFY_DESC
+~ String V3_AUTH_PHONE_VERIFY
+~ String V3_AUTH_PHONE_VERIFY_CONTACTS
+~ String V3_AUTH_PHONE_VERIFY_CONTACTS_DESC
+~ String V3_AUTH_PHONE_VERIFY_FINAL_PV_MSG
+~ String V3_AUTH_PHONE_VERIFY_FINAL_PV_MSG_DESC
+}
+interface com.welab.collection.common.Urls$CollectionPlanApplyLog {
+~ String COLLECTION_PLAN_APPLY_LOG
+~ String COLLECTION_PLAN_APPLY_LOG_DESC
+~ String V3_AUTH_COLLECTION_PLAN_APPLY_LOG
+~ String V3_AUTH_COLLECTION_PLAN_APPLY_LOG_LIST
+~ String V3_AUTH_COLLECTION_PLAN_APPLY_LOG_LIST_DESC
+}
+interface com.welab.collection.common.Urls$StationLetter {
+~ String STATION_LETTER
+~ String STATION_LETTER_DESC
+~ String V3_STATION_LETTER
+~ String V3_STATION_LETTER_LIST
+~ String V3_STATION_LETTER_LIST_DESC
+~ String V3_STATION_LETTER_UNREAD_NUMBER
+~ String V3_STATION_LETTER_UNREAD_NUMBER_DESC
+~ String V3_STATION_LETTER_READ
+~ String V3_STATION_LETTER_READ_DESC
+}
+interface com.welab.collection.common.Urls$UserNotes {
+~ String USER_NOTES
+~ String USER_NOTES_DESC
+~ String V3_NOTES_PAGE_LIST
+~ String V3_NOTES_PAGE_LIST_DESC
+}
+interface com.welab.collection.common.Urls$BuyerInfo {
+~ String MODEL
+~ String DESC
+~ String BUYER_INFO_PAGE_LIST
+~ String BUYER_INFO_PAGE_LIST_DESC
+~ String SAVE_BUYER_INFO
+~ String SAVE_BUYER_INFO_DESC
+~ String BANK_LIST
+~ String BANK_LIST_DESC
+}
+interface com.welab.collection.common.Urls$Reports {
+~ String REPORTS
+~ String REPORTS_DESC
+~ String V3_ASSIGNMENT
+~ String V3_ASSIGNMENT_DESC
+~ String V3_ROBOCOLL
+~ String V3_ROBOCOLL_DESC
+~ String V3_CALL_RESULT
+~ String V3_CALL_RESULT_DESC
+~ String V3_TASK_FILE
+~ String V3_TASK_FILE_DESC
+~ String V3_LOG_MANUAL_REPORTING
+~ String V3_LOG_MANUAL_REPORTING_DESC
+~ String V3_DOWNLOAD_REPORT
+~ String V3_DOWNLOAD_REPORT_DESC
+}
+class com.welab.collection.controller.CollectionVoiceController {
+- DocumentService documentService
+- CollectionVoiceServiceImpl collectionVoiceServiceImpl
+- CollectionVoiceRecordingJob collectionVoiceRecordingJob
++ Response<PageInfo<CollectionVoiceResponseVO>> getList(CollectionVoiceVO)
++ Response<String> downLoadUrl(Long)
+}
+class com.welab.collection.controller.TaskAssignController {
+- TaskAssignManager taskAssignManager
+- CollectionRuleServiceImpl collectionRuleService
++ Response<PageInfo<TaskAssignConfigVO>> selectPage(TaskAssignConfigQryVO)
++ Response<Void> saveRule(TaskAssignDetailVO,Long)
++ Response<TaskAssignDetailVO> getDetail(Long)
++ Response<PageInfo<CollectionRulOptUnityLogVo>> listCollectionRulOptUnityLog(ListOptUnityLogVo)
++ Response<Void> updateStatus(TaskAssignConfigStatusVO,Long)
++ Response<Void> delete(Long)
+}
+class com.welab.collection.test.SimpleTest {
++ <<Create>> SimpleTest()
++ void initializeBefore()
++ {static} void print(Object)
+}
+class com.welab.collection.test.ReaderTxt {
++ {static} void main(String[])
+}
+class com.welab.collection.test.ql.QLExpressTest {
++ {static} void main(String[])
+}
+class com.welab.collection.controller.TagsController {
+- BaseTagsService tagsService
+- CollectionLoansTagLogServiceImpl collectionLoansTagLogService
+- TagsManager tagsManager
++ Response<PageInfo<TagsVO>> findTagsPage(QueryTagsVo)
++ Response<TagsVO> saveTags(TagsVO)
++ Response updateStatus(Tags)
++ Response makeTagByExcel(Long,MultipartFile)
++ Response getList(QueryTagLogVo)
+}
+class com.welab.collection.test.SendFanoutMsgListener1 {
++ void doConsumer(String,String,Message)
++ ConsumerMetaDataInfo generatorConsumerMetaDataInfo()
+}
+class com.welab.collection.controller.CollectionNotesQryController {
+- CollectionNotesService collectionNotesService
++ Response<CollectionNotesVO> getCollectionNotes(CollectionNotesQry)
+}
+class com.welab.collection.vo.PageResponseVo {
+- Integer pages
+- Long total
+- List<T> data
++ {static} PageResponseVo<T> createResponseVo(Page<R>,Class<T>)
++ {static} PageResponseVo<T> createResponseVo(PageInfo<R>,Class<T>)
+}
+class com.welab.collection.controller.EplanController {
+- PlanAllocateUserService planAllocateUserService
++ Response addUser(PlanAllocateUserAddVo,Long)
++ Response editUser(EditUserVo)
++ Response delUser(DelUserVo)
++ Response<PageInfo<PlanAllocateUserVo>> listUser(PlanAllocateUserQueryVo)
++ Response allocate(AllocateVo,Long)
++ Response<PageInfo<ListCollectionPlanResponseVo>> listCollectionPlan(ListCollectionPlanRequestVo)
++ Response addCancelReason(AddCancelReasonVo)
++ Response<PageInfo<ListTaskResponseVo>> listTask(ListTaskRequestVo,Long)
+}
+class com.welab.collection.vo.PageVO {
+- Integer pageNum
+- Integer pageSize
+}
+class com.welab.collection.controller.StationLetterController {
+- MessageAppServiceFacade messageAppServiceFacade
++ Response<PageInfo<AppMessageDTO>> list(StationLetterQryVO)
++ Response<Integer> unreadNumber()
++ Response read(String)
+}
+class com.welab.collection.controller.MvcTest {
+- WebApplicationContext context
+- String contenPath
+- int port
++ TestRestTemplate template
++ MockMvc mvc
++ String basePath
++ void setUp()
++ MultiValueMap<String,String> bean2MultiValueMap(Object)
+}
+class com.welab.collection.controller.PauseOverdueController {
+- PauseOverdueServiceImpl pauseOverdueService
++ Response<List<PauseOverdue>> getList(QueryPauseOverdue)
++ Response<PageInfo<PauseOverdue>> getPageList(QueryPauseOverdue)
++ Response save(PauseOverdue,Long)
+}
+class com.welab.collection.test.TestJson {
++ {static} void export()
++ {static} void main(String[])
++ {static} void aa()
+}
+class com.welab.collection.config.Swagger2Config {
+# {static} String BASE_PACKAGE
+- boolean swaggerEnable
++ Docket createRestApi()
+- ApiInfo apiInfo()
+- List<Parameter> buildHeader()
+}
+class com.welab.collection.controller.RepaymentController {
+- LoanService loanService
+- PlanService planService
+- EPlanServiceFacade ePlanServiceFacade
+- ApplicationServiceFacade applicationServiceFacade
+- BackstageConfigServiceFacade backstageConfigServiceFacade
++ Response findRepaymentCode()
++ Response editRepaymentSave(Long,CustomRepayCmd)
++ Response<CalPlanAmountDto> tryApplyFPlan(Long,ApplyPlanDTO)
++ Response<CalPlanAmountDto> tryApplyCPlan(Long,ApplyPlanDTO)
++ Response<CalPlanAmountDto> tryApplyEPlan(Long,ApplyPlanDTO)
+- boolean switchIsOpen(PlansTypeEnum)
++ Response applyFPlan(Long,ApplyPlanDTO)
++ Response batchApplyFPlan(Long,ApplyFPlanCmd)
++ Response batchTryApplyFPlan(Long,TryApplyFPlanCmd)
++ Response applyC1Plan(Long,ApplyPlanDTO)
++ Response applyEPlan(Long,ApplyPlanDTO)
++ Response<CalEPlanAmountDTO> tryApplyEPlanV3(Long,TryEPlanDTO)
++ Response applyEPlanV3(Long,ApplyEPlanDTO)
++ Response<Boolean> checkEPlan(List<String>)
+- void checkPlan(String)
+}
+class com.welab.collection.controller.SellLoansController {
+- SellLoansServiceManager sellLoansServiceManager
+- SellLoansRepaymentService sellLoansRepaymentService
+- ImportSellLoansCmdExe importSellLoansCmdExe
++ Response<PageInfo<SellLoansVO>> getList(QuerySellLoansVo)
++ Response importLoans(Long,MultipartFile)
++ Response closeLoans(Long,MultipartFile)
++ Response<PageInfo<SellLoansRepaymentVO>> repaymentList(QuerySellLoansVo)
++ Response<PageInfo<SellLoansImportVO>> importList(QuerySellLoansImportVO)
++ void importDownload(HttpServletResponse,String,String)
+}
+class com.welab.collection.controller.CollmatraLoansController {
+- CollmatraLoansServiceImpl collmatraLoansService
+- CollmatraLoansManager collmatraLoansManager
++ Response<PageInfo<CollmatraLoansVo>> query(QueryCollmatraLoansVo)
++ Response importCollmatraLoans(Long,MultipartFile,String)
++ Response delete(Long,String,String)
++ Response deleteByExcel(Long,String,MultipartFile)
+}
+
+
+com.welab.collection.test.SimpleTest <|-- com.welab.collection.test.ScaffoldTest
+com.welab.collection.service.impl.SimpleTest <|-- com.welab.collection.service.impl.PlanAllocateUserServiceTest
+com.welab.collection.controller.MvcTest <|-- com.welab.collection.controller.TagsControllerTest
+com.welab.collection.service.impl.SimpleTest <|-- com.welab.collection.service.impl.MatchingConfigTest
+com.welab.collection.service.impl.SimpleTest <|-- com.welab.collection.service.impl.ActionServiceTest
+springfox.documentation.swagger2.mappers.ServiceModelToSwagger2MapperImpl <|-- com.welab.collection.config.ServiceModelToSwagger2MapperExt
+com.welab.collection.test.Test1 +.. com.welab.collection.test.Test1$Person
+com.welab.collection.service.impl.SimpleTest <|-- com.welab.collection.service.impl.mogo.KreddoTaskCollectionServiceTest
+com.welab.sea.util.mq.base.BaseDirectMessageListener <|-- com.welab.collection.test.SendDirectMsgListener
+com.welab.collection.service.impl.SimpleTest <|-- com.welab.collection.service.impl.TaskAssignTest
+com.welab.collection.vo.PageVO <|-- com.welab.collection.vo.request.CollectionVoiceVO
+com.welab.collection.test.SimpleTest <|-- com.welab.collection.test.CollectionRuleLogTest
+com.welab.collection.ApplicationTest <|-- com.welab.collection.test.MessageProducerTest
+com.welab.collection.test.MessageProducerTest +.. com.welab.collection.test.MessageProducerTest$SendFanoutMsgDTO
+com.welab.collection.test.BaseMessageBody <|-- com.welab.collection.test.MessageProducerTest$SendFanoutMsgDTO
+com.welab.collection.test.MessageProducerTest +.. com.welab.collection.test.MessageProducerTest$SendDelayMsgDTO
+com.welab.collection.test.BaseMessageBody <|-- com.welab.collection.test.MessageProducerTest$SendDelayMsgDTO
+com.welab.collection.test.MessageProducerTest +.. com.welab.collection.test.MessageProducerTest$SendDirectMsgDTO
+com.welab.collection.test.BaseMessageBody <|-- com.welab.collection.test.MessageProducerTest$SendDirectMsgDTO
+com.welab.collection.controller.MvcTest <|-- com.welab.collection.controller.CollectionLoansControllerTest
+com.welab.collection.service.impl.SimpleTest <|-- com.welab.collection.service.impl.MessageHandleTest
+com.welab.collection.test.SimpleTest <|-- com.welab.collection.test.CollectionReportTest
+com.welab.collection.controller.MvcTest <|-- com.welab.collection.controller.DecisionControllerTest
+com.welab.collection.service.impl.SimpleTest <|-- com.welab.collection.service.impl.CollectionNotesServiceTest
+com.welab.collection.controller.MvcTest <|-- com.welab.collection.controller.CollectionRuleControllerTest
+com.welab.collection.service.impl.SimpleTest <|-- com.welab.collection.service.impl.BaseTagsServiceTest
+com.welab.collection.service.impl.SimpleTest <|-- com.welab.collection.service.impl.FcSystemServiceTest
+java.io.Serializable <|.. com.welab.collection.vo.request.UserNikDTO
+com.welab.sea.util.mq.base.BaseFanoutMessageListener <|-- com.welab.collection.test.SendFanoutMsgListener2
+com.welab.collection.service.impl.SimpleTest <|-- com.welab.collection.service.impl.CollectionRuleTest
+com.welab.collection.service.impl.SimpleTest <|-- com.welab.collection.service.impl.CollectionZipCodeTest
+com.welab.sea.util.mq.base.BaseDelayMessageListener <|-- com.welab.collection.test.SendDelayMsgListener
+com.welab.collection.service.impl.SimpleTest <|-- com.welab.collection.service.impl.BuyerInfoTest
+com.welab.collection.test.SimpleTest <|-- com.welab.collection.test.FcUserInfoQryExeTest
+com.welab.collection.ApplicationTest <|-- com.welab.collection.test.TestValidation
+com.welab.collection.test.TestValidation +.. com.welab.collection.test.TestValidation$ValidationObj
+com.welab.collection.service.impl.SimpleTest <|-- com.welab.collection.service.impl.CollmatraLoansServiceTest
+com.welab.collection.test.P <|-- com.welab.collection.test.C
+com.welab.collection.service.impl.SimpleTest <|-- com.welab.collection.service.impl.DecisionServiceImplTest
+com.welab.collection.common.Urls +.. com.welab.collection.common.Urls$Tags
+com.welab.collection.common.Urls +.. com.welab.collection.common.Urls$Decision
+com.welab.collection.common.Urls +.. com.welab.collection.common.Urls$Rule
+com.welab.collection.common.Urls +.. com.welab.collection.common.Urls$Loans
+com.welab.collection.common.Urls +.. com.welab.collection.common.Urls$User
+com.welab.collection.common.Urls +.. com.welab.collection.common.Urls$PauseOverdue
+com.welab.collection.common.Urls +.. com.welab.collection.common.Urls$Dues
+com.welab.collection.common.Urls +.. com.welab.collection.common.Urls$Repayment
+com.welab.collection.common.Urls +.. com.welab.collection.common.Urls$Users
+com.welab.collection.common.Urls +.. com.welab.collection.common.Urls$RequestEProgram
+com.welab.collection.common.Urls +.. com.welab.collection.common.Urls$Task
+com.welab.collection.common.Urls +.. com.welab.collection.common.Urls$CollectionVoiceURL
+com.welab.collection.common.Urls +.. com.welab.collection.common.Urls$CollectionNotesURL
+com.welab.collection.common.Urls +.. com.welab.collection.common.Urls$CollmatraLoansURL
+com.welab.collection.common.Urls +.. com.welab.collection.common.Urls$SellLoans
+com.welab.collection.common.Urls +.. com.welab.collection.common.Urls$Fdc
+com.welab.collection.common.Urls +.. com.welab.collection.common.Urls$FC_H5
+com.welab.collection.common.Urls +.. com.welab.collection.common.Urls$FC_COLLECTION
+com.welab.collection.common.Urls +.. com.welab.collection.common.Urls$Document
+com.welab.collection.common.Urls +.. com.welab.collection.common.Urls$TaskAssign
+com.welab.collection.common.Urls +.. com.welab.collection.common.Urls$PhoneVerify
+com.welab.collection.common.Urls +.. com.welab.collection.common.Urls$CollectionPlanApplyLog
+com.welab.collection.common.Urls +.. com.welab.collection.common.Urls$StationLetter
+com.welab.collection.common.Urls +.. com.welab.collection.common.Urls$UserNotes
+com.welab.collection.common.Urls +.. com.welab.collection.common.Urls$BuyerInfo
+com.welab.collection.common.Urls +.. com.welab.collection.common.Urls$Reports
+com.welab.sea.util.mq.base.BaseFanoutMessageListener <|-- com.welab.collection.test.SendFanoutMsgListener1
+org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests <|-- com.welab.collection.controller.MvcTest
+@enduml

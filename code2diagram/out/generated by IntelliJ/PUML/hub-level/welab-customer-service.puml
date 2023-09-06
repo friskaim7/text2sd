@@ -1,0 +1,2718 @@
+@startuml
+class com.welab.customer.app.service.UserDeviceService {
+- DevicesDubboService devicesDubboService
+- BaseDeviceOperateHistoryService baseDeviceOperateHistoryService
+- UserService userService
++ Response<PageInfo<UserDevicesDTO>> getUserDevicesPage(Long,int,int)
++ Response<Boolean> updateDeviceState(UserDevicesStateDTO,Long,Long,String)
++ Response<List<DeviceOperateHistory>> getOperateHistoryByUserId(Long)
++ Response<PageInfo<UserDevicesDTO>> getPageUserDevicesByUserIdAndState(Long,int,int)
+}
+class com.welab.customer.service.impl.UserModTelServiceImpl {
+- UserService userService
+- UserTelChangeLogMapper userTelLogMapper
+- UserProfilesService userProfilesService
+- LoanUserTelService loanUserTelService
+- LoansService loansService
+- UserTelChangeLogExtMapper userTelLogExtMapper
+- UserRelatedInfoService userRelatedInfoService
+- UserTokenServiceFacade userTokenServiceFacade
+- ProductService productService
+- IAccountCenterServiceFaced iAccountCenterServiceFaced
+- ApplicationServiceFacade applicationServiceFacade
+- UserServiceFacade userServiceFacade
++ Response userModTel(String,Long,String,Long)
++ Response<List<UserTelChangeLogVo>> findUserModTelByLimit(Long,Long)
++ {static} void main(String[])
+}
+class com.welab.customer.model.UserQuestionLog {
+- Long id
+- Byte type
+- Long questionId
+- String origin
+- Long userId
+- Long adminId
+- String title
+- String body
+- String state
+- String remark
+- Date finishedAt
+- Date closedAt
+- Date createdAt
++ Long getId()
++ void setId(Long)
++ Byte getType()
++ void setType(Byte)
++ Long getQuestionId()
++ void setQuestionId(Long)
++ String getOrigin()
++ void setOrigin(String)
++ Long getUserId()
++ void setUserId(Long)
++ Long getAdminId()
++ void setAdminId(Long)
++ String getTitle()
++ void setTitle(String)
++ String getBody()
++ void setBody(String)
++ String getState()
++ void setState(String)
++ String getRemark()
++ void setRemark(String)
++ Date getFinishedAt()
++ void setFinishedAt(Date)
++ Date getClosedAt()
++ void setClosedAt(Date)
++ Date getCreatedAt()
++ void setCreatedAt(Date)
+}
+class com.welab.customer.vo.UserProfilesTrackFileVO {
+- Long id
+- Date createdAt
+- Long userId
+- String type
+- Long adminId
+- Integer updateType
+- String adminName
+- String userName
+- String oldVal
+- String newVal
+- String updateName
+- String fileUrl
+}
+class com.welab.customer.service.vo.LoanLimitDetailVO {
+- {static} long serialVersionUID
+- String applicationNumber
+- Date created
+- String flow
+- String status
+- Date updated
+- String rejectReason
+}
+class com.welab.customer.service.impl.UserInfoServiceImpl {
+- ApplicationService applicationService
+- UserProfilesService userProfilesService
+- CreditUserAccountService creditUserAccountService
+- UserService userService
+- LoansService loansService
+- LoanCreditLimitService loanCreditLimitService
+- UserNameLogMapper userNameLogMapper
+- ProductService productService
+- IAccountCenterServiceFaced iAccountCenterServiceFaced
++ Response<Object> getUserInfoByPage(QueryUserInfoDTO)
++ Response<Object> getUserInfoByUserId(Long)
++ Response<Object> resetPassword(Long)
++ Response<Object> getUserInfo(String,String)
++ void updateUserName(UserNameVo,Long)
+}
+interface com.welab.customer.mapper.DeviceOperateHistoryMapper {
+~ long countByExample(DeviceOperateHistoryExample)
+~ int deleteByPrimaryKey(Long)
+~ int insert(DeviceOperateHistory)
+~ int insertSelective(DeviceOperateHistory)
+~ List<DeviceOperateHistory> selectByExample(DeviceOperateHistoryExample)
+~ DeviceOperateHistory selectByPrimaryKey(Long)
+~ int updateByExampleSelective(DeviceOperateHistory,DeviceOperateHistoryExample)
+~ int updateByExample(DeviceOperateHistory,DeviceOperateHistoryExample)
+~ int updateByPrimaryKeySelective(DeviceOperateHistory)
+~ int updateByPrimaryKey(DeviceOperateHistory)
+}
+class com.welab.customer.controller.FileController {
+- BankInfoService bankInfoService
++ Response uploadUserPassBook(Long,MultipartFile,Long)
++ Response<List<UserProfilesTrackFileVO>> getUserPassbooks(Long)
+}
+class com.welab.customer.app.service.UserEmailService {
+- String appId
+- MessageEmailService messageEmailService
+- ApplicationService applicationService
+- UserProfilesService userProfilesService
+- BaseUserEmailVerifyService baseUserEmailVerifyService
+- IAccountCenterServiceFaced iAccountCenterServiceFaced
++ Response<Void> updateEmail(Long,UserProfileVO)
+}
+class com.welab.customer.controller.ContractController {
+- ContractInfoService contractInfoService
++ Response<String> userList(String)
+}
+class com.welab.customer.test.UserDeviceTest {
+- UserDeviceService userDeviceService
+- UserEmailVerifyCmdExe emailVerifyCmdExe
++ void testGetPage()
++ void testGetVerifyStatus()
++ void sendEmail()
+}
+class com.welab.customer.model.UserEmailVerify {
+- Long id
+- Long userId
+- String email
+- String platform
+- Integer status
+- Date createdAt
+- Date updatedAt
+- Date expiredAt
+- Date verifyAt
+- String uniqueCode
+- String adminName
+- Long adminId
++ Long getId()
++ void setId(Long)
++ Long getUserId()
++ void setUserId(Long)
++ String getEmail()
++ void setEmail(String)
++ String getPlatform()
++ void setPlatform(String)
++ Integer getStatus()
++ void setStatus(Integer)
++ Date getCreatedAt()
++ void setCreatedAt(Date)
++ Date getUpdatedAt()
++ void setUpdatedAt(Date)
++ Date getExpiredAt()
++ void setExpiredAt(Date)
++ Date getVerifyAt()
++ void setVerifyAt(Date)
++ String getUniqueCode()
++ void setUniqueCode(String)
++ String getAdminName()
++ void setAdminName(String)
++ Long getAdminId()
++ void setAdminId(Long)
+}
+interface com.welab.customer.service.ContractInfoService {
+~ Response<String> getContract(String)
+}
+class com.welab.customer.dto.QueryRepaymentDTO {
+- {static} long serialVersionUID
+- Long userId
+- String loanNumber
+- Byte type
+- String startTime
+- String endTime
+- Byte isAdvance
+- String transId
+}
+interface com.welab.customer.service.UserModTelService {
+~ Response userModTel(String,Long,String,Long)
+~ Response<List<UserTelChangeLogVo>> findUserModTelByLimit(Long,Long)
+}
+interface com.welab.customer.mapper.UserQuestionLogMapper {
+~ long countByExample(UserQuestionLogExample)
+~ int deleteByExample(UserQuestionLogExample)
+~ int deleteByPrimaryKey(Long)
+~ int insert(UserQuestionLog)
+~ int insertSelective(UserQuestionLog)
+~ List<UserQuestionLog> selectByExample(UserQuestionLogExample)
+~ UserQuestionLog selectByPrimaryKey(Long)
+~ int updateByExampleSelective(UserQuestionLog,UserQuestionLogExample)
+~ int updateByExample(UserQuestionLog,UserQuestionLogExample)
+~ int updateByPrimaryKeySelective(UserQuestionLog)
+~ int updateByPrimaryKey(UserQuestionLog)
+}
+class com.welab.customer.dto.QueryUserBankDTO {
+- {static} long serialVersionUID
+- String userName
+- String bankNumber
+- String bankCode
+- String mobile
+- Date beginTime
+- Date endTime
+}
+class com.welab.customer.app.facade.InsuranceDetailDubboServiceFacade {
+- InsuranceDetailDubboService insuranceDetailDubboService
++ InsuranceDetailDTO getInsuranceDetail(String,InsuranceDetailEnum.TypeEnum)
+}
+enum com.welab.customer.enums.UserQuestionLogTypeEnum {
++  ADD
++  UPDATE
+- Byte value
+- String name
+- String enName
+- <<Create>> UserQuestionLogTypeEnum(int,String,String)
++ Byte getValue()
++ String getName()
++ String getEnName()
++ {static} String getName(Byte,boolean)
++ {static} List getStatusList(boolean)
+}
+class com.welab.customer.controller.UserQuestionController {
+- {static} Logger log
+- UserQuestionServcieImpl userQuestionService
++ Response<PageInfo<UserQuestionVO>> questionList(UserQuestionDTO)
++ Response<Void> save(UserQuestionDTO,Long)
++ Response<Void> update(UserQuestionDTO,Long)
++ Response<Long> stateTotal(String,String,String)
++ Response<List<UserQuestionStaticExtVo>> stateStatic(String,String,String)
++ Response<PageInfo> getList(String,String,String,Integer,Integer)
++ void exportPackage(String,String,String,HttpServletResponse)
+}
+class com.welab.customer.dto.UserQuestionDTO {
+- {static} long serialVersionUID
+- Long id
+- Long userId
+- String level
+- String category
+- String source
+- Long adminId
+- String origin
+- String title
+- String body
+- String state
+- String remark
+- String loanNumber
+}
+class com.welab.customer.dto.UserEmailVerifyDTO {
+- {static} long serialVersionUID
+- Long id
+- Long userId
+- String email
+- Integer status
+- Date createdAt
+- Date updatedAt
+- Date expiredAt
+- Date verifyAt
+- String uniqueCode
+- String adminName
+- Long adminId
+- Long remainingTime
+}
+interface com.welab.customer.mapper.UserNameLogMapper {
+~ int deleteByPrimaryKey(Long)
+~ int insert(UserNameLog)
+~ int insertSelective(UserNameLog)
+~ UserNameLog selectByPrimaryKey(Long)
+~ int updateByPrimaryKeySelective(UserNameLog)
+~ int updateByPrimaryKey(UserNameLog)
+}
+class com.welab.customer.test.SimpleTest {
++ <<Create>> SimpleTest()
+}
+enum com.welab.customer.enums.EligibleProgramEnum {
++  CLOSE_REBOOK
++  C_PROGRAM
++  E_PROGRAM
+- String name
+- String desc
+}
+class com.welab.customer.app.facade.application.CreditInfoServiceFromApplicationFacade {
+- LoansService loansService
++ Boolean isCanIncreaseCredit(Long)
+}
+class com.welab.customer.app.service.BankInfoService {
+- DocumentService documentService
+- UserProfilesTrackService userProfilesTrackService
+- ApplicationService applicationService
++ Response<List<UserProfilesTrackFileVO>> getUserPassbooks(Long)
++ Response uploadUserPassBook(Long,MultipartFile,Long)
+}
+interface com.welab.customer.service.UserQuestionLogService {
+~ void saveUserQuestionLog(UserQuestionLogTypeEnum,Long,Long,String)
+~ Response<Object> findUserQuestionLogByPage(UserQuestionLogDTO)
+~ Response<List<UserQuestionLogVoExt>> findUserQuestionLogList(Long)
+}
+class com.welab.customer.controller.EmailVerifyController {
+- BaseUserEmailVerifyService baseUserEmailVerifyService
+- UserEmailVerifyCmdExe emailVerifyCmdExe
++ Response sendVerifyEmail(Long,Long,String)
++ Response<UserEmailVerify> getVerifyStatus(Long)
++ Response confirm(String)
++ Response<List<UserEmailVerify>> getVerifyList(Long)
+}
+class com.welab.customer.controller.UserProfilesController {
+- UserInfoServiceImpl userInfoService
+- UserProfilesTrackService userProfilesTrackService
+- UserEmailService userEmailService
+- IAccountCenterServiceFaced iAccountCenterServiceFaced
++ Response<Boolean> verifiConditon(String,Long)
++ Response<Void> updateEmail(Long,UserProfileVO)
++ Response<Object> userInfo(Long)
++ Response<Object> getUserInfo(String,String)
++ Response updateUserName(UserNameVo,Long)
++ Response<Map<String,List<UserProfilesTrackVO>>> getUserProfilesTrackList(Long,String)
+}
+class com.welab.customer.service.impl.UserQuestionServcieImpl {
+- UserQuestionLogMapper userQuestionLogMapper
+- MessageEmailService messageEmailService
+- UserService userService
+- UserQuestionExtMapper extMapper
+- ProductService productService
+- ConfigsService configsService
+- String MAIL_QUESTION_CREATED_OR_UPDATED
+- String APP_ID
+- {static} String CUSTOMER_QUESTION_CREATED_NOTICE
+- {static} String CUSTOMER_QUESTION_UPDATED_NOTICE
++ Response<Void> saveUserQuestion(UserQuestionDTO)
++ Response<Void> updateUserQuestion(UserQuestionDTO)
++ Response<PageInfo<UserQuestionVO>> findPageUserQuestionByUserId(UserQuestionDTO)
++ Response<List<UserQuestionStaticExtVo>> findUserQuestionStatic(String,String,String)
++ Response<Long> countUserQuestionStatic(String,String,String)
++ Page findUserQuestionByPage(String,String,String,int,int)
++ PageInfo getUserQuestionByPage(String,String,String,int,int)
++ List<ExportUserQuestion> exportUserQuestionByPage(String,String,String)
+- List<ExportUserQuestion> conversion(List<UserQuestion>)
+- Long getOrgId(String)
+- void saveLog(UserQuestionLogTypeEnum,UserQuestionDTO)
+- MailDTO createMailDTO(UserQuestion,boolean)
+- String getMobileByCache(Long,Map<Long,String>)
+- String getMobileByUserId(Long)
+}
+class com.welab.customer.exception.CustomerException {
+- {static} long serialVersionUID
++ <<Create>> CustomerException(Integer)
++ <<Create>> CustomerException(Integer,String)
++ <<Create>> CustomerException(CustomerServiceResponse.Enums)
+}
+interface com.welab.customer.service.UserTelLogService {
+~ Response<Void> saveUserTelLog(UserTelLogVo)
+~ Response<List<UserTelLogVo>> findUserTelLogList(Long)
+}
+interface com.welab.customer.mapper.UserTelLogMapper {
+~ long countByExample(UserTelLogExample)
+~ int deleteByExample(UserTelLogExample)
+~ int deleteByPrimaryKey(Long)
+~ int insert(UserTelLog)
+~ int insertSelective(UserTelLog)
+~ List<UserTelLog> selectByExample(UserTelLogExample)
+~ UserTelLog selectByPrimaryKey(Long)
+~ int updateByExampleSelective(UserTelLog,UserTelLogExample)
+~ int updateByExample(UserTelLog,UserTelLogExample)
+~ int updateByPrimaryKeySelective(UserTelLog)
+~ int updateByPrimaryKey(UserTelLog)
+}
+class com.welab.customer.controller.UserTelLogController {
+- UserTelLogService userTelLogService
++ Response saveUserTelLog(Long,UserTelLogVo)
++ Response findUserTelLogList(Long)
+}
+class com.welab.customer.model.UserTelLogExample {
+# String orderByClause
+# boolean distinct
+# List<Criteria> oredCriteria
++ <<Create>> UserTelLogExample()
++ void setOrderByClause(String)
++ String getOrderByClause()
++ void setDistinct(boolean)
++ boolean isDistinct()
++ List<Criteria> getOredCriteria()
++ void or(Criteria)
++ Criteria or()
++ Criteria createCriteria()
+# Criteria createCriteriaInternal()
++ void clear()
+}
+abstract class com.welab.customer.model.UserTelLogExample$GeneratedCriteria {
+# List<Criterion> criteria
+# <<Create>> GeneratedCriteria()
++ boolean isValid()
++ List<Criterion> getAllCriteria()
++ List<Criterion> getCriteria()
+# void addCriterion(String)
+# void addCriterion(String,Object,String)
+# void addCriterion(String,Object,Object,String)
++ Criteria andIdIsNull()
++ Criteria andIdIsNotNull()
++ Criteria andIdEqualTo(Long)
++ Criteria andIdNotEqualTo(Long)
++ Criteria andIdGreaterThan(Long)
++ Criteria andIdGreaterThanOrEqualTo(Long)
++ Criteria andIdLessThan(Long)
++ Criteria andIdLessThanOrEqualTo(Long)
++ Criteria andIdIn(List<Long>)
++ Criteria andIdNotIn(List<Long>)
++ Criteria andIdBetween(Long,Long)
++ Criteria andIdNotBetween(Long,Long)
++ Criteria andUserIdIsNull()
++ Criteria andUserIdIsNotNull()
++ Criteria andUserIdEqualTo(Long)
++ Criteria andUserIdNotEqualTo(Long)
++ Criteria andUserIdGreaterThan(Long)
++ Criteria andUserIdGreaterThanOrEqualTo(Long)
++ Criteria andUserIdLessThan(Long)
++ Criteria andUserIdLessThanOrEqualTo(Long)
++ Criteria andUserIdIn(List<Long>)
++ Criteria andUserIdNotIn(List<Long>)
++ Criteria andUserIdBetween(Long,Long)
++ Criteria andUserIdNotBetween(Long,Long)
++ Criteria andAdminIdIsNull()
++ Criteria andAdminIdIsNotNull()
++ Criteria andAdminIdEqualTo(Long)
++ Criteria andAdminIdNotEqualTo(Long)
++ Criteria andAdminIdGreaterThan(Long)
++ Criteria andAdminIdGreaterThanOrEqualTo(Long)
++ Criteria andAdminIdLessThan(Long)
++ Criteria andAdminIdLessThanOrEqualTo(Long)
++ Criteria andAdminIdIn(List<Long>)
++ Criteria andAdminIdNotIn(List<Long>)
++ Criteria andAdminIdBetween(Long,Long)
++ Criteria andAdminIdNotBetween(Long,Long)
++ Criteria andOriginIsNull()
++ Criteria andOriginIsNotNull()
++ Criteria andOriginEqualTo(String)
++ Criteria andOriginNotEqualTo(String)
++ Criteria andOriginGreaterThan(String)
++ Criteria andOriginGreaterThanOrEqualTo(String)
++ Criteria andOriginLessThan(String)
++ Criteria andOriginLessThanOrEqualTo(String)
++ Criteria andOriginLike(String)
++ Criteria andOriginNotLike(String)
++ Criteria andOriginIn(List<String>)
++ Criteria andOriginNotIn(List<String>)
++ Criteria andOriginBetween(String,String)
++ Criteria andOriginNotBetween(String,String)
++ Criteria andTelIsNull()
++ Criteria andTelIsNotNull()
++ Criteria andTelEqualTo(String)
++ Criteria andTelNotEqualTo(String)
++ Criteria andTelGreaterThan(String)
++ Criteria andTelGreaterThanOrEqualTo(String)
++ Criteria andTelLessThan(String)
++ Criteria andTelLessThanOrEqualTo(String)
++ Criteria andTelLike(String)
++ Criteria andTelNotLike(String)
++ Criteria andTelIn(List<String>)
++ Criteria andTelNotIn(List<String>)
++ Criteria andTelBetween(String,String)
++ Criteria andTelNotBetween(String,String)
++ Criteria andRemarkIsNull()
++ Criteria andRemarkIsNotNull()
++ Criteria andRemarkEqualTo(String)
++ Criteria andRemarkNotEqualTo(String)
++ Criteria andRemarkGreaterThan(String)
++ Criteria andRemarkGreaterThanOrEqualTo(String)
++ Criteria andRemarkLessThan(String)
++ Criteria andRemarkLessThanOrEqualTo(String)
++ Criteria andRemarkLike(String)
++ Criteria andRemarkNotLike(String)
++ Criteria andRemarkIn(List<String>)
++ Criteria andRemarkNotIn(List<String>)
++ Criteria andRemarkBetween(String,String)
++ Criteria andRemarkNotBetween(String,String)
++ Criteria andCreatedAtIsNull()
++ Criteria andCreatedAtIsNotNull()
++ Criteria andCreatedAtEqualTo(Date)
++ Criteria andCreatedAtNotEqualTo(Date)
++ Criteria andCreatedAtGreaterThan(Date)
++ Criteria andCreatedAtGreaterThanOrEqualTo(Date)
++ Criteria andCreatedAtLessThan(Date)
++ Criteria andCreatedAtLessThanOrEqualTo(Date)
++ Criteria andCreatedAtIn(List<Date>)
++ Criteria andCreatedAtNotIn(List<Date>)
++ Criteria andCreatedAtBetween(Date,Date)
++ Criteria andCreatedAtNotBetween(Date,Date)
+}
+class com.welab.customer.model.UserTelLogExample$Criteria {
+# <<Create>> Criteria()
+}
+class com.welab.customer.model.UserTelLogExample$Criterion {
+- String condition
+- Object value
+- Object secondValue
+- boolean noValue
+- boolean singleValue
+- boolean betweenValue
+- boolean listValue
+- String typeHandler
+# <<Create>> Criterion(String)
+# <<Create>> Criterion(String,Object,String)
+# <<Create>> Criterion(String,Object)
+# <<Create>> Criterion(String,Object,Object,String)
+# <<Create>> Criterion(String,Object,Object)
++ String getCondition()
++ Object getValue()
++ Object getSecondValue()
++ boolean isNoValue()
++ boolean isSingleValue()
++ boolean isBetweenValue()
++ boolean isListValue()
++ String getTypeHandler()
+}
+class com.welab.customer.test.finance.AdvanceRepaymentServiceTest {
+- AdvanceRepaymentService advanceRepaymentService
++ void repay()
+}
+class com.welab.customer.model.UserTelChangeLogExample {
+# String orderByClause
+# boolean distinct
+# List<Criteria> oredCriteria
++ <<Create>> UserTelChangeLogExample()
++ void setOrderByClause(String)
++ String getOrderByClause()
++ void setDistinct(boolean)
++ boolean isDistinct()
++ List<Criteria> getOredCriteria()
++ void or(Criteria)
++ Criteria or()
++ Criteria createCriteria()
+# Criteria createCriteriaInternal()
++ void clear()
+}
+abstract class com.welab.customer.model.UserTelChangeLogExample$GeneratedCriteria {
+# List<Criterion> criteria
+# <<Create>> GeneratedCriteria()
++ boolean isValid()
++ List<Criterion> getAllCriteria()
++ List<Criterion> getCriteria()
+# void addCriterion(String)
+# void addCriterion(String,Object,String)
+# void addCriterion(String,Object,Object,String)
++ Criteria andIdIsNull()
++ Criteria andIdIsNotNull()
++ Criteria andIdEqualTo(Long)
++ Criteria andIdNotEqualTo(Long)
++ Criteria andIdGreaterThan(Long)
++ Criteria andIdGreaterThanOrEqualTo(Long)
++ Criteria andIdLessThan(Long)
++ Criteria andIdLessThanOrEqualTo(Long)
++ Criteria andIdIn(List<Long>)
++ Criteria andIdNotIn(List<Long>)
++ Criteria andIdBetween(Long,Long)
++ Criteria andIdNotBetween(Long,Long)
++ Criteria andUserIdIsNull()
++ Criteria andUserIdIsNotNull()
++ Criteria andUserIdEqualTo(Long)
++ Criteria andUserIdNotEqualTo(Long)
++ Criteria andUserIdGreaterThan(Long)
++ Criteria andUserIdGreaterThanOrEqualTo(Long)
++ Criteria andUserIdLessThan(Long)
++ Criteria andUserIdLessThanOrEqualTo(Long)
++ Criteria andUserIdIn(List<Long>)
++ Criteria andUserIdNotIn(List<Long>)
++ Criteria andUserIdBetween(Long,Long)
++ Criteria andUserIdNotBetween(Long,Long)
++ Criteria andAdminIdIsNull()
++ Criteria andAdminIdIsNotNull()
++ Criteria andAdminIdEqualTo(Long)
++ Criteria andAdminIdNotEqualTo(Long)
++ Criteria andAdminIdGreaterThan(Long)
++ Criteria andAdminIdGreaterThanOrEqualTo(Long)
++ Criteria andAdminIdLessThan(Long)
++ Criteria andAdminIdLessThanOrEqualTo(Long)
++ Criteria andAdminIdIn(List<Long>)
++ Criteria andAdminIdNotIn(List<Long>)
++ Criteria andAdminIdBetween(Long,Long)
++ Criteria andAdminIdNotBetween(Long,Long)
++ Criteria andOldMobileIsNull()
++ Criteria andOldMobileIsNotNull()
++ Criteria andOldMobileEqualTo(String)
++ Criteria andOldMobileNotEqualTo(String)
++ Criteria andOldMobileGreaterThan(String)
++ Criteria andOldMobileGreaterThanOrEqualTo(String)
++ Criteria andOldMobileLessThan(String)
++ Criteria andOldMobileLessThanOrEqualTo(String)
++ Criteria andOldMobileLike(String)
++ Criteria andOldMobileNotLike(String)
++ Criteria andOldMobileIn(List<String>)
++ Criteria andOldMobileNotIn(List<String>)
++ Criteria andOldMobileBetween(String,String)
++ Criteria andOldMobileNotBetween(String,String)
++ Criteria andNewMobileIsNull()
++ Criteria andNewMobileIsNotNull()
++ Criteria andNewMobileEqualTo(String)
++ Criteria andNewMobileNotEqualTo(String)
++ Criteria andNewMobileGreaterThan(String)
++ Criteria andNewMobileGreaterThanOrEqualTo(String)
++ Criteria andNewMobileLessThan(String)
++ Criteria andNewMobileLessThanOrEqualTo(String)
++ Criteria andNewMobileLike(String)
++ Criteria andNewMobileNotLike(String)
++ Criteria andNewMobileIn(List<String>)
++ Criteria andNewMobileNotIn(List<String>)
++ Criteria andNewMobileBetween(String,String)
++ Criteria andNewMobileNotBetween(String,String)
++ Criteria andCreatedAtIsNull()
++ Criteria andCreatedAtIsNotNull()
++ Criteria andCreatedAtEqualTo(Date)
++ Criteria andCreatedAtNotEqualTo(Date)
++ Criteria andCreatedAtGreaterThan(Date)
++ Criteria andCreatedAtGreaterThanOrEqualTo(Date)
++ Criteria andCreatedAtLessThan(Date)
++ Criteria andCreatedAtLessThanOrEqualTo(Date)
++ Criteria andCreatedAtIn(List<Date>)
++ Criteria andCreatedAtNotIn(List<Date>)
++ Criteria andCreatedAtBetween(Date,Date)
++ Criteria andCreatedAtNotBetween(Date,Date)
++ Criteria andStateIsNull()
++ Criteria andStateIsNotNull()
++ Criteria andStateEqualTo(Byte)
++ Criteria andStateNotEqualTo(Byte)
++ Criteria andStateGreaterThan(Byte)
++ Criteria andStateGreaterThanOrEqualTo(Byte)
++ Criteria andStateLessThan(Byte)
++ Criteria andStateLessThanOrEqualTo(Byte)
++ Criteria andStateIn(List<Byte>)
++ Criteria andStateNotIn(List<Byte>)
++ Criteria andStateBetween(Byte,Byte)
++ Criteria andStateNotBetween(Byte,Byte)
+}
+class com.welab.customer.model.UserTelChangeLogExample$Criteria {
+# <<Create>> Criteria()
+}
+class com.welab.customer.model.UserTelChangeLogExample$Criterion {
+- String condition
+- Object value
+- Object secondValue
+- boolean noValue
+- boolean singleValue
+- boolean betweenValue
+- boolean listValue
+- String typeHandler
+# <<Create>> Criterion(String)
+# <<Create>> Criterion(String,Object,String)
+# <<Create>> Criterion(String,Object)
+# <<Create>> Criterion(String,Object,Object,String)
+# <<Create>> Criterion(String,Object,Object)
++ String getCondition()
++ Object getValue()
++ Object getSecondValue()
++ boolean isNoValue()
++ boolean isSingleValue()
++ boolean isBetweenValue()
++ boolean isListValue()
++ String getTypeHandler()
+}
+interface com.welab.customer.mapper.UserEmailVerifyMapper {
+~ long countByExample(UserEmailVerifyExample)
+~ int deleteByPrimaryKey(Long)
+~ int insert(UserEmailVerify)
+~ int insertSelective(UserEmailVerify)
+~ List<UserEmailVerify> selectByExample(UserEmailVerifyExample)
+~ UserEmailVerify selectByPrimaryKey(Long)
+~ int updateByExampleSelective(UserEmailVerify,UserEmailVerifyExample)
+~ int updateByExample(UserEmailVerify,UserEmailVerifyExample)
+~ int updateByPrimaryKeySelective(UserEmailVerify)
+~ int updateByPrimaryKey(UserEmailVerify)
+}
+interface com.welab.customer.service.LoansInfoService {
+~ Response<Object> getLoansByPage(QueryLoansInfoDTO)
+~ Response<Object> getLoanByLoanNumber(String)
+~ Response<Object> getCurrentLoanByUserId(Long)
+~ Response<Object> getLoanByUserId(Long)
+~ Response advanceSchedule(String)
+~ Response advanceConfirm(String)
+~ Response<Object> findMergeDues(String)
+~ Response SkipOverdue(String)
+~ Response editOverdue(String,Integer,Long)
+~ Response editLendType(String,String,Long)
+}
+class com.welab.customer.response.CustomerServiceResponse {
++ {static} String MOBILE_OR_LOAN_NUMBER_NOT_EXIST
++ {static} String ENTER_CORRECT_INFO
++ {static} String LOAN_NUMBER_NOT_EXIST
++ {static} String NO_CONTRACT
++ {static} String LOAN_ORGID_NOT_EMPTY
+- {static} String UNIQUECODE_NOT_FIND
+- {static} String UNIQUECODE_EXPIRED
+- {static} String EXIST_EMAIL_VERIFY
+- {static} String EMAIL_SEND_ERROR
+- {static} String PARAMETER_ABNORMAL
+- {static} String EMAIL_FORMAT_ERROR
+- {static} String OPERATION_FAILED
+- {static} String EMAIL_IS_SAME
+}
+enum com.welab.customer.response.Enums {
++  MOBILE_OR_LOAN_NUMBER_NOT_EXIST
++  LOAN_NUMBER_NOT_EXIST
++  NO_CONTRACT
++  LOAN_ORGID_NOT_EMPTY
++  ENTER_CORRECT_INFO
++  UNIQUECODE_NOT_FIND
++  UNIQUECODE_EXPIRED
++  EXIST_EMAIL_VERIFY
++  EMAIL_SEND_ERROR
++  PARAMETER_ABNORMAL
++  OPERATION_FAILED
++  EMAIL_IS_SAME
++  EMAIL_FORMAT_ERROR
+- Integer code
+- String message
+- <<Create>> Enums(Integer,String)
++ Integer getCode()
++ String getMessage()
+}
+class com.welab.customer.app.facade.user.UserTokenServiceFacade {
+- IUserTokenService userTokenService
++ Boolean deleteUserToken(Long)
++ Long getLastOrgId(Long)
+}
+class com.welab.customer.controller.LoansController {
+- {static} Logger log
+- LoansInfoService loansInfoService
+- LoanService loanService
+- LoansService loansService
+- FifBranchesService fifBranchesService
+- ConfigsService configsService
+- BaseLoanService baseLoanService
+- LoanCreditLimitService loanCreditLimitService
++ Response<List<SendBackLoanVO>> getSendBackModifyInfos(String)
++ Response<Object> getLoan(Long,String)
++ Response<PageInfo<LoanLimitDetailVO>> getUserLimitDetail(LoanLimitDetailReqVO)
++ Response<Object> getCurrentLoan(Long)
++ Response advanceSchedule(String)
++ Response advanceConfirm(LoansDTO)
++ Response findOverdues(String)
++ Response SkipOverdue(LoansDTO)
++ Response editOverdue(LoansDTO)
++ Response loanCustomAmount(String,String,Long)
++ Response loanLendEdit(Long,String,String,Long)
++ Response loanLendConfig()
++ Response loanLendStore()
++ Response<List<LoanCreditLimitVO>> getUserCreditApplyInfo(Long)
++ Response loanCoupon(String)
+}
+class com.welab.customer.vo.UserQuestionStaticExtVo {
+- String state
+- Long num
+}
+enum com.welab.customer.enums.CustomerLoanStatusEnum {
++  APPLIED
++  IN_APPROVAL
++  REJECTED
++  CANCELED
++  APPROVED
++  AGREEMENT_SIGNED
++  IN_DISBURSED
++  DISBURSED
++  OVERDUE
++  CLOSED
+- String typeName
+- String typeValue
+- <<Create>> CustomerLoanStatusEnum(String,String)
++ String getTypeValue()
++ {static} String getTypeValue(CustomerLoanStatusEnum)
++ {static} String getName(CustomerLoanStatusEnum)
++ {static} String getName(String)
+}
+class com.welab.customer.service.vo.DuesAmountOverExtVo {
+- Integer overDay
+}
+class com.welab.customer.vo.SendBackLoanVO {
+- Date sendBackAt
+- Date sendBackAppliedAt
+- Byte sendBackAppliedStatus
+- List<Map<String,Object>> sendBackModifyApplyInfo
+}
+class com.welab.customer.vo.UserTelChangeLogVo {
+- Long id
+- Long userId
+- Long adminId
+- String adminName
+- String oldMobile
+- String newMobile
+- Date createdAt
+- Byte state
+}
+class com.welab.customer.dto.UserQuestionLogDTO {
+- {static} long serialVersionUID
+- Byte type
+- Long userId
+- Long adminId
+- Date startTime
+- Date endTime
+}
+class com.welab.customer.controller.TransationController {
+- {static} Logger log
+- TransationService ransationService
++ Response record(QueryRepaymentDTO)
+}
+class com.welab.customer.model.DeviceOperateHistory {
+- Long id
+- Long userId
+- Long orgId
+- String deviceId
+- Integer deviceState
+- Boolean enabled
+- String adminName
+- Long adminId
+- Date createdAt
+- Date updatedAt
++ Long getId()
++ void setId(Long)
++ Long getUserId()
++ void setUserId(Long)
++ Long getOrgId()
++ void setOrgId(Long)
++ String getDeviceId()
++ void setDeviceId(String)
++ Integer getDeviceState()
++ void setDeviceState(Integer)
++ Boolean getEnabled()
++ void setEnabled(Boolean)
++ String getAdminName()
++ void setAdminName(String)
++ Long getAdminId()
++ void setAdminId(Long)
++ Date getCreatedAt()
++ void setCreatedAt(Date)
++ Date getUpdatedAt()
++ void setUpdatedAt(Date)
+}
+class com.welab.customer.test.TransationTest {
+- UserTransService userTransService
++ void transation()
+}
+class com.welab.customer.vo.LoansVOExt {
+- {static} long serialVersionUID
+- String repayCode
+- Long repayDueAmount
+- Map store
+- Integer historyOverDueDays
+- boolean payLater
+- Map<Object,Object> creditOrderInfo
+- String approvalStage
+- Integer maxOverDueDays
+- String cessie
+- String buyerName
+- String channelLogoUrl
+- Boolean advanced
+- String policyNumber
+- Long insuranceCoverage
+- String eligibleProgram
+}
+class com.welab.customer.response.PageBean {
+- List<T> data
+- Long total
+- Integer pageSize
+- Integer pageNum
+- Integer pages
++ <<Create>> PageBean()
++ <<Create>> PageBean(List<T>,Long,Integer,Integer,Integer)
++ <<Create>> PageBean(Page)
+}
+class com.welab.customer.service.vo.UserNameVo {
+- Long userId
+- String newUserName
+- String oldUserName
+}
+class com.welab.customer.controller.UserQuestionLogController {
+- {static} Logger log
+- UserQuestionLogService userQuestionLogService
++ Response questionLogList(Long)
++ Response questionLogConfig()
+}
+class com.welab.customer.vo.WhitelistVO {
+- Long id
+- String partner
+- String lob
+- Date createdAt
+}
+class com.welab.customer.controller.UserIntegralController {
++ Response getUserIntegralInfo(Object)
+}
+class com.welab.customer.service.impl.UserEmailVerifyServiceImpl {
+- UserEmailVerifyCmdExe emailVerifyCmdExe
+- BaseUserEmailVerifyService baseUserEmailVerifyService
++ Response sendVerifyEmail(Long,String,String)
++ Response<UserEmailVerifyDTO> getVerifyStatus(Long,String)
++ Response confirm(String)
++ UserEmailVerifyDTO findLastOne(Long,String)
++ UserEmailVerifyDTO getVerifyEmailStatus(Long,String)
+}
+class com.welab.customer.app.facade.credit.FdcServiceFacade {
+- CreditFdcService fdcService
++ void getFdcByNikForCredit(String,Long)
+}
+class com.welab.customer.controller.UserModTelController {
+- UserModTelService userModTelService
++ Response updateMobile(Long,String,Long,String)
++ Response findMobileConfig()
++ Response<List<UserTelChangeLogVo>> findMobileList(Long,Long)
+}
+class com.welab.customer.controller.BankCardController {
+- {static} Logger log
+- BankCardService bankCardService
+- ApplicationService applicationService
+- ProductService productService
+- VirtualAccountQry virtualAccountQry
+- UserTokenServiceFacade userTokenServiceFacade
++ Response<Object> queryUserBankCardByUserId(String,Long)
++ Response<Object> save(String,BindUserBankDTO)
++ Response<Boolean> delete(Long)
++ Response<List<VirtualAccountVO>> findVirtualAccountByLoanNumber(String)
+}
+interface com.welab.customer.service.TransationService {
+~ Response findUserTransByPage(QueryRepaymentDTO)
+}
+class com.welab.customer.service.vo.LoanLimitDetailReqVO {
+- {static} long serialVersionUID
+- Integer pageNum
+- Integer pageSize
+- Long userId
+}
+class com.welab.customer.model.UserEmailVerifyExample {
+# String orderByClause
+# boolean distinct
+# List<Criteria> oredCriteria
++ <<Create>> UserEmailVerifyExample()
++ void setOrderByClause(String)
++ String getOrderByClause()
++ void setDistinct(boolean)
++ boolean isDistinct()
++ List<Criteria> getOredCriteria()
++ void or(Criteria)
++ Criteria or()
++ Criteria createCriteria()
+# Criteria createCriteriaInternal()
++ void clear()
+}
+abstract class com.welab.customer.model.UserEmailVerifyExample$GeneratedCriteria {
+# List<Criterion> criteria
+# <<Create>> GeneratedCriteria()
++ boolean isValid()
++ List<Criterion> getAllCriteria()
++ List<Criterion> getCriteria()
+# void addCriterion(String)
+# void addCriterion(String,Object,String)
+# void addCriterion(String,Object,Object,String)
++ Criteria andIdIsNull()
++ Criteria andIdIsNotNull()
++ Criteria andIdEqualTo(Long)
++ Criteria andIdNotEqualTo(Long)
++ Criteria andIdGreaterThan(Long)
++ Criteria andIdGreaterThanOrEqualTo(Long)
++ Criteria andIdLessThan(Long)
++ Criteria andIdLessThanOrEqualTo(Long)
++ Criteria andIdIn(List<Long>)
++ Criteria andIdNotIn(List<Long>)
++ Criteria andIdBetween(Long,Long)
++ Criteria andIdNotBetween(Long,Long)
++ Criteria andUserIdIsNull()
++ Criteria andUserIdIsNotNull()
++ Criteria andUserIdEqualTo(Long)
++ Criteria andUserIdNotEqualTo(Long)
++ Criteria andUserIdGreaterThan(Long)
++ Criteria andUserIdGreaterThanOrEqualTo(Long)
++ Criteria andUserIdLessThan(Long)
++ Criteria andUserIdLessThanOrEqualTo(Long)
++ Criteria andUserIdIn(List<Long>)
++ Criteria andUserIdNotIn(List<Long>)
++ Criteria andUserIdBetween(Long,Long)
++ Criteria andUserIdNotBetween(Long,Long)
++ Criteria andEmailIsNull()
++ Criteria andEmailIsNotNull()
++ Criteria andEmailEqualTo(String)
++ Criteria andEmailNotEqualTo(String)
++ Criteria andEmailGreaterThan(String)
++ Criteria andEmailGreaterThanOrEqualTo(String)
++ Criteria andEmailLessThan(String)
++ Criteria andEmailLessThanOrEqualTo(String)
++ Criteria andEmailLike(String)
++ Criteria andEmailNotLike(String)
++ Criteria andEmailIn(List<String>)
++ Criteria andEmailNotIn(List<String>)
++ Criteria andEmailBetween(String,String)
++ Criteria andEmailNotBetween(String,String)
++ Criteria andPlatformIsNull()
++ Criteria andPlatformIsNotNull()
++ Criteria andPlatformEqualTo(String)
++ Criteria andPlatformNotEqualTo(String)
++ Criteria andPlatformGreaterThan(String)
++ Criteria andPlatformGreaterThanOrEqualTo(String)
++ Criteria andPlatformLessThan(String)
++ Criteria andPlatformLessThanOrEqualTo(String)
++ Criteria andPlatformLike(String)
++ Criteria andPlatformNotLike(String)
++ Criteria andPlatformIn(List<String>)
++ Criteria andPlatformNotIn(List<String>)
++ Criteria andPlatformBetween(String,String)
++ Criteria andPlatformNotBetween(String,String)
++ Criteria andStatusIsNull()
++ Criteria andStatusIsNotNull()
++ Criteria andStatusEqualTo(Integer)
++ Criteria andStatusNotEqualTo(Integer)
++ Criteria andStatusGreaterThan(Integer)
++ Criteria andStatusGreaterThanOrEqualTo(Integer)
++ Criteria andStatusLessThan(Integer)
++ Criteria andStatusLessThanOrEqualTo(Integer)
++ Criteria andStatusIn(List<Integer>)
++ Criteria andStatusNotIn(List<Integer>)
++ Criteria andStatusBetween(Integer,Integer)
++ Criteria andStatusNotBetween(Integer,Integer)
++ Criteria andCreatedAtIsNull()
++ Criteria andCreatedAtIsNotNull()
++ Criteria andCreatedAtEqualTo(Date)
++ Criteria andCreatedAtNotEqualTo(Date)
++ Criteria andCreatedAtGreaterThan(Date)
++ Criteria andCreatedAtGreaterThanOrEqualTo(Date)
++ Criteria andCreatedAtLessThan(Date)
++ Criteria andCreatedAtLessThanOrEqualTo(Date)
++ Criteria andCreatedAtIn(List<Date>)
++ Criteria andCreatedAtNotIn(List<Date>)
++ Criteria andCreatedAtBetween(Date,Date)
++ Criteria andCreatedAtNotBetween(Date,Date)
++ Criteria andUpdatedAtIsNull()
++ Criteria andUpdatedAtIsNotNull()
++ Criteria andUpdatedAtEqualTo(Date)
++ Criteria andUpdatedAtNotEqualTo(Date)
++ Criteria andUpdatedAtGreaterThan(Date)
++ Criteria andUpdatedAtGreaterThanOrEqualTo(Date)
++ Criteria andUpdatedAtLessThan(Date)
++ Criteria andUpdatedAtLessThanOrEqualTo(Date)
++ Criteria andUpdatedAtIn(List<Date>)
++ Criteria andUpdatedAtNotIn(List<Date>)
++ Criteria andUpdatedAtBetween(Date,Date)
++ Criteria andUpdatedAtNotBetween(Date,Date)
++ Criteria andExpiredAtIsNull()
++ Criteria andExpiredAtIsNotNull()
++ Criteria andExpiredAtEqualTo(Date)
++ Criteria andExpiredAtNotEqualTo(Date)
++ Criteria andExpiredAtGreaterThan(Date)
++ Criteria andExpiredAtGreaterThanOrEqualTo(Date)
++ Criteria andExpiredAtLessThan(Date)
++ Criteria andExpiredAtLessThanOrEqualTo(Date)
++ Criteria andExpiredAtIn(List<Date>)
++ Criteria andExpiredAtNotIn(List<Date>)
++ Criteria andExpiredAtBetween(Date,Date)
++ Criteria andExpiredAtNotBetween(Date,Date)
++ Criteria andVerifyAtIsNull()
++ Criteria andVerifyAtIsNotNull()
++ Criteria andVerifyAtEqualTo(Date)
++ Criteria andVerifyAtNotEqualTo(Date)
++ Criteria andVerifyAtGreaterThan(Date)
++ Criteria andVerifyAtGreaterThanOrEqualTo(Date)
++ Criteria andVerifyAtLessThan(Date)
++ Criteria andVerifyAtLessThanOrEqualTo(Date)
++ Criteria andVerifyAtIn(List<Date>)
++ Criteria andVerifyAtNotIn(List<Date>)
++ Criteria andVerifyAtBetween(Date,Date)
++ Criteria andVerifyAtNotBetween(Date,Date)
++ Criteria andUniqueCodeIsNull()
++ Criteria andUniqueCodeIsNotNull()
++ Criteria andUniqueCodeEqualTo(String)
++ Criteria andUniqueCodeNotEqualTo(String)
++ Criteria andUniqueCodeGreaterThan(String)
++ Criteria andUniqueCodeGreaterThanOrEqualTo(String)
++ Criteria andUniqueCodeLessThan(String)
++ Criteria andUniqueCodeLessThanOrEqualTo(String)
++ Criteria andUniqueCodeLike(String)
++ Criteria andUniqueCodeNotLike(String)
++ Criteria andUniqueCodeIn(List<String>)
++ Criteria andUniqueCodeNotIn(List<String>)
++ Criteria andUniqueCodeBetween(String,String)
++ Criteria andUniqueCodeNotBetween(String,String)
++ Criteria andAdminNameIsNull()
++ Criteria andAdminNameIsNotNull()
++ Criteria andAdminNameEqualTo(String)
++ Criteria andAdminNameNotEqualTo(String)
++ Criteria andAdminNameGreaterThan(String)
++ Criteria andAdminNameGreaterThanOrEqualTo(String)
++ Criteria andAdminNameLessThan(String)
++ Criteria andAdminNameLessThanOrEqualTo(String)
++ Criteria andAdminNameLike(String)
++ Criteria andAdminNameNotLike(String)
++ Criteria andAdminNameIn(List<String>)
++ Criteria andAdminNameNotIn(List<String>)
++ Criteria andAdminNameBetween(String,String)
++ Criteria andAdminNameNotBetween(String,String)
++ Criteria andAdminIdIsNull()
++ Criteria andAdminIdIsNotNull()
++ Criteria andAdminIdEqualTo(Long)
++ Criteria andAdminIdNotEqualTo(Long)
++ Criteria andAdminIdGreaterThan(Long)
++ Criteria andAdminIdGreaterThanOrEqualTo(Long)
++ Criteria andAdminIdLessThan(Long)
++ Criteria andAdminIdLessThanOrEqualTo(Long)
++ Criteria andAdminIdIn(List<Long>)
++ Criteria andAdminIdNotIn(List<Long>)
++ Criteria andAdminIdBetween(Long,Long)
++ Criteria andAdminIdNotBetween(Long,Long)
+}
+class com.welab.customer.model.UserEmailVerifyExample$Criteria {
+# <<Create>> Criteria()
+}
+class com.welab.customer.model.UserEmailVerifyExample$Criterion {
+- String condition
+- Object value
+- Object secondValue
+- boolean noValue
+- boolean singleValue
+- boolean betweenValue
+- boolean listValue
+- String typeHandler
+# <<Create>> Criterion(String)
+# <<Create>> Criterion(String,Object,String)
+# <<Create>> Criterion(String,Object)
+# <<Create>> Criterion(String,Object,Object,String)
+# <<Create>> Criterion(String,Object,Object)
++ String getCondition()
++ Object getValue()
++ Object getSecondValue()
++ boolean isNoValue()
++ boolean isSingleValue()
++ boolean isBetweenValue()
++ boolean isListValue()
++ String getTypeHandler()
+}
+class com.welab.customer.Application {
+- {static} Logger LOG
++ {static} void main(String[])
+}
+class com.welab.customer.vo.UpdateUserDeviceStatusParamVO {
+- {static} long serialVersionUID
+- Long userId
+}
+class com.welab.customer.app.command.UserEmailVerifyCmdExe {
+- BaseUserEmailVerifyService baseUserEmailVerifyService
+- String appId
+- UserService userService
+- MessageEmailService messageEmailService
+- UserProfilesService userProfilesService
++ Response sendVerifyEmail(Long,Long,String,String)
++ Response<UserEmailVerify> verifyStatus(Long,String)
++ Response confirm(String)
+}
+class com.welab.customer.model.UserTelLog {
+- Long id
+- Long userId
+- Long adminId
+- String origin
+- String tel
+- String remark
+- Date createdAt
++ Long getId()
++ void setId(Long)
++ Long getUserId()
++ void setUserId(Long)
++ Long getAdminId()
++ void setAdminId(Long)
++ String getOrigin()
++ void setOrigin(String)
++ String getTel()
++ void setTel(String)
++ String getRemark()
++ void setRemark(String)
++ Date getCreatedAt()
++ void setCreatedAt(Date)
+}
+class com.welab.customer.app.facade.finance.RepaymentServiceFaced {
+- RepaymentService reaymentService
++ LoanDataDTO findDuesByCredit(Long,Boolean)
+}
+class com.welab.customer.service.impl.TransationServiceImpl {
+- UserTransService userTransService
++ Response findUserTransByPage(QueryRepaymentDTO)
+}
+enum com.welab.customer.enums.UserChangeStateEnum {
++  Fail
++  OtherSuccess
++  AllSuccess
+- Byte value
+- String name
+- String enName
+- <<Create>> UserChangeStateEnum(Integer,String,String)
++ Byte getValue()
++ String getName()
++ String getEnName()
++ {static} List getStatusList(boolean)
+}
+interface com.welab.customer.service.UserQuestionService {
+~ Response<Void> saveUserQuestion(UserQuestionDTO)
+~ Response<Void> updateUserQuestion(UserQuestionDTO)
+~ Response<PageInfo<UserQuestionVO>> findPageUserQuestionByUserId(UserQuestionDTO)
+~ Response<List<UserQuestionStaticExtVo>> findUserQuestionStatic(String,String,String)
+~ Response<Long> countUserQuestionStatic(String,String,String)
+~ Page findUserQuestionByPage(String,String,String,int,int)
+}
+interface com.welab.customer.service.UserEmailVerifyService {
+~ Response sendVerifyEmail(Long,String,String)
+~ Response<UserEmailVerifyDTO> getVerifyStatus(Long,String)
+~ Response confirm(String)
+~ UserEmailVerifyDTO findLastOne(Long,String)
+~ UserEmailVerifyDTO getVerifyEmailStatus(Long,String)
+}
+enum com.welab.customer.enums.UserQuestionStateEnum {
++  INIT
++  PROCESSING
++  FINISHED
++  CLOSED
+- String typeName
+- String typeValue
+- <<Create>> UserQuestionStateEnum(String,String)
++ String getTypeValue()
++ String getTypeName()
++ {static} String getTypeValue(UserQuestionStateEnum)
++ {static} String getName(UserQuestionStateEnum)
++ {static} String getName(String)
++ {static} Map<String,String> getMap()
+}
+class com.welab.customer.test.finance.CreditTest {
+- CreditRemoteService creditRemoteService
++ void test()
+}
+class com.welab.customer.filter.LogFilter {
+- {static} Logger LOGGER
+- {static} String NOTIFICATION_PREFIX
+- {static} String REQUEST_PREFIX
+- {static} String RESPONSE_PREFIX
+- AtomicLong _id
+# void doFilterInternal(HttpServletRequest,HttpServletResponse,FilterChain)
++ void destroy()
+- void log(StringBuilder)
+- StringBuilder prefixId(StringBuilder,long)
+- void printRequestLine(StringBuilder,String,long,String,String)
+- void printResponseLine(StringBuilder,String,long,int)
+- void printPrefixedHeaders(StringBuilder,long,String,HttpServletRequest)
+}
+interface com.welab.customer.common.Urls {
+~ String ROOT
+~ String ROOT_DESC
+~ String V1
+~ String V3
+~ String AUTH
+}
+interface com.welab.customer.common.Urls$Loans {
+~ String V1_LOANS_LIST
+~ String V1_LOANS_LIST_DESC
+~ String V1_LOAN_DETAIL
+~ String V1_LOAN_DETAIL_DESC
+~ String V1_USER_LIMIT
+~ String V1_USER_LIMIT_DESC
+~ String V1_CREDIT_APPLY_INFO
+~ String V1_CREDIT_APPLY_INFO_DESC
+~ String V1_SEND_BACK_MODIFYINFOS
+~ String V1_SEND_BACK_MODIFYINFOS_DESC
+~ String V1_LOAN_CURRENT
+~ String V1_LOAN_CURRENT_DESC
+~ String V1_LOAN_SAVE_NOTES
+~ String V1_LOAN_SAVE_NOTES_DESC
+~ String V1_LOAN_GET_NOTES
+~ String V1_LOAN_GET_NOTES_DESC
+~ String V1_LOAN_ADVANCE_SCHEDULE
+~ String V1_LOAN_ADVANCE_SCHEDULE_DESC
+~ String V1_LOAN_ADVANCE_CONFIRM
+~ String V1_LOAN_ADVANCE_CONFIRM_DESC
+~ String V1_LOAN_DUES
+~ String V1_LOAN_DUES_DESC
+~ String V1_LOAN_SKIP_DUES
+~ String V1_LOAN_SKIP_DUES_DESC
+~ String V1_LOAN_CUSTOM_AMOUNT
+~ String V1_LOAN_CUSTOM_AMOUNT_DESC
+~ String V1_LOAN_LEND_EDIT
+~ String V1_LOAN_LEND_EDIT_DESC
+~ String V1_LOAN_LEND_CONFIG
+~ String V1_LOAN_LEND_CONFIG_DESC
+~ String V1_LOAN_LEND_STORE
+~ String V1_LOAN_LEND_STORE_DESC
+~ String V1_LOAN_COUPON
+~ String V1_LOAN_COUPON_DESC
+}
+interface com.welab.customer.common.Urls$UserProfiles {
+~ String V1_USERS_LIST
+~ String V1_USERS_LIST_DESC
+~ String V1_VERIFI_MODIFY_INFO
+~ String V1_VERIFI_MODIFY_INFO_DESC
+~ String V1_USER_DETAIL
+~ String V1_USER_DETAIL_DESC
+~ String V1_GET_USER
+~ String V1_GET_USER_DESC
+~ String V1_UPDATE_USER_NAME
+~ String V1_UPDATE_USER_NAME_DESC
+~ String V1_UPDATE_USER_EMAIL
+~ String V1_UPDATE_USER_EMAIL_DESC
+~ String V1_GET_USERPROFILES_TRACK_LIST
+~ String V1_GET_USERPROFILES_TRACK_LIST_DESC
+}
+interface com.welab.customer.common.Urls$Contract {
+~ String V1_VIEW_CONTRACT
+~ String V1_VIEW_CONTRACT_DESC
+}
+interface com.welab.customer.common.Urls$UserQuestion {
+~ String V1_USER_QUESTION_LIST
+~ String V1_USER_QUESTION_LIST_DESC
+~ String V1_USER_QUESTION_SAVE
+~ String V1_USER_QUESTION_SAVE_DESC
+~ String V1_USER_QUESTION_UPDATE
+~ String V1_USER_QUESTION_UPDATE_DESC
+~ String V1_USER_QUESTION_STATE_STATIC
+~ String V1_USER_QUESTION_STATE_STATIC_DESC
+~ String V1_USER_QUESTION_STATE_TOTAL
+~ String V1_USER_QUESTION_STATE_TOTAL_DESC
+~ String V1_USER_QUESTION_STATE_LIST
+~ String V1_USER_QUESTION_STATE_LIST_DESC
+~ String V1_USER_QUESTION_STATE_EXPORT
+~ String V1_USER_QUESTION_STATE_EXPORT_DESC
+}
+interface com.welab.customer.common.Urls$BankCard {
+~ String V1_BANKCARD_LIST
+~ String V1_BANKCARD_LIST_DESC
+~ String V1_BANKCARD_GET_BY_USERID
+~ String V1_BANKCARD_GET_BY_USERID_DESC
+~ String V1_BANKCARD_DETAIL
+~ String V1_BANKCARD_DETAIL_DESC
+~ String V1_BANKCARD_SAVE
+~ String V1_BANKCARD_SAVE_DESC
+~ String V1_BANKCARD_DELETE
+~ String V1_BANKCARD_DELETE_DESC
+~ String V1_FIND_VIRTUAL_ACCOUNT_BY_LOANNUMBER
+~ String V1_FIND_VIRTUAL_ACCOUNT_BY_LOANNUMBER_DESC
+}
+interface com.welab.customer.common.Urls$Transaction {
+~ String V1_TRANSACTION_RECORD
+~ String V1_TRANSACTION_RECORD_DESC
+}
+interface com.welab.customer.common.Urls$UserQuestionLog {
+~ String V1_USER_QUESTION_LOG_LIST
+~ String V1_USER_QUESTION_LOG_LIST_DESC
+~ String V1_USER_QUESTION_LOG_CONFIG
+~ String V1_USER_QUESTION_LOG_CONFIG_DESC
+}
+interface com.welab.customer.common.Urls$UserTelLog {
+~ String V1_USER_TEL_LOG_SAVE
+~ String V1_USER_TEL_LOG_SAVE_DESC
+~ String V1_USER_TEL_LOG_LIST
+~ String V1_USER_TEL_LOG_LIST_DESC
+~ String V1_USER_TEL_LOG_CONFIG
+~ String V1_USER_TEL_LOG_CONFIG_DESC
+}
+interface com.welab.customer.common.Urls$UserModTel {
+~ String V1_USER_MOD_TEL
+~ String V1_USER_MOD_TEL_DESC
+~ String V1_USER_MOD_TEL_CONFIG
+~ String V1_USER_MOD_TEL_CONFIG_DESC
+~ String V1_USER_MOD_TEL_LIST
+~ String V1_USER_MOD_TEL_LIST_DESC
+~ String V3_USER_MOD_TEL_LIST
+~ String V3_USER_MOD_TEL_LIST_DESC
+}
+interface com.welab.customer.common.Urls$Schedule {
+~ String V1_SCHEDULE_AMOUNT
+~ String V1_SCHEDULE_AMOUNT_DESC
+~ String V1_SCHEDULE_FIND_PRODUCT
+~ String V1_SCHEDULE_FIND_PRODUCT_DESC
+~ String V1_SCHEDULE_FIND_AMOUNT
+~ String V1_SCHEDULE_FIND_AMOUNT_DESC
+}
+interface com.welab.customer.common.Urls$Dues {
+~ String V1_LOAN_PLAN_EDIT_DUES
+~ String V1_LOAN_PLAN_EDIT_DUES_DESC
+}
+interface com.welab.customer.common.Urls$Integral {
+~ String V1_INTEGRAL_INFO
+~ String V1_INTEGRAL_INFO_DESC
+}
+interface com.welab.customer.common.Urls$File {
+~ String MODULE
+~ String V1_FILE_UPLOAD_USERPASSBOOK
+~ String V1_FILE_UPLOAD__USERPASSBOOK_DESC
+~ String V1_FILE_GET_USER_PASSBOOKS
+~ String V1_FILE_GET_USERPASSBOOKS_DESC
+}
+interface com.welab.customer.common.Urls$Email {
+~ String MODULE
+~ String V1_EMAIL_SEND_VERIFY_EMAIL
+~ String V1_EMAIL_SEND_VERIFY_EMAIL_DESC
+~ String V1_EMAIL_CONFIRM
+~ String V1_EMAIL_CONFIRM_DESC
+~ String V1_EMAIL_GET_VERIFY_STATUS
+~ String V1_EMAIL_GET_VERIFY_STATUS_DESC
+~ String V1_EMAIL_GET_VERIFY_LIST
+~ String V1_EMAIL_GET_VERIFY_LIST_DESC
+}
+interface com.welab.customer.common.Urls$Credit {
+~ String CREDIT
+~ String V1_CREDIT_GET_ACCOUNT_STATUS
+~ String V1_CREDIT_GET_ACCOUNT_STATUS_DESC
+~ String V1_CREDIT_UPDATE_STATUS
+~ String V1_CREDIT_UPDATE_STATUS_DESC
+~ String V1_CREDIT_FREEZE_LOG
+~ String V1_CREDIT_FREEZE_LOG_DESC
+~ String V1_CREDIT_GETCREDIT_USERTAG
+~ String V1_CREDIT_GETCREDIT_USERTAG_DESC
+~ String V1_CREDIT_GET_FREEZE_STATUS_LIST
+~ String V1_CREDIT_GET_FREEZE_STATUS_LIST_DESC
+~ String V3_ISCAN_INCREASECREDIT
+~ String V3_ISCAN_INCREASECREDIT_DESC
+}
+interface com.welab.customer.common.Urls$UserDevice {
+~ String USER_DEVICE_
+~ String V1_USER_DEVICE_PAGE
+~ String V1_USER_DEVICE_PAGE_DESC
+~ String V1_UPDATE_USER_DEVICE_STATUS
+~ String V1_UPDATE_USER_DEVICE_STATUS_DESC
+~ String V1_LIST_OPERATE_HISTORY
+~ String V1_LIST_OPERATE_HISTORY_DESC
+~ String V1_PAGE_BLOCK_DEVICE
+~ String V1_PAGE_BLOCK_DEVICE_DESC
+}
+interface com.welab.customer.common.Urls$WhiteListURL {
+~ String MODULE
+~ String V3_GET_UFI_WHITELIST
+~ String V3_GET_UFI_WHITELIST_DESC
+}
+enum com.welab.customer.enums.UserEmailVerifyPlatformEnum {
++  ADMIN_WEB
++  ANDROID
++  MODIFY_EMAIL
++  ASTRA_AUTH
++  ASTRA_AUTH_ACQ
++  USER_PROFILE_ACQ
++  MODIFY_MOBILE
++  DIGISIGN_REG_FAIL
+- String value
+- Integer validTime
+- String desc
+- Integer times
+~ {static} Map<String,List<String>> relevance
++ {static} Integer findValidTime(String)
++ {static} Integer findMaxVaildTimes(String)
++ {static} List<String> relevance(String)
+}
+class com.welab.customer.constants.Constant {
++ {static} String FLOW_TYPE_ACQUISTION
++ {static} String FLOW_TYPE_TOP_UP
+}
+class com.welab.customer.controller.ScheduleController {
+- DuesService duesService
+- ProductConfigService productConfigService
+- IProductCodeInfoService productCodeInfoService
++ Response trySchedule(String,Long,String)
++ Response findProduct(Long)
++ Response findAmount(String)
++ Integer getTenor(String,String)
+}
+interface com.welab.customer.mapper.UserTelChangeLogMapper {
+~ long countByExample(UserTelChangeLogExample)
+~ int deleteByExample(UserTelChangeLogExample)
+~ int deleteByPrimaryKey(Long)
+~ int insert(UserTelChangeLog)
+~ int insertSelective(UserTelChangeLog)
+~ List<UserTelChangeLog> selectByExample(UserTelChangeLogExample)
+~ UserTelChangeLog selectByPrimaryKey(Long)
+~ int updateByExampleSelective(UserTelChangeLog,UserTelChangeLogExample)
+~ int updateByExample(UserTelChangeLog,UserTelChangeLogExample)
+~ int updateByPrimaryKeySelective(UserTelChangeLog)
+~ int updateByPrimaryKey(UserTelChangeLog)
+}
+class com.welab.customer.test.ScaffoldTest {
+- DefaultConfigService config
+- String ZOOKEEPER_URL
+- UserProfilesController userProfilesController
++ void test1()
++ void appId()
++ void get()
+}
+enum com.welab.customer.enums.UserEmailVerifyStatusEnum {
++  WAITING
++  SUCCESS
++  TIMEOUT
++  CUSTOMR_VERIFY_PASS
+- Integer status
+~ <<Create>> UserEmailVerifyStatusEnum(Integer)
++ Integer getStatus()
+}
+class com.welab.customer.app.command.VirtualAccountQry {
+- AccountService accountService
+- LoanService loanService
+- FlexifitWhiteDubboService flexifitWhiteDubboService
++ Response<List<VirtualAccountVO>> findVirtualAccount(LoansVO)
+}
+interface com.welab.customer.mapper.UserTelChangeLogExtMapper {
+~ List<UserTelChangeLog> selectByUserLimit(Long,Long)
+}
+class com.welab.customer.app.facade.customer.service.UfiWhiteListDubboServiceFacade {
+- UfiWhiteListDubboService ufiWhiteListDubboService
++ UfiWhiteListDTO getByUserId(Long)
+}
+class com.welab.customer.controller.WhiteListController {
+- UfiWhiteListDubboServiceFacade ufiWhiteListDubboServiceFacade
++ Response<WhitelistVO> getUFIWhiteList(Long)
+}
+class com.welab.customer.vo.CreditStatusVO {
+- Long userId
+- String opt
+- String remark
+}
+class com.welab.customer.service.vo.UserProfileVO {
+- Long userId
+- String email
+}
+class com.welab.customer.service.util.DateUtils {
+- <<Create>> DateUtils()
++ {static} int diffDay(Date,Date)
+}
+class com.welab.customer.test.FlexifitTest {
+- VirtualAccountQry virtualAccountQry
++ void testF()
+}
+class com.welab.customer.vo.UserInfoVO {
+}
+class com.welab.customer.test.TempTest {
+- DefaultConfigService defaultConfigService
++ void yaml()
++ void yaml2()
+}
+class com.welab.customer.model.ext.UserQuestionStaticExt {
+- String state
+- Long num
+}
+class com.welab.customer.test.finance.TransationTest {
+- UserTransService userTransService
++ void transation()
+}
+class com.welab.customer.controller.CreditController {
+- CreditRemoteService creditUserAccountService
+- CreditRemoteService creditRemoteService
+- UserService userService
+- FdcServiceFacade fdcServiceFacade
+- UserProfileServiceFacade userProfileServiceFacade
+- CreditInfoServiceFromApplicationFacade creditInfoServiceFromApplicationFacade
++ Response<List<String>> getCustomerFreezeStatusList(String,Long)
++ Response<Boolean> isCanIncreaseCredit(String,Long)
++ Response getAccountStatus(String,Long)
++ Response updateStatus(String,Long,CreditStatusVO)
++ Response<PageInfo<CreditUserAccountStatusLogDTO>> freezeLog(CreditUserFreezeLogVO)
++ Response getCreditUserTag(String,Long)
+}
+class com.welab.customer.service.impl.LoansInfoServiceImpl {
+- {static} Logger log
+- String skipTag
+- LoansService loansService
+- LoanService loanService
+- AdvanceRepaymentService advanceRepaymentService
+- ApplicationService applicationService
+- UserProfilesService userProfilesService
+- DuesService duesService
+- DisburseService disburseService
+- ProductService productService
+- FinanceUserBankcardSevice financeUserBankcardSevice
+- ApprovalLoansService approvalLoansService
+- ConfigsService configsService
+- LoanCreditOrderService loanCreditOrderService
+- MerchantService merchantService
+- ITaskService iTaskService
+- LoanCreditLimitService loanCreditLimitService
+- InsuranceDetailDubboServiceFacade insuranceDetailDubboServiceFacade
+- RepaymentServiceFaced repaymentServiceFaced
+- ILoanServiceFacade iLoanServiceFacade
+- {static} String CURRENT_LOAN
++ Response<Object> getLoansByPage(QueryLoansInfoDTO)
++ Response<Object> getLoanByLoanNumber(String)
++ Response<Object> getLoanByUserId(Long)
+- String getMatchProgram(Long,String)
++ Response<Object> getCurrentLoanByUserId(Long)
++ Response advanceSchedule(String)
++ Response advanceConfirm(String)
++ Response<Object> findMergeDues(String)
++ Response SkipOverdue(String)
++ Response editOverdue(String,Integer,Long)
++ Response editLendType(String,String,Long)
+- void setApprovalStage(LoansVOExt,LoansVO)
+}
+class com.welab.customer.service.BaseConfigsService {
+- ConfigsService configsService
++ String getQuestionState(String,String)
+}
+interface com.welab.customer.service.UserInfoService {
+~ Response<Object> getUserInfoByPage(QueryUserInfoDTO)
+~ Response<Object> getUserInfoByUserId(Long)
+~ Response<Object> resetPassword(Long)
+~ Response<Object> getUserInfo(String,String)
+}
+class com.welab.customer.dto.BasePage {
+- {static} long serialVersionUID
+- int pageNum
+- int pageSize
+}
+class com.welab.customer.app.facade.finance.ILoanServiceFacade {
+- ILoanService iLoanService
++ Boolean isPartionRepayment(String)
+}
+class com.welab.customer.service.BaseDeviceOperateHistoryService {
+- DeviceOperateHistoryMapper deviceOperateHistoryMapper
++ List<DeviceOperateHistory> getByUserId(Long)
++ void saveOperateHistory(DeviceOperateHistory)
+}
+class com.welab.customer.dto.LoansDTO {
+- {static} long serialVersionUID
+- String loanNumber
+- Integer dueIndex
+- Long lateFee
+}
+interface com.welab.customer.service.BankCardService {
+~ Response<Object> queryUserBankCardPage(QueryUserBankDTO)
+~ Response queryUserBankCardByUserId(Long)
+~ Response queryUserBankCardByUserId(Long,Long)
+~ Response saveUserBankCard(BindUserBankDTO)
+~ Response<Boolean> deleteUserBankCard(Long)
+}
+class com.welab.customer.dto.BindUserBankDTO {
+- {static} long serialVersionUID
+- Long orgId
+- Long userId
+- String bankAccountNumber
+- String bankCode
+- String bankName
+- String userName
+}
+class com.welab.customer.model.UserTelChangeLog {
+- Long id
+- Long userId
+- Long adminId
+- String oldMobile
+- String newMobile
+- Date createdAt
+- Byte state
++ Long getId()
++ void setId(Long)
++ Long getUserId()
++ void setUserId(Long)
++ Long getAdminId()
++ void setAdminId(Long)
++ String getOldMobile()
++ void setOldMobile(String)
++ String getNewMobile()
++ void setNewMobile(String)
++ Date getCreatedAt()
++ void setCreatedAt(Date)
++ Byte getState()
++ void setState(Byte)
+}
+class com.welab.customer.app.facade.user.UserServiceFacade {
+- UserService userService
++ UserInfoDTO getUserInfoByUserId(Long)
+}
+class com.welab.customer.dto.QueryLoansInfoDTO {
+- int pageNum
+- int pageSize
+- String loanNumber
+- String isCurrentLoan
+}
+class com.welab.customer.app.facade.IAccountCenterServiceFaced {
+- IAccountCenterService iAccountCenterService
++ boolean checkModifyState(AccountCenterQry)
++ AccountStateVO queryModifyState(AccountCenterQry)
+}
+class com.welab.customer.controller.UserDeviceController {
+- UserDeviceService userDeviceService
++ Response<PageInfo<UserDevicesDTO>> getUserDevicesPage(UserDeviceParamVO)
++ Response<Boolean> updateUserDeviceStatus(Long,UserDeviceStateParamVO)
++ Response<List<DeviceOperateHistory>> getOperateHistoryByUserId(UserDeviceParamVO)
++ Response<PageInfo<UserDevicesDTO>> getBlockDevicePage(UserDeviceParamVO)
+}
+class com.welab.customer.vo.ExportUserQuestion {
+- String questionNumber
+- String title
+- String body
+- String source
+- String origin1
+- String origin2
+- String origin3
+- String origin4
+- String level
+- String category
+- String mobile
+- String state
+- String updatedAt
+- String createdAt
+- String notes
+- String remark
+}
+class com.welab.customer.test.SimpleTest {
++ <<Create>> SimpleTest()
+}
+class com.welab.customer.model.UserQuestionExample {
+# String orderByClause
+# boolean distinct
+# List<Criteria> oredCriteria
++ <<Create>> UserQuestionExample()
++ void setOrderByClause(String)
++ String getOrderByClause()
++ void setDistinct(boolean)
++ boolean isDistinct()
++ List<Criteria> getOredCriteria()
++ void or(Criteria)
++ Criteria or()
++ Criteria createCriteria()
+# Criteria createCriteriaInternal()
++ void clear()
+}
+abstract class com.welab.customer.model.UserQuestionExample$GeneratedCriteria {
+# List<Criterion> criteria
+# <<Create>> GeneratedCriteria()
++ boolean isValid()
++ List<Criterion> getAllCriteria()
++ List<Criterion> getCriteria()
+# void addCriterion(String)
+# void addCriterion(String,Object,String)
+# void addCriterion(String,Object,Object,String)
++ Criteria andIdIsNull()
++ Criteria andIdIsNotNull()
++ Criteria andIdEqualTo(Long)
++ Criteria andIdNotEqualTo(Long)
++ Criteria andIdGreaterThan(Long)
++ Criteria andIdGreaterThanOrEqualTo(Long)
++ Criteria andIdLessThan(Long)
++ Criteria andIdLessThanOrEqualTo(Long)
++ Criteria andIdIn(List<Long>)
++ Criteria andIdNotIn(List<Long>)
++ Criteria andIdBetween(Long,Long)
++ Criteria andIdNotBetween(Long,Long)
++ Criteria andQuestionNumberIsNull()
++ Criteria andQuestionNumberIsNotNull()
++ Criteria andQuestionNumberEqualTo(String)
++ Criteria andQuestionNumberNotEqualTo(String)
++ Criteria andQuestionNumberGreaterThan(String)
++ Criteria andQuestionNumberGreaterThanOrEqualTo(String)
++ Criteria andQuestionNumberLessThan(String)
++ Criteria andQuestionNumberLessThanOrEqualTo(String)
++ Criteria andQuestionNumberLike(String)
++ Criteria andQuestionNumberNotLike(String)
++ Criteria andQuestionNumberIn(List<String>)
++ Criteria andQuestionNumberNotIn(List<String>)
++ Criteria andQuestionNumberBetween(String,String)
++ Criteria andQuestionNumberNotBetween(String,String)
++ Criteria andLevelIsNull()
++ Criteria andLevelIsNotNull()
++ Criteria andLevelEqualTo(String)
++ Criteria andLevelNotEqualTo(String)
++ Criteria andLevelGreaterThan(String)
++ Criteria andLevelGreaterThanOrEqualTo(String)
++ Criteria andLevelLessThan(String)
++ Criteria andLevelLessThanOrEqualTo(String)
++ Criteria andLevelLike(String)
++ Criteria andLevelNotLike(String)
++ Criteria andLevelIn(List<String>)
++ Criteria andLevelNotIn(List<String>)
++ Criteria andLevelBetween(String,String)
++ Criteria andLevelNotBetween(String,String)
++ Criteria andCategoryIsNull()
++ Criteria andCategoryIsNotNull()
++ Criteria andCategoryEqualTo(String)
++ Criteria andCategoryNotEqualTo(String)
++ Criteria andCategoryGreaterThan(String)
++ Criteria andCategoryGreaterThanOrEqualTo(String)
++ Criteria andCategoryLessThan(String)
++ Criteria andCategoryLessThanOrEqualTo(String)
++ Criteria andCategoryLike(String)
++ Criteria andCategoryNotLike(String)
++ Criteria andCategoryIn(List<String>)
++ Criteria andCategoryNotIn(List<String>)
++ Criteria andCategoryBetween(String,String)
++ Criteria andCategoryNotBetween(String,String)
++ Criteria andSourceIsNull()
++ Criteria andSourceIsNotNull()
++ Criteria andSourceEqualTo(String)
++ Criteria andSourceNotEqualTo(String)
++ Criteria andSourceGreaterThan(String)
++ Criteria andSourceGreaterThanOrEqualTo(String)
++ Criteria andSourceLessThan(String)
++ Criteria andSourceLessThanOrEqualTo(String)
++ Criteria andSourceLike(String)
++ Criteria andSourceNotLike(String)
++ Criteria andSourceIn(List<String>)
++ Criteria andSourceNotIn(List<String>)
++ Criteria andSourceBetween(String,String)
++ Criteria andSourceNotBetween(String,String)
++ Criteria andUserIdIsNull()
++ Criteria andUserIdIsNotNull()
++ Criteria andUserIdEqualTo(Long)
++ Criteria andUserIdNotEqualTo(Long)
++ Criteria andUserIdGreaterThan(Long)
++ Criteria andUserIdGreaterThanOrEqualTo(Long)
++ Criteria andUserIdLessThan(Long)
++ Criteria andUserIdLessThanOrEqualTo(Long)
++ Criteria andUserIdIn(List<Long>)
++ Criteria andUserIdNotIn(List<Long>)
++ Criteria andUserIdBetween(Long,Long)
++ Criteria andUserIdNotBetween(Long,Long)
++ Criteria andAdminIdIsNull()
++ Criteria andAdminIdIsNotNull()
++ Criteria andAdminIdEqualTo(Long)
++ Criteria andAdminIdNotEqualTo(Long)
++ Criteria andAdminIdGreaterThan(Long)
++ Criteria andAdminIdGreaterThanOrEqualTo(Long)
++ Criteria andAdminIdLessThan(Long)
++ Criteria andAdminIdLessThanOrEqualTo(Long)
++ Criteria andAdminIdIn(List<Long>)
++ Criteria andAdminIdNotIn(List<Long>)
++ Criteria andAdminIdBetween(Long,Long)
++ Criteria andAdminIdNotBetween(Long,Long)
++ Criteria andOriginIsNull()
++ Criteria andOriginIsNotNull()
++ Criteria andOriginEqualTo(String)
++ Criteria andOriginNotEqualTo(String)
++ Criteria andOriginGreaterThan(String)
++ Criteria andOriginGreaterThanOrEqualTo(String)
++ Criteria andOriginLessThan(String)
++ Criteria andOriginLessThanOrEqualTo(String)
++ Criteria andOriginLike(String)
++ Criteria andOriginNotLike(String)
++ Criteria andOriginIn(List<String>)
++ Criteria andOriginNotIn(List<String>)
++ Criteria andOriginBetween(String,String)
++ Criteria andOriginNotBetween(String,String)
++ Criteria andTitleIsNull()
++ Criteria andTitleIsNotNull()
++ Criteria andTitleEqualTo(String)
++ Criteria andTitleNotEqualTo(String)
++ Criteria andTitleGreaterThan(String)
++ Criteria andTitleGreaterThanOrEqualTo(String)
++ Criteria andTitleLessThan(String)
++ Criteria andTitleLessThanOrEqualTo(String)
++ Criteria andTitleLike(String)
++ Criteria andTitleNotLike(String)
++ Criteria andTitleIn(List<String>)
++ Criteria andTitleNotIn(List<String>)
++ Criteria andTitleBetween(String,String)
++ Criteria andTitleNotBetween(String,String)
++ Criteria andBodyIsNull()
++ Criteria andBodyIsNotNull()
++ Criteria andBodyEqualTo(String)
++ Criteria andBodyNotEqualTo(String)
++ Criteria andBodyGreaterThan(String)
++ Criteria andBodyGreaterThanOrEqualTo(String)
++ Criteria andBodyLessThan(String)
++ Criteria andBodyLessThanOrEqualTo(String)
++ Criteria andBodyLike(String)
++ Criteria andBodyNotLike(String)
++ Criteria andBodyIn(List<String>)
++ Criteria andBodyNotIn(List<String>)
++ Criteria andBodyBetween(String,String)
++ Criteria andBodyNotBetween(String,String)
++ Criteria andStateIsNull()
++ Criteria andStateIsNotNull()
++ Criteria andStateEqualTo(String)
++ Criteria andStateNotEqualTo(String)
++ Criteria andStateGreaterThan(String)
++ Criteria andStateGreaterThanOrEqualTo(String)
++ Criteria andStateLessThan(String)
++ Criteria andStateLessThanOrEqualTo(String)
++ Criteria andStateLike(String)
++ Criteria andStateNotLike(String)
++ Criteria andStateIn(List<String>)
++ Criteria andStateNotIn(List<String>)
++ Criteria andStateBetween(String,String)
++ Criteria andStateNotBetween(String,String)
++ Criteria andNotesIsNull()
++ Criteria andNotesIsNotNull()
++ Criteria andNotesEqualTo(String)
++ Criteria andNotesNotEqualTo(String)
++ Criteria andNotesGreaterThan(String)
++ Criteria andNotesGreaterThanOrEqualTo(String)
++ Criteria andNotesLessThan(String)
++ Criteria andNotesLessThanOrEqualTo(String)
++ Criteria andNotesLike(String)
++ Criteria andNotesNotLike(String)
++ Criteria andNotesIn(List<String>)
++ Criteria andNotesNotIn(List<String>)
++ Criteria andNotesBetween(String,String)
++ Criteria andNotesNotBetween(String,String)
++ Criteria andRemarkIsNull()
++ Criteria andRemarkIsNotNull()
++ Criteria andRemarkEqualTo(String)
++ Criteria andRemarkNotEqualTo(String)
++ Criteria andRemarkGreaterThan(String)
++ Criteria andRemarkGreaterThanOrEqualTo(String)
++ Criteria andRemarkLessThan(String)
++ Criteria andRemarkLessThanOrEqualTo(String)
++ Criteria andRemarkLike(String)
++ Criteria andRemarkNotLike(String)
++ Criteria andRemarkIn(List<String>)
++ Criteria andRemarkNotIn(List<String>)
++ Criteria andRemarkBetween(String,String)
++ Criteria andRemarkNotBetween(String,String)
++ Criteria andFinishedAtIsNull()
++ Criteria andFinishedAtIsNotNull()
++ Criteria andFinishedAtEqualTo(Date)
++ Criteria andFinishedAtNotEqualTo(Date)
++ Criteria andFinishedAtGreaterThan(Date)
++ Criteria andFinishedAtGreaterThanOrEqualTo(Date)
++ Criteria andFinishedAtLessThan(Date)
++ Criteria andFinishedAtLessThanOrEqualTo(Date)
++ Criteria andFinishedAtIn(List<Date>)
++ Criteria andFinishedAtNotIn(List<Date>)
++ Criteria andFinishedAtBetween(Date,Date)
++ Criteria andFinishedAtNotBetween(Date,Date)
++ Criteria andClosedAtIsNull()
++ Criteria andClosedAtIsNotNull()
++ Criteria andClosedAtEqualTo(Date)
++ Criteria andClosedAtNotEqualTo(Date)
++ Criteria andClosedAtGreaterThan(Date)
++ Criteria andClosedAtGreaterThanOrEqualTo(Date)
++ Criteria andClosedAtLessThan(Date)
++ Criteria andClosedAtLessThanOrEqualTo(Date)
++ Criteria andClosedAtIn(List<Date>)
++ Criteria andClosedAtNotIn(List<Date>)
++ Criteria andClosedAtBetween(Date,Date)
++ Criteria andClosedAtNotBetween(Date,Date)
++ Criteria andCreatedAtIsNull()
++ Criteria andCreatedAtIsNotNull()
++ Criteria andCreatedAtEqualTo(Date)
++ Criteria andCreatedAtNotEqualTo(Date)
++ Criteria andCreatedAtGreaterThan(Date)
++ Criteria andCreatedAtGreaterThanOrEqualTo(Date)
++ Criteria andCreatedAtLessThan(Date)
++ Criteria andCreatedAtLessThanOrEqualTo(Date)
++ Criteria andCreatedAtIn(List<Date>)
++ Criteria andCreatedAtNotIn(List<Date>)
++ Criteria andCreatedAtBetween(Date,Date)
++ Criteria andCreatedAtNotBetween(Date,Date)
++ Criteria andUpdatedAtIsNull()
++ Criteria andUpdatedAtIsNotNull()
++ Criteria andUpdatedAtEqualTo(Date)
++ Criteria andUpdatedAtNotEqualTo(Date)
++ Criteria andUpdatedAtGreaterThan(Date)
++ Criteria andUpdatedAtGreaterThanOrEqualTo(Date)
++ Criteria andUpdatedAtLessThan(Date)
++ Criteria andUpdatedAtLessThanOrEqualTo(Date)
++ Criteria andUpdatedAtIn(List<Date>)
++ Criteria andUpdatedAtNotIn(List<Date>)
++ Criteria andUpdatedAtBetween(Date,Date)
++ Criteria andUpdatedAtNotBetween(Date,Date)
+}
+class com.welab.customer.model.UserQuestionExample$Criteria {
+# <<Create>> Criteria()
+}
+class com.welab.customer.model.UserQuestionExample$Criterion {
+- String condition
+- Object value
+- Object secondValue
+- boolean noValue
+- boolean singleValue
+- boolean betweenValue
+- boolean listValue
+- String typeHandler
+# <<Create>> Criterion(String)
+# <<Create>> Criterion(String,Object,String)
+# <<Create>> Criterion(String,Object)
+# <<Create>> Criterion(String,Object,Object,String)
+# <<Create>> Criterion(String,Object,Object)
++ String getCondition()
++ Object getValue()
++ Object getSecondValue()
++ boolean isNoValue()
++ boolean isSingleValue()
++ boolean isBetweenValue()
++ boolean isListValue()
++ String getTypeHandler()
+}
+class com.welab.customer.config.Swagger2Config {
++ Docket createRestApi()
+- ApiInfo apiInfo()
+- List<Parameter> buildHeader()
+}
+class com.welab.customer.vo.CreditUserFreezeLogVO {
+- Long userId
+- Integer pageNum
+- Integer pageSize
+}
+class com.welab.customer.model.UserQuestionLogExample {
+# String orderByClause
+# boolean distinct
+# List<Criteria> oredCriteria
++ <<Create>> UserQuestionLogExample()
++ void setOrderByClause(String)
++ String getOrderByClause()
++ void setDistinct(boolean)
++ boolean isDistinct()
++ List<Criteria> getOredCriteria()
++ void or(Criteria)
++ Criteria or()
++ Criteria createCriteria()
+# Criteria createCriteriaInternal()
++ void clear()
+}
+abstract class com.welab.customer.model.UserQuestionLogExample$GeneratedCriteria {
+# List<Criterion> criteria
+# <<Create>> GeneratedCriteria()
++ boolean isValid()
++ List<Criterion> getAllCriteria()
++ List<Criterion> getCriteria()
+# void addCriterion(String)
+# void addCriterion(String,Object,String)
+# void addCriterion(String,Object,Object,String)
++ Criteria andIdIsNull()
++ Criteria andIdIsNotNull()
++ Criteria andIdEqualTo(Long)
++ Criteria andIdNotEqualTo(Long)
++ Criteria andIdGreaterThan(Long)
++ Criteria andIdGreaterThanOrEqualTo(Long)
++ Criteria andIdLessThan(Long)
++ Criteria andIdLessThanOrEqualTo(Long)
++ Criteria andIdIn(List<Long>)
++ Criteria andIdNotIn(List<Long>)
++ Criteria andIdBetween(Long,Long)
++ Criteria andIdNotBetween(Long,Long)
++ Criteria andTypeIsNull()
++ Criteria andTypeIsNotNull()
++ Criteria andTypeEqualTo(Byte)
++ Criteria andTypeNotEqualTo(Byte)
++ Criteria andTypeGreaterThan(Byte)
++ Criteria andTypeGreaterThanOrEqualTo(Byte)
++ Criteria andTypeLessThan(Byte)
++ Criteria andTypeLessThanOrEqualTo(Byte)
++ Criteria andTypeIn(List<Byte>)
++ Criteria andTypeNotIn(List<Byte>)
++ Criteria andTypeBetween(Byte,Byte)
++ Criteria andTypeNotBetween(Byte,Byte)
++ Criteria andQuestionIdIsNull()
++ Criteria andQuestionIdIsNotNull()
++ Criteria andQuestionIdEqualTo(Long)
++ Criteria andQuestionIdNotEqualTo(Long)
++ Criteria andQuestionIdGreaterThan(Long)
++ Criteria andQuestionIdGreaterThanOrEqualTo(Long)
++ Criteria andQuestionIdLessThan(Long)
++ Criteria andQuestionIdLessThanOrEqualTo(Long)
++ Criteria andQuestionIdIn(List<Long>)
++ Criteria andQuestionIdNotIn(List<Long>)
++ Criteria andQuestionIdBetween(Long,Long)
++ Criteria andQuestionIdNotBetween(Long,Long)
++ Criteria andOriginIsNull()
++ Criteria andOriginIsNotNull()
++ Criteria andOriginEqualTo(String)
++ Criteria andOriginNotEqualTo(String)
++ Criteria andOriginGreaterThan(String)
++ Criteria andOriginGreaterThanOrEqualTo(String)
++ Criteria andOriginLessThan(String)
++ Criteria andOriginLessThanOrEqualTo(String)
++ Criteria andOriginLike(String)
++ Criteria andOriginNotLike(String)
++ Criteria andOriginIn(List<String>)
++ Criteria andOriginNotIn(List<String>)
++ Criteria andOriginBetween(String,String)
++ Criteria andOriginNotBetween(String,String)
++ Criteria andUserIdIsNull()
++ Criteria andUserIdIsNotNull()
++ Criteria andUserIdEqualTo(Long)
++ Criteria andUserIdNotEqualTo(Long)
++ Criteria andUserIdGreaterThan(Long)
++ Criteria andUserIdGreaterThanOrEqualTo(Long)
++ Criteria andUserIdLessThan(Long)
++ Criteria andUserIdLessThanOrEqualTo(Long)
++ Criteria andUserIdIn(List<Long>)
++ Criteria andUserIdNotIn(List<Long>)
++ Criteria andUserIdBetween(Long,Long)
++ Criteria andUserIdNotBetween(Long,Long)
++ Criteria andAdminIdIsNull()
++ Criteria andAdminIdIsNotNull()
++ Criteria andAdminIdEqualTo(Long)
++ Criteria andAdminIdNotEqualTo(Long)
++ Criteria andAdminIdGreaterThan(Long)
++ Criteria andAdminIdGreaterThanOrEqualTo(Long)
++ Criteria andAdminIdLessThan(Long)
++ Criteria andAdminIdLessThanOrEqualTo(Long)
++ Criteria andAdminIdIn(List<Long>)
++ Criteria andAdminIdNotIn(List<Long>)
++ Criteria andAdminIdBetween(Long,Long)
++ Criteria andAdminIdNotBetween(Long,Long)
++ Criteria andTitleIsNull()
++ Criteria andTitleIsNotNull()
++ Criteria andTitleEqualTo(String)
++ Criteria andTitleNotEqualTo(String)
++ Criteria andTitleGreaterThan(String)
++ Criteria andTitleGreaterThanOrEqualTo(String)
++ Criteria andTitleLessThan(String)
++ Criteria andTitleLessThanOrEqualTo(String)
++ Criteria andTitleLike(String)
++ Criteria andTitleNotLike(String)
++ Criteria andTitleIn(List<String>)
++ Criteria andTitleNotIn(List<String>)
++ Criteria andTitleBetween(String,String)
++ Criteria andTitleNotBetween(String,String)
++ Criteria andBodyIsNull()
++ Criteria andBodyIsNotNull()
++ Criteria andBodyEqualTo(String)
++ Criteria andBodyNotEqualTo(String)
++ Criteria andBodyGreaterThan(String)
++ Criteria andBodyGreaterThanOrEqualTo(String)
++ Criteria andBodyLessThan(String)
++ Criteria andBodyLessThanOrEqualTo(String)
++ Criteria andBodyLike(String)
++ Criteria andBodyNotLike(String)
++ Criteria andBodyIn(List<String>)
++ Criteria andBodyNotIn(List<String>)
++ Criteria andBodyBetween(String,String)
++ Criteria andBodyNotBetween(String,String)
++ Criteria andStateIsNull()
++ Criteria andStateIsNotNull()
++ Criteria andStateEqualTo(String)
++ Criteria andStateNotEqualTo(String)
++ Criteria andStateGreaterThan(String)
++ Criteria andStateGreaterThanOrEqualTo(String)
++ Criteria andStateLessThan(String)
++ Criteria andStateLessThanOrEqualTo(String)
++ Criteria andStateLike(String)
++ Criteria andStateNotLike(String)
++ Criteria andStateIn(List<String>)
++ Criteria andStateNotIn(List<String>)
++ Criteria andStateBetween(String,String)
++ Criteria andStateNotBetween(String,String)
++ Criteria andRemarkIsNull()
++ Criteria andRemarkIsNotNull()
++ Criteria andRemarkEqualTo(String)
++ Criteria andRemarkNotEqualTo(String)
++ Criteria andRemarkGreaterThan(String)
++ Criteria andRemarkGreaterThanOrEqualTo(String)
++ Criteria andRemarkLessThan(String)
++ Criteria andRemarkLessThanOrEqualTo(String)
++ Criteria andRemarkLike(String)
++ Criteria andRemarkNotLike(String)
++ Criteria andRemarkIn(List<String>)
++ Criteria andRemarkNotIn(List<String>)
++ Criteria andRemarkBetween(String,String)
++ Criteria andRemarkNotBetween(String,String)
++ Criteria andFinishedAtIsNull()
++ Criteria andFinishedAtIsNotNull()
++ Criteria andFinishedAtEqualTo(Date)
++ Criteria andFinishedAtNotEqualTo(Date)
++ Criteria andFinishedAtGreaterThan(Date)
++ Criteria andFinishedAtGreaterThanOrEqualTo(Date)
++ Criteria andFinishedAtLessThan(Date)
++ Criteria andFinishedAtLessThanOrEqualTo(Date)
++ Criteria andFinishedAtIn(List<Date>)
++ Criteria andFinishedAtNotIn(List<Date>)
++ Criteria andFinishedAtBetween(Date,Date)
++ Criteria andFinishedAtNotBetween(Date,Date)
++ Criteria andClosedAtIsNull()
++ Criteria andClosedAtIsNotNull()
++ Criteria andClosedAtEqualTo(Date)
++ Criteria andClosedAtNotEqualTo(Date)
++ Criteria andClosedAtGreaterThan(Date)
++ Criteria andClosedAtGreaterThanOrEqualTo(Date)
++ Criteria andClosedAtLessThan(Date)
++ Criteria andClosedAtLessThanOrEqualTo(Date)
++ Criteria andClosedAtIn(List<Date>)
++ Criteria andClosedAtNotIn(List<Date>)
++ Criteria andClosedAtBetween(Date,Date)
++ Criteria andClosedAtNotBetween(Date,Date)
++ Criteria andCreatedAtIsNull()
++ Criteria andCreatedAtIsNotNull()
++ Criteria andCreatedAtEqualTo(Date)
++ Criteria andCreatedAtNotEqualTo(Date)
++ Criteria andCreatedAtGreaterThan(Date)
++ Criteria andCreatedAtGreaterThanOrEqualTo(Date)
++ Criteria andCreatedAtLessThan(Date)
++ Criteria andCreatedAtLessThanOrEqualTo(Date)
++ Criteria andCreatedAtIn(List<Date>)
++ Criteria andCreatedAtNotIn(List<Date>)
++ Criteria andCreatedAtBetween(Date,Date)
++ Criteria andCreatedAtNotBetween(Date,Date)
+}
+class com.welab.customer.model.UserQuestionLogExample$Criteria {
+# <<Create>> Criteria()
+}
+class com.welab.customer.model.UserQuestionLogExample$Criterion {
+- String condition
+- Object value
+- Object secondValue
+- boolean noValue
+- boolean singleValue
+- boolean betweenValue
+- boolean listValue
+- String typeHandler
+# <<Create>> Criterion(String)
+# <<Create>> Criterion(String,Object,String)
+# <<Create>> Criterion(String,Object)
+# <<Create>> Criterion(String,Object,Object,String)
+# <<Create>> Criterion(String,Object,Object)
++ String getCondition()
++ Object getValue()
++ Object getSecondValue()
++ boolean isNoValue()
++ boolean isSingleValue()
++ boolean isBetweenValue()
++ boolean isListValue()
++ String getTypeHandler()
+}
+class com.welab.customer.service.impl.BankCardServiceImpl {
+- FinanceUserBankcardSevice financeUserBankcardSevice
++ Response<Object> queryUserBankCardPage(QueryUserBankDTO)
++ Response saveUserBankCard(BindUserBankDTO)
++ Response<Boolean> deleteUserBankCard(Long)
++ Response queryUserBankCardByUserId(Long)
++ Response queryUserBankCardByUserId(Long,Long)
+}
+class com.welab.customer.vo.UserDeviceParamVO {
+- {static} long serialVersionUID
+- Long userId
+}
+class com.welab.customer.vo.UserDeviceStateParamVO {
+- {static} long serialVersionUID
+- Long deviceId
+- Integer deviceState
+- String deviceKey
+- Long userId
+- String wdDeviceId
+}
+class com.welab.customer.app.facade.application.ApplicationServiceFacade {
+- ApplicationService applicationService
++ List<ContactVO> getContactByUserId(Long)
+}
+class com.welab.customer.service.impl.UserQuestionLogServiceImpl {
+- UserQuestionLogMapper mapper
+- UserService userService
++ void saveUserQuestionLog(UserQuestionLogTypeEnum,Long,Long,String)
++ Response findUserQuestionLogByPage(UserQuestionLogDTO)
++ Response<List<UserQuestionLogVoExt>> findUserQuestionLogList(Long)
+- void transName(UserQuestionLogVoExt,Map<Long,String>)
+- String queryName(Long)
+}
+class com.welab.customer.vo.UserTelLogVo {
+- Long id
+- Long userId
+- Long adminId
+- String origin
+- String tel
+- String remark
+- Date createdAt
+}
+class com.welab.customer.test.BnakTest {
+- BankInfoService bankInfoService
++ void testBank()
+}
+class com.welab.customer.service.BaseLoanService {
+- LoanCreditLimitService loanCreditLimitService
++ PageInfo<LoanLimitDetailVO> getLoanLimitDetailByUserId(LoanLimitDetailReqVO)
+}
+class com.welab.customer.app.facade.application.UserProfileServiceFacade {
+- UserProfilesService userProfilesService
++ UserProfileVO getUserProfile(Long)
+}
+class com.welab.customer.service.impl.ContractInfoServiceImpl {
+- ContractService contractService
+- ApplicationService applicationService
+- DisburseService disburseService
++ Response<String> getContract(String)
+}
+class com.welab.customer.service.impl.UserTelLogServiceImpl {
+- UserTelLogMapper userTelLogMapper
++ Response<Void> saveUserTelLog(UserTelLogVo)
++ Response<List<UserTelLogVo>> findUserTelLogList(Long)
+}
+class com.welab.customer.vo.UserQuestionLogVoExt {
+- String typeName
+- String userName
+- String adminName
+- String stateName
+}
+class com.welab.customer.model.UserQuestion {
+- Long id
+- String questionNumber
+- String level
+- String category
+- String source
+- Long userId
+- Long adminId
+- String origin
+- String title
+- String body
+- String state
+- String notes
+- String remark
+- Date finishedAt
+- Date closedAt
+- Date createdAt
+- Date updatedAt
++ Long getId()
++ void setId(Long)
++ String getQuestionNumber()
++ void setQuestionNumber(String)
++ String getLevel()
++ void setLevel(String)
++ String getCategory()
++ void setCategory(String)
++ String getSource()
++ void setSource(String)
++ Long getUserId()
++ void setUserId(Long)
++ Long getAdminId()
++ void setAdminId(Long)
++ String getOrigin()
++ void setOrigin(String)
++ String getTitle()
++ void setTitle(String)
++ String getBody()
++ void setBody(String)
++ String getState()
++ void setState(String)
++ String getNotes()
++ void setNotes(String)
++ String getRemark()
++ void setRemark(String)
++ Date getFinishedAt()
++ void setFinishedAt(Date)
++ Date getClosedAt()
++ void setClosedAt(Date)
++ Date getCreatedAt()
++ void setCreatedAt(Date)
++ Date getUpdatedAt()
++ void setUpdatedAt(Date)
+}
+class com.welab.customer.vo.UserQuestionVO {
+- {static} long serialVersionUID
+- Long id
+- String questionNumber
+- Long userId
+- String level
+- String category
+- String source
+- Long adminId
+- String origin
+- String title
+- String body
+- String state
+- String remark
+- Date finishedAt
+- Date closedAt
+- Date createdAt
+- Date updatedAt
+- String loanNumber
+}
+class com.welab.customer.model.DeviceOperateHistoryExample {
+# String orderByClause
+# boolean distinct
+# List<Criteria> oredCriteria
++ <<Create>> DeviceOperateHistoryExample()
++ void setOrderByClause(String)
++ String getOrderByClause()
++ void setDistinct(boolean)
++ boolean isDistinct()
++ List<Criteria> getOredCriteria()
++ void or(Criteria)
++ Criteria or()
++ Criteria createCriteria()
+# Criteria createCriteriaInternal()
++ void clear()
+}
+abstract class com.welab.customer.model.DeviceOperateHistoryExample$GeneratedCriteria {
+# List<Criterion> criteria
+# <<Create>> GeneratedCriteria()
++ boolean isValid()
++ List<Criterion> getAllCriteria()
++ List<Criterion> getCriteria()
+# void addCriterion(String)
+# void addCriterion(String,Object,String)
+# void addCriterion(String,Object,Object,String)
++ Criteria andIdIsNull()
++ Criteria andIdIsNotNull()
++ Criteria andIdEqualTo(Long)
++ Criteria andIdNotEqualTo(Long)
++ Criteria andIdGreaterThan(Long)
++ Criteria andIdGreaterThanOrEqualTo(Long)
++ Criteria andIdLessThan(Long)
++ Criteria andIdLessThanOrEqualTo(Long)
++ Criteria andIdIn(List<Long>)
++ Criteria andIdNotIn(List<Long>)
++ Criteria andIdBetween(Long,Long)
++ Criteria andIdNotBetween(Long,Long)
++ Criteria andUserIdIsNull()
++ Criteria andUserIdIsNotNull()
++ Criteria andUserIdEqualTo(Long)
++ Criteria andUserIdNotEqualTo(Long)
++ Criteria andUserIdGreaterThan(Long)
++ Criteria andUserIdGreaterThanOrEqualTo(Long)
++ Criteria andUserIdLessThan(Long)
++ Criteria andUserIdLessThanOrEqualTo(Long)
++ Criteria andUserIdIn(List<Long>)
++ Criteria andUserIdNotIn(List<Long>)
++ Criteria andUserIdBetween(Long,Long)
++ Criteria andUserIdNotBetween(Long,Long)
++ Criteria andOrgIdIsNull()
++ Criteria andOrgIdIsNotNull()
++ Criteria andOrgIdEqualTo(Long)
++ Criteria andOrgIdNotEqualTo(Long)
++ Criteria andOrgIdGreaterThan(Long)
++ Criteria andOrgIdGreaterThanOrEqualTo(Long)
++ Criteria andOrgIdLessThan(Long)
++ Criteria andOrgIdLessThanOrEqualTo(Long)
++ Criteria andOrgIdIn(List<Long>)
++ Criteria andOrgIdNotIn(List<Long>)
++ Criteria andOrgIdBetween(Long,Long)
++ Criteria andOrgIdNotBetween(Long,Long)
++ Criteria andDeviceIdIsNull()
++ Criteria andDeviceIdIsNotNull()
++ Criteria andDeviceIdEqualTo(String)
++ Criteria andDeviceIdNotEqualTo(String)
++ Criteria andDeviceIdGreaterThan(String)
++ Criteria andDeviceIdGreaterThanOrEqualTo(String)
++ Criteria andDeviceIdLessThan(String)
++ Criteria andDeviceIdLessThanOrEqualTo(String)
++ Criteria andDeviceIdLike(String)
++ Criteria andDeviceIdNotLike(String)
++ Criteria andDeviceIdIn(List<String>)
++ Criteria andDeviceIdNotIn(List<String>)
++ Criteria andDeviceIdBetween(String,String)
++ Criteria andDeviceIdNotBetween(String,String)
++ Criteria andDeviceStateIsNull()
++ Criteria andDeviceStateIsNotNull()
++ Criteria andDeviceStateEqualTo(Integer)
++ Criteria andDeviceStateNotEqualTo(Integer)
++ Criteria andDeviceStateGreaterThan(Integer)
++ Criteria andDeviceStateGreaterThanOrEqualTo(Integer)
++ Criteria andDeviceStateLessThan(Integer)
++ Criteria andDeviceStateLessThanOrEqualTo(Integer)
++ Criteria andDeviceStateIn(List<Integer>)
++ Criteria andDeviceStateNotIn(List<Integer>)
++ Criteria andDeviceStateBetween(Integer,Integer)
++ Criteria andDeviceStateNotBetween(Integer,Integer)
++ Criteria andEnabledIsNull()
++ Criteria andEnabledIsNotNull()
++ Criteria andEnabledEqualTo(Boolean)
++ Criteria andEnabledNotEqualTo(Boolean)
++ Criteria andEnabledGreaterThan(Boolean)
++ Criteria andEnabledGreaterThanOrEqualTo(Boolean)
++ Criteria andEnabledLessThan(Boolean)
++ Criteria andEnabledLessThanOrEqualTo(Boolean)
++ Criteria andEnabledIn(List<Boolean>)
++ Criteria andEnabledNotIn(List<Boolean>)
++ Criteria andEnabledBetween(Boolean,Boolean)
++ Criteria andEnabledNotBetween(Boolean,Boolean)
++ Criteria andAdminNameIsNull()
++ Criteria andAdminNameIsNotNull()
++ Criteria andAdminNameEqualTo(String)
++ Criteria andAdminNameNotEqualTo(String)
++ Criteria andAdminNameGreaterThan(String)
++ Criteria andAdminNameGreaterThanOrEqualTo(String)
++ Criteria andAdminNameLessThan(String)
++ Criteria andAdminNameLessThanOrEqualTo(String)
++ Criteria andAdminNameLike(String)
++ Criteria andAdminNameNotLike(String)
++ Criteria andAdminNameIn(List<String>)
++ Criteria andAdminNameNotIn(List<String>)
++ Criteria andAdminNameBetween(String,String)
++ Criteria andAdminNameNotBetween(String,String)
++ Criteria andAdminIdIsNull()
++ Criteria andAdminIdIsNotNull()
++ Criteria andAdminIdEqualTo(Long)
++ Criteria andAdminIdNotEqualTo(Long)
++ Criteria andAdminIdGreaterThan(Long)
++ Criteria andAdminIdGreaterThanOrEqualTo(Long)
++ Criteria andAdminIdLessThan(Long)
++ Criteria andAdminIdLessThanOrEqualTo(Long)
++ Criteria andAdminIdIn(List<Long>)
++ Criteria andAdminIdNotIn(List<Long>)
++ Criteria andAdminIdBetween(Long,Long)
++ Criteria andAdminIdNotBetween(Long,Long)
++ Criteria andCreatedAtIsNull()
++ Criteria andCreatedAtIsNotNull()
++ Criteria andCreatedAtEqualTo(Date)
++ Criteria andCreatedAtNotEqualTo(Date)
++ Criteria andCreatedAtGreaterThan(Date)
++ Criteria andCreatedAtGreaterThanOrEqualTo(Date)
++ Criteria andCreatedAtLessThan(Date)
++ Criteria andCreatedAtLessThanOrEqualTo(Date)
++ Criteria andCreatedAtIn(List<Date>)
++ Criteria andCreatedAtNotIn(List<Date>)
++ Criteria andCreatedAtBetween(Date,Date)
++ Criteria andCreatedAtNotBetween(Date,Date)
++ Criteria andUpdatedAtIsNull()
++ Criteria andUpdatedAtIsNotNull()
++ Criteria andUpdatedAtEqualTo(Date)
++ Criteria andUpdatedAtNotEqualTo(Date)
++ Criteria andUpdatedAtGreaterThan(Date)
++ Criteria andUpdatedAtGreaterThanOrEqualTo(Date)
++ Criteria andUpdatedAtLessThan(Date)
++ Criteria andUpdatedAtLessThanOrEqualTo(Date)
++ Criteria andUpdatedAtIn(List<Date>)
++ Criteria andUpdatedAtNotIn(List<Date>)
++ Criteria andUpdatedAtBetween(Date,Date)
++ Criteria andUpdatedAtNotBetween(Date,Date)
+}
+class com.welab.customer.model.DeviceOperateHistoryExample$Criteria {
+# <<Create>> Criteria()
+}
+class com.welab.customer.model.DeviceOperateHistoryExample$Criterion {
+- String condition
+- Object value
+- Object secondValue
+- boolean noValue
+- boolean singleValue
+- boolean betweenValue
+- boolean listValue
+- String typeHandler
+# <<Create>> Criterion(String)
+# <<Create>> Criterion(String,Object,String)
+# <<Create>> Criterion(String,Object)
+# <<Create>> Criterion(String,Object,Object,String)
+# <<Create>> Criterion(String,Object,Object)
++ String getCondition()
++ Object getValue()
++ Object getSecondValue()
++ boolean isNoValue()
++ boolean isSingleValue()
++ boolean isBetweenValue()
++ boolean isListValue()
++ String getTypeHandler()
+}
+class com.welab.customer.app.facade.credit.CreditRemoteService {
+- CreditUserAccountService creditUserAccountService
+- CreditProductListService creditUserTagService
+- UserProfilesApprovalService userProfilesApprovalService
+- {static} String TAG
++ Response getUserTagCredit(UpdateCreditUserAccountVO)
++ CreditUserAccountVO findByUserAndProductCode(Long,String)
++ Response freezeUser(CreditUserAccountStatusLogDTO)
++ Response<PageInfo<CreditUserAccountStatusLogDTO>> getFreezeLogList(PageRequestDTO<CreditUserAccountStatusLogDTO>)
++ Response unFreezeUser(CreditUserAccountStatusLogDTO)
+}
+abstract class com.welab.customer.service.util.IdGenerator {
+- {static} int APPLICATION_ID_LENGTH
+- {static} String FORMAT_BASE
+- {static} String APPLICATION_ID_RANDOM_FORMAT
+- {static} String TIME_STAMP_FORMAT
++ {static} String generate(Date)
++ {static} String generate()
+- {static} String generateRandomString(String,int)
+- {static} String parseDate(Date)
+}
+interface com.welab.customer.mapper.UserQuestionExtMapper {
+~ List<UserQuestionStaticExt> findUserQuestionStatic(Date,Date,Long)
+~ Long countUserQuestionStatic(Date,Date,Long)
+~ List<UserQuestion> findListByDate(Date,Date,Long)
+}
+class com.welab.customer.dto.QueryUserInfoDTO {
+- int pageNum
+- int pageSize
+- String name
+- String mobile
+- String nik
+}
+class com.welab.customer.service.BaseUserEmailVerifyService {
+- UserEmailVerifyMapper userEmailVerifyMapper
++ Long countForTime(Long,List<String>,Date,Date)
++ UserEmailVerify getLastByUserId(Long,String)
++ UserEmailVerify getLastByUserId(Long,Integer,String,boolean)
++ List<UserEmailVerify> getList(Long)
++ UserEmailVerify getOne(String)
++ UserEmailVerify getEmailVerifyInfo(Long,String)
++ UserEmailVerify getOneByEmail(Long,String)
++ boolean save(UserEmailVerify)
++ UserEmailVerify findLastOne(Long,String)
+}
+interface com.welab.customer.mapper.UserQuestionMapper {
+~ long countByExample(UserQuestionExample)
+~ int deleteByExample(UserQuestionExample)
+~ int deleteByPrimaryKey(Long)
+~ int insert(UserQuestion)
+~ int insertSelective(UserQuestion)
+~ List<UserQuestion> selectByExample(UserQuestionExample)
+~ UserQuestion selectByPrimaryKey(Long)
+~ int updateByExampleSelective(UserQuestion,UserQuestionExample)
+~ int updateByExample(UserQuestion,UserQuestionExample)
+~ int updateByPrimaryKeySelective(UserQuestion)
+~ int updateByPrimaryKey(UserQuestion)
+}
+class com.welab.customer.vo.UserQuestionLogVo {
+- Long id
+- Byte type
+- Long questionId
+- String origin
+- Long userId
+- Long adminId
+- String title
+- String body
+- String state
+- String remark
+- Date finishedAt
+- Date closedAt
+- Date createdAt
+}
+class com.welab.customer.model.UserNameLog {
+- Long id
+- Long userId
+- Long adminId
+- String newName
+- String oldName
+- Date createdAt
++ Long getId()
++ void setId(Long)
++ Long getUserId()
++ void setUserId(Long)
++ Long getAdminId()
++ void setAdminId(Long)
++ String getNewName()
++ void setNewName(String)
++ String getOldName()
++ void setOldName(String)
++ Date getCreatedAt()
++ void setCreatedAt(Date)
+}
+
+
+com.welab.customer.service.UserModTelService <|.. com.welab.customer.service.impl.UserModTelServiceImpl
+com.welab.customer.vo.Serializable <|.. com.welab.customer.vo.UserProfilesTrackFileVO
+java.io.Serializable <|.. com.welab.customer.service.vo.LoanLimitDetailVO
+com.welab.customer.service.UserInfoService <|.. com.welab.customer.service.impl.UserInfoServiceImpl
+com.welab.customer.test.SimpleTest <|-- com.welab.customer.test.UserDeviceTest
+com.welab.customer.dto.BasePage <|-- com.welab.customer.dto.QueryRepaymentDTO
+com.welab.customer.dto.BasePage <|-- com.welab.customer.dto.QueryUserBankDTO
+com.welab.customer.dto.BasePage <|-- com.welab.customer.dto.UserQuestionDTO
+java.io.Serializable <|.. com.welab.customer.dto.UserEmailVerifyDTO
+com.welab.customer.service.UserQuestionService <|.. com.welab.customer.service.impl.UserQuestionServcieImpl
+com.welab.common.exception.FastRuntimeException <|-- com.welab.customer.exception.CustomerException
+com.welab.customer.model.UserTelLogExample +.. com.welab.customer.model.UserTelLogExample$GeneratedCriteria
+com.welab.customer.model.UserTelLogExample +.. com.welab.customer.model.UserTelLogExample$Criteria
+com.welab.customer.model.GeneratedCriteria <|-- com.welab.customer.model.UserTelLogExample$Criteria
+com.welab.customer.model.UserTelLogExample +.. com.welab.customer.model.UserTelLogExample$Criterion
+com.welab.customer.test.SimpleTest <|-- com.welab.customer.test.finance.AdvanceRepaymentServiceTest
+com.welab.customer.model.UserTelChangeLogExample +.. com.welab.customer.model.UserTelChangeLogExample$GeneratedCriteria
+com.welab.customer.model.UserTelChangeLogExample +.. com.welab.customer.model.UserTelChangeLogExample$Criteria
+com.welab.customer.model.GeneratedCriteria <|-- com.welab.customer.model.UserTelChangeLogExample$Criteria
+com.welab.customer.model.UserTelChangeLogExample +.. com.welab.customer.model.UserTelChangeLogExample$Criterion
+com.welab.loan.finance.vo.DuesAmountExtVo <|-- com.welab.customer.service.vo.DuesAmountOverExtVo
+com.welab.customer.dto.BasePage <|-- com.welab.customer.dto.UserQuestionLogDTO
+com.welab.customer.test.SimpleTest <|-- com.welab.customer.test.TransationTest
+com.welab.application.vo.LoansVO <|-- com.welab.customer.vo.LoansVOExt
+java.io.Serializable <|.. com.welab.customer.response.PageBean
+java.io.Serializable <|.. com.welab.customer.vo.WhitelistVO
+com.welab.customer.service.UserEmailVerifyService <|.. com.welab.customer.service.impl.UserEmailVerifyServiceImpl
+java.io.Serializable <|.. com.welab.customer.service.vo.LoanLimitDetailReqVO
+com.welab.customer.model.UserEmailVerifyExample +.. com.welab.customer.model.UserEmailVerifyExample$GeneratedCriteria
+com.welab.customer.model.UserEmailVerifyExample +.. com.welab.customer.model.UserEmailVerifyExample$Criteria
+com.welab.customer.model.GeneratedCriteria <|-- com.welab.customer.model.UserEmailVerifyExample$Criteria
+com.welab.customer.model.UserEmailVerifyExample +.. com.welab.customer.model.UserEmailVerifyExample$Criterion
+java.io.Serializable <|.. com.welab.customer.vo.UpdateUserDeviceStatusParamVO
+com.welab.customer.service.TransationService <|.. com.welab.customer.service.impl.TransationServiceImpl
+com.welab.customer.test.SimpleTest <|-- com.welab.customer.test.finance.CreditTest
+org.springframework.web.filter.OncePerRequestFilter <|-- com.welab.customer.filter.LogFilter
+com.welab.customer.common.Urls +.. com.welab.customer.common.Urls$Loans
+com.welab.customer.common.Urls +.. com.welab.customer.common.Urls$UserProfiles
+com.welab.customer.common.Urls +.. com.welab.customer.common.Urls$Contract
+com.welab.customer.common.Urls +.. com.welab.customer.common.Urls$UserQuestion
+com.welab.customer.common.Urls +.. com.welab.customer.common.Urls$BankCard
+com.welab.customer.common.Urls +.. com.welab.customer.common.Urls$Transaction
+com.welab.customer.common.Urls +.. com.welab.customer.common.Urls$UserQuestionLog
+com.welab.customer.common.Urls +.. com.welab.customer.common.Urls$UserTelLog
+com.welab.customer.common.Urls +.. com.welab.customer.common.Urls$UserModTel
+com.welab.customer.common.Urls +.. com.welab.customer.common.Urls$Schedule
+com.welab.customer.common.Urls +.. com.welab.customer.common.Urls$Dues
+com.welab.customer.common.Urls +.. com.welab.customer.common.Urls$Integral
+com.welab.customer.common.Urls +.. com.welab.customer.common.Urls$File
+com.welab.customer.common.Urls +.. com.welab.customer.common.Urls$Email
+com.welab.customer.common.Urls +.. com.welab.customer.common.Urls$Credit
+com.welab.customer.common.Urls +.. com.welab.customer.common.Urls$UserDevice
+com.welab.customer.common.Urls +.. com.welab.customer.common.Urls$WhiteListURL
+com.welab.customer.test.SimpleTest <|-- com.welab.customer.test.ScaffoldTest
+com.welab.customer.test.SimpleTest <|-- com.welab.customer.test.FlexifitTest
+com.welab.customer.test.SimpleTest <|-- com.welab.customer.test.finance.TransationTest
+com.welab.customer.service.LoansInfoService <|.. com.welab.customer.service.impl.LoansInfoServiceImpl
+java.io.Serializable <|.. com.welab.customer.dto.BasePage
+java.io.Serializable <|.. com.welab.customer.dto.LoansDTO
+java.io.Serializable <|.. com.welab.customer.dto.BindUserBankDTO
+com.welab.customer.vo.Serializable <|.. com.welab.customer.vo.ExportUserQuestion
+com.welab.customer.model.UserQuestionExample +.. com.welab.customer.model.UserQuestionExample$GeneratedCriteria
+com.welab.customer.model.UserQuestionExample +.. com.welab.customer.model.UserQuestionExample$Criteria
+com.welab.customer.model.GeneratedCriteria <|-- com.welab.customer.model.UserQuestionExample$Criteria
+com.welab.customer.model.UserQuestionExample +.. com.welab.customer.model.UserQuestionExample$Criterion
+com.welab.customer.model.UserQuestionLogExample +.. com.welab.customer.model.UserQuestionLogExample$GeneratedCriteria
+com.welab.customer.model.UserQuestionLogExample +.. com.welab.customer.model.UserQuestionLogExample$Criteria
+com.welab.customer.model.GeneratedCriteria <|-- com.welab.customer.model.UserQuestionLogExample$Criteria
+com.welab.customer.model.UserQuestionLogExample +.. com.welab.customer.model.UserQuestionLogExample$Criterion
+com.welab.customer.service.BankCardService <|.. com.welab.customer.service.impl.BankCardServiceImpl
+java.io.Serializable <|.. com.welab.customer.vo.UserDeviceParamVO
+com.welab.sea.util.dto.PageQuery <|-- com.welab.customer.vo.UserDeviceParamVO
+java.io.Serializable <|.. com.welab.customer.vo.UserDeviceStateParamVO
+com.welab.customer.service.UserQuestionLogService <|.. com.welab.customer.service.impl.UserQuestionLogServiceImpl
+com.welab.customer.vo.Serializable <|.. com.welab.customer.vo.UserTelLogVo
+com.welab.customer.test.SimpleTest <|-- com.welab.customer.test.BnakTest
+com.welab.customer.service.ContractInfoService <|.. com.welab.customer.service.impl.ContractInfoServiceImpl
+com.welab.customer.service.UserTelLogService <|.. com.welab.customer.service.impl.UserTelLogServiceImpl
+com.welab.customer.vo.UserQuestionLogVo <|-- com.welab.customer.vo.UserQuestionLogVoExt
+java.io.Serializable <|.. com.welab.customer.vo.UserQuestionVO
+com.welab.customer.model.DeviceOperateHistoryExample +.. com.welab.customer.model.DeviceOperateHistoryExample$GeneratedCriteria
+com.welab.customer.model.DeviceOperateHistoryExample +.. com.welab.customer.model.DeviceOperateHistoryExample$Criteria
+com.welab.customer.model.GeneratedCriteria <|-- com.welab.customer.model.DeviceOperateHistoryExample$Criteria
+com.welab.customer.model.DeviceOperateHistoryExample +.. com.welab.customer.model.DeviceOperateHistoryExample$Criterion
+com.welab.customer.mapper.UserQuestionMapper <|-- com.welab.customer.mapper.UserQuestionExtMapper
+com.welab.customer.vo.Serializable <|.. com.welab.customer.vo.UserQuestionLogVo
+@enduml

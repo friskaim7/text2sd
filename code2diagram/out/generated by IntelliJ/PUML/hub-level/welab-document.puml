@@ -1,0 +1,1788 @@
+@startuml
+class com.welab.document.service.impl.AttachmentServiceImpl {
+- AttachmentDao attachmentDao
+- GridFsTemplateExt gridFsTemplate
++ Response uploadAttachment(MultipartFile,Attachment)
++ Response uploadAndReplaceAttachment(MultipartFile,Attachment)
++ Page<Attachment> findAttachmentPage(QueryAttachmentReq)
++ GridFSDBFileExt getGridFSDBFile(String)
+}
+class com.welab.document.service.impl.AttachmentServiceImpl$QueryAttachmentReq {
+- Integer pageNum
+- Integer pageSize
+}
+class com.welab.document.model.PartnerDocument {
+- {static} long serialVersionUID
+- Long docId
+- Long orgId
+- Integer relationType
+- Long relationId
+- String docType
+- String fileName
+- String fileType
+- String fileUrl
+- String accessToken
+- Integer fileIndex
+- Boolean async
+- Short watermark
+- Short thumbnail
+- Short downloadStatus
+- Date gmtDownload
+- Date gmtCreate
+- Date gmtModified
+- Integer lockVersion
+}
+enum com.welab.document.enums.ResponseCodeTypeEnum {
++  SUCCESS
++  SYSTEM_BUSY
++  FAILURE
++  UPLOAD_FILE_IS_NULL
++  IMG_TYPE_IS_NOT_ALLOWED
+- int code
+- String message
+- <<Create>> ResponseCodeTypeEnum(int,String)
++ int getCode()
++ String getMessage()
++ {static} ResponseCodeTypeEnum getResponseCodeTypeByCode(Integer)
+}
+interface com.welab.document.service.DocumentService {
+~ void uploadFileAndSave(DocUploadDto)
+~ Long uploadFile(DocUploadDto)
+~ void uploadUrlFileAndSave(UrlDocUploadDto)
+~ Response<List<DocumentDto>> getFile(DocQueryDto)
+~ Response<List<DocumentDto>> getFiles(SeaDocQueryDto)
+~ Response<DocumentDto> getLastestOneFile(DocQueryDto)
+~ Response<AliCloudStsDto> getStsAuthority(Long,Long)
+~ Response<Boolean> delete(Long)
+~ Response<Long> insert(SeaDocInsertDto)
+~ Response<List<DocumentDto>> getRecords(List<Long>,int)
+~ Response<DocumentDto> getByDocId(Long)
+}
+class com.welab.document.ConfigConsts {
++ {static} String CA_NAME
+}
+class com.welab.document.config.UploadConfig {
+- Map<String,UploadItemConfig> uploadConfigs
++ UploadItemConfig getUploadItemConfig(String)
+}
+class com.welab.document.config.UploadConfig$UploadItemConfig {
+- String allowUploadTypes
+- String notAllowUploadTypes
+- String maxFileSize
+- String urlExpiry
++ boolean checkFileType(String)
++ Date getUrlExpiryDate()
++ long getMaxSize()
+}
+class com.welab.document.test.DocumentServiceImplTest {
++ {static} String IMAGE_BEST_BASE64
+- DocumentService documentService
++ void testInsert()
++ void uploadDocument()
++ void getFile()
+}
+class com.welab.document.domain.model.Attachment {
+- String id
+- String type
+- String name
+- String fileId
+- Long uploadUserId
+- String ext
+- Date uploadTime
+- Date expireTime
+}
+enum com.welab.document.enums.PictureStyleEnum {
++  ORIGINAL
++  HIGH
++  MEDIUM
++  THUMB
+- String value
+- <<Create>> PictureStyleEnum(String)
++ {static} PictureStyleEnum getPictureStyle(String)
++ String getValue()
+}
+class com.welab.document.model.PhotoInfo {
+- Long id
+- Long docId
+- Long userId
+- Byte pid
+- String pinfo
+- String sourceId
+- Date createdAt
+- Date updatedAt
++ Long getId()
++ void setId(Long)
++ Long getDocId()
++ void setDocId(Long)
++ Long getUserId()
++ void setUserId(Long)
++ Byte getPid()
++ void setPid(Byte)
++ String getPinfo()
++ void setPinfo(String)
++ String getSourceId()
++ void setSourceId(String)
++ Date getCreatedAt()
++ void setCreatedAt(Date)
++ Date getUpdatedAt()
++ void setUpdatedAt(Date)
+}
+class com.welab.document.domain.tables.StaticImport {
++ TablePartnerDocument tPartnerDocument
++ TableSaasDocument tSaasDocument
+}
+class com.welab.document.dto.DocumentDto {
+- {static} long serialVersionUID
+- Long docId
+- Long orgId
+- Integer relationType
+- Long relationId
+- String docType
+- String fileType
+- String fileName
+- Long fileSize
+- Integer fileIndex
+- Integer watermark
+- Integer thumbnail
+- String accessToken
+- Date gmtUpload
+- Date gmtCreate
+- Date gmtModified
+- String base64Data
+- String originUrl
+- String watermarkUrl
+- String style
+- List<ThumbnailDto> thumbnailList
+- Boolean state
++ void collectThumbnail(ThumbnailDto)
+}
+class com.welab.document.utils.Im4JavaCmd {
+- {static} Logger LOGGER
++ {static} String GM_HOME
+- {static} boolean ENABLE_GRAPHICS_MAGICK
+- {static} Im4JavaCmd CMD
+- {static} boolean isInit
+- {static} String gmHomePath
+- <<Create>> Im4JavaCmd()
++ {static} Im4JavaCmd getInstance()
+- {static} void parseGraphicsMagickPath()
++ boolean resize(String,String,String)
++ boolean addWaterMark(String,String)
+- BufferedImage getWaterMarkFileAsBufferedImage(String)
+- ConvertCmd buildConvertCmd()
+- CompositeCmd buildCompositeCmd()
+}
+class com.welab.document.utils.Certificate {
+- File m_certFile
+- String m_password
++ <<Create>> Certificate(File,String)
++ File getCertFile()
++ String getPassword()
+}
+class com.welab.document.vo.common.DocumentResponse {
+- {static} long serialVersionUID
+- Integer code
+- String message
+- T result
++ <<Create>> DocumentResponse(T)
++ <<Create>> DocumentResponse(Integer)
++ <<Create>> DocumentResponse(Integer,T)
+}
+class com.welab.document.handler.Document {
+- File documentFile
+- String accessToken
+- String fileExtension
+- String fileName
+- String fileFullName
+- String mimeType
+- long fileSize
+- boolean addWatermark
+- boolean addThumbnail
+- boolean async
++ <<Create>> Document(String)
++ <<Create>> Document(String,String)
++ <<Create>> Document(File)
+- void initializeFileInfo(String)
++ void setDocument(File)
++ File getDocument()
++ long getFileSize()
++ void setFileSize(long)
++ String getAccessToken()
++ void setAccessToken(String)
++ String getFileExtension()
++ String getFileName()
++ String getMimeType()
++ boolean isAddWatermark()
++ void setAddWatermark(boolean)
++ boolean isAddThumbnail()
++ void setAddThumbnail(boolean)
++ boolean isAsync()
++ void setAsync(boolean)
++ String getFileFullName()
++ void setFileFullName(String)
+}
+enum com.welab.document.enums.DocsTypeEnum {
++  _2ND_NPWP
++  _2ND_SIM
++  _2ND_BPJS_H
++  _2ND_BPJS_R
++  _2ND_STNK
++  _2ND_OTHER
++  _2ND_FIF_DOC
++  COMPANY_ID_CARD_2ND
++  SALARY_SLIP_2ND
++  KARTU_ASURANSI_2ND
++  SALARY_REKENING_2ND
++  SELF_NPWP_2ND
++  SELF_SIUP_2ND
++  SELF_SKU_2ND
++  SELF_PBB_2ND
++  SELF_BUKTI_2ND
++  SELF_SPT_2ND
++  SELF_BANK_STATEMENT_2ND
++  E_KTP_2ND
++  DRIVER_LICENSE_2ND
++  SALARIED_CATEGORY
++  SELF_EMPLOYEE_CATEGORY
++  CUSTOMER_2ND_ID
++  EKTP_2ND
++  _2ND_TAX_CUT_SLIP
++  _2ND_FAMILY_CARD
++  _2ND_ANNUAL_RECEIPT
++  SELF_SKU_SIUP_TDP_2ND
++  SK_PNS_2ND
++  BANK_STATEMENT_3_MONTHS_2ND
++  EMPLOYMENT_CONTRACT_2ND
++  ID_CARD_2ND
++  ID_PNS_2ND
++  NAME_CARD_2ND
++  PHOTOS_OF_BUSI_LOCA_2ND
++  RECEIPTRI_2ND
++  SALARY_CERTIFICATE_2ND
++  WEBSITE_PHOTO_SER_2ND
++  COLLECTION_VOICE
++  FINANCE_PLANS_CONTRACT_HTML
++  FINANCE_PLANS_CONTRACT_PDF
++  FINANCE_F_PLAN_CONTRACT_PDF
++  MAUCASH_SUPPLEMENT_CONTRACT
++  H5_FACE_FILE
++  TO_B_CONTRACT
++  TO_B_RESTOCK_TERMSHEET
++  TO_B_RESTOCK_MAP
++  RESTOCK_BACK_FILE
++  TAPP_IMPORT_PDF_FILE
++  TAPP_APPLY_FILE
++  GADA_CONTRACT
++  OJK_CHECK_UFI_PDF
++  FC_PHOTO
++  KTP
++  MAUMODAL_NIB
++  MAUMODAL_NPWP
++  MAUMODAL_FRONT_BUILDING
++  MAUMODAL_RIGHT_BUILDING
++  MAUMODAL_LEFT_BUILDING
++  MAUMODAL_PRODUCT
++  MAUMODAL_KK
++  MAUMODAL_SK
++  SELFIE
++  FRONT_SIDE_BUILDING_SELFIE
++  BUSINESS_PRODUCT_SELFIE
++  NPWP
++  NIB
++  POWER_OF_ATTORNEY_IN_CHARGE
+- String typeName
+- String typeValue
+}
+interface com.welab.document.mapper.PhotoInfoMapper {
+~ int countByExample(PhotoInfoExample)
+~ int deleteByExample(PhotoInfoExample)
+~ int deleteByPrimaryKey(Long)
+~ int insert(PhotoInfo)
+~ int insertSelective(PhotoInfo)
+~ List<PhotoInfo> selectByExample(PhotoInfoExample)
+~ PhotoInfo selectByPrimaryKey(Long)
+~ int updateByExampleSelective(PhotoInfo,PhotoInfoExample)
+~ int updateByExample(PhotoInfo,PhotoInfoExample)
+~ int updateByPrimaryKeySelective(PhotoInfo)
+~ int updateByPrimaryKey(PhotoInfo)
+}
+enum com.welab.document.enums.PhotoInfoPidEnum {
++  CAMERA
++  PHOTO
++  UNKNOWN
+- Byte value
+- String desc
+}
+class com.welab.document.controller.DocumentController {
+- DocValidator validator
+- DocumentService docService
+- DocumentHandler handler
+- UploadForSeaCmdExe uploadForSeaCmdExe
+- AttachmentServiceImpl attachmentService
+- OjkCheckContractGenerationService ojkCheckContractGenerationService
++ Response<Boolean> fileUpload(MultipartFile,DocUploadVo)
++ Response getByToken(String,String)
++ Response uploadForSea(Long,MultipartFile,DocUploadVo)
++ Response uploadForSea2(Long,MultipartFile,DocUploadVo)
++ Response uploadAttachment(Long,MultipartFile,Attachment)
++ Response uploadAndReplaceAttachment(Long,MultipartFile,Attachment)
++ Page<Attachment> findAttachmentPage(AttachmentServiceImpl.QueryAttachmentReq)
++ String attachmentDownload(String,HttpServletResponse)
++ String loanContract(String,HttpServletResponse)
++ Response uploadForSea(MultipartFile,String)
++ Response<DocumentDto> getLastestOneFile(DocQueryDto)
+}
+class com.welab.document.dao.BasePartnerDocumentService {
+- PartnerDocumentMapper partnerDocumentMapper
++ void insert(PartnerDocument)
++ void update(PartnerDocument)
++ List<PartnerDocument> getForList(Long,Integer,Long)
+}
+class com.welab.document.test.SimpleTest {
++ <<Create>> SimpleTest()
+}
+class com.welab.document.utils.CopyUtil {
+- {static} HashSet<String> primitive
++ {static} void copy(Object,Object)
+}
+class com.welab.document.model.PhotoInfoExample {
+# String orderByClause
+# boolean distinct
+# List<Criteria> oredCriteria
++ <<Create>> PhotoInfoExample()
++ void setOrderByClause(String)
++ String getOrderByClause()
++ void setDistinct(boolean)
++ boolean isDistinct()
++ List<Criteria> getOredCriteria()
++ void or(Criteria)
++ Criteria or()
++ Criteria createCriteria()
+# Criteria createCriteriaInternal()
++ void clear()
+}
+abstract class com.welab.document.model.PhotoInfoExample$GeneratedCriteria {
+# List<Criterion> criteria
+# <<Create>> GeneratedCriteria()
++ boolean isValid()
++ List<Criterion> getAllCriteria()
++ List<Criterion> getCriteria()
+# void addCriterion(String)
+# void addCriterion(String,Object,String)
+# void addCriterion(String,Object,Object,String)
++ Criteria andIdIsNull()
++ Criteria andIdIsNotNull()
++ Criteria andIdEqualTo(Long)
++ Criteria andIdNotEqualTo(Long)
++ Criteria andIdGreaterThan(Long)
++ Criteria andIdGreaterThanOrEqualTo(Long)
++ Criteria andIdLessThan(Long)
++ Criteria andIdLessThanOrEqualTo(Long)
++ Criteria andIdIn(List<Long>)
++ Criteria andIdNotIn(List<Long>)
++ Criteria andIdBetween(Long,Long)
++ Criteria andIdNotBetween(Long,Long)
++ Criteria andDocIdIsNull()
++ Criteria andDocIdIsNotNull()
++ Criteria andDocIdEqualTo(Long)
++ Criteria andDocIdNotEqualTo(Long)
++ Criteria andDocIdGreaterThan(Long)
++ Criteria andDocIdGreaterThanOrEqualTo(Long)
++ Criteria andDocIdLessThan(Long)
++ Criteria andDocIdLessThanOrEqualTo(Long)
++ Criteria andDocIdIn(List<Long>)
++ Criteria andDocIdNotIn(List<Long>)
++ Criteria andDocIdBetween(Long,Long)
++ Criteria andDocIdNotBetween(Long,Long)
++ Criteria andUserIdIsNull()
++ Criteria andUserIdIsNotNull()
++ Criteria andUserIdEqualTo(Long)
++ Criteria andUserIdNotEqualTo(Long)
++ Criteria andUserIdGreaterThan(Long)
++ Criteria andUserIdGreaterThanOrEqualTo(Long)
++ Criteria andUserIdLessThan(Long)
++ Criteria andUserIdLessThanOrEqualTo(Long)
++ Criteria andUserIdIn(List<Long>)
++ Criteria andUserIdNotIn(List<Long>)
++ Criteria andUserIdBetween(Long,Long)
++ Criteria andUserIdNotBetween(Long,Long)
++ Criteria andPidIsNull()
++ Criteria andPidIsNotNull()
++ Criteria andPidEqualTo(Byte)
++ Criteria andPidNotEqualTo(Byte)
++ Criteria andPidGreaterThan(Byte)
++ Criteria andPidGreaterThanOrEqualTo(Byte)
++ Criteria andPidLessThan(Byte)
++ Criteria andPidLessThanOrEqualTo(Byte)
++ Criteria andPidIn(List<Byte>)
++ Criteria andPidNotIn(List<Byte>)
++ Criteria andPidBetween(Byte,Byte)
++ Criteria andPidNotBetween(Byte,Byte)
++ Criteria andPinfoIsNull()
++ Criteria andPinfoIsNotNull()
++ Criteria andPinfoEqualTo(String)
++ Criteria andPinfoNotEqualTo(String)
++ Criteria andPinfoGreaterThan(String)
++ Criteria andPinfoGreaterThanOrEqualTo(String)
++ Criteria andPinfoLessThan(String)
++ Criteria andPinfoLessThanOrEqualTo(String)
++ Criteria andPinfoLike(String)
++ Criteria andPinfoNotLike(String)
++ Criteria andPinfoIn(List<String>)
++ Criteria andPinfoNotIn(List<String>)
++ Criteria andPinfoBetween(String,String)
++ Criteria andPinfoNotBetween(String,String)
++ Criteria andSourceIdIsNull()
++ Criteria andSourceIdIsNotNull()
++ Criteria andSourceIdEqualTo(String)
++ Criteria andSourceIdNotEqualTo(String)
++ Criteria andSourceIdGreaterThan(String)
++ Criteria andSourceIdGreaterThanOrEqualTo(String)
++ Criteria andSourceIdLessThan(String)
++ Criteria andSourceIdLessThanOrEqualTo(String)
++ Criteria andSourceIdLike(String)
++ Criteria andSourceIdNotLike(String)
++ Criteria andSourceIdIn(List<String>)
++ Criteria andSourceIdNotIn(List<String>)
++ Criteria andSourceIdBetween(String,String)
++ Criteria andSourceIdNotBetween(String,String)
++ Criteria andCreatedAtIsNull()
++ Criteria andCreatedAtIsNotNull()
++ Criteria andCreatedAtEqualTo(Date)
++ Criteria andCreatedAtNotEqualTo(Date)
++ Criteria andCreatedAtGreaterThan(Date)
++ Criteria andCreatedAtGreaterThanOrEqualTo(Date)
++ Criteria andCreatedAtLessThan(Date)
++ Criteria andCreatedAtLessThanOrEqualTo(Date)
++ Criteria andCreatedAtIn(List<Date>)
++ Criteria andCreatedAtNotIn(List<Date>)
++ Criteria andCreatedAtBetween(Date,Date)
++ Criteria andCreatedAtNotBetween(Date,Date)
++ Criteria andUpdatedAtIsNull()
++ Criteria andUpdatedAtIsNotNull()
++ Criteria andUpdatedAtEqualTo(Date)
++ Criteria andUpdatedAtNotEqualTo(Date)
++ Criteria andUpdatedAtGreaterThan(Date)
++ Criteria andUpdatedAtGreaterThanOrEqualTo(Date)
++ Criteria andUpdatedAtLessThan(Date)
++ Criteria andUpdatedAtLessThanOrEqualTo(Date)
++ Criteria andUpdatedAtIn(List<Date>)
++ Criteria andUpdatedAtNotIn(List<Date>)
++ Criteria andUpdatedAtBetween(Date,Date)
++ Criteria andUpdatedAtNotBetween(Date,Date)
+}
+class com.welab.document.model.PhotoInfoExample$Criteria {
+# <<Create>> Criteria()
+}
+class com.welab.document.model.PhotoInfoExample$Criterion {
+- String condition
+- Object value
+- Object secondValue
+- boolean noValue
+- boolean singleValue
+- boolean betweenValue
+- boolean listValue
+- String typeHandler
+# <<Create>> Criterion(String)
+# <<Create>> Criterion(String,Object,String)
+# <<Create>> Criterion(String,Object)
+# <<Create>> Criterion(String,Object,Object,String)
+# <<Create>> Criterion(String,Object,Object)
++ String getCondition()
++ Object getValue()
++ Object getSecondValue()
++ boolean isNoValue()
++ boolean isSingleValue()
++ boolean isBetweenValue()
++ boolean isListValue()
++ String getTypeHandler()
+}
+class com.welab.document.handler.PictureStyle {
+- Map<String,String> styleMap
++ void addStyle(String,String)
++ Set<Entry<String,String>> getStyle()
+}
+class com.welab.document.service.impl.SeqNoService {
+- String appId
+- String zookeeperUrl
+- String username
+- String password
+- GeneratorConnectorFactory connector
++ void init()
++ long generateKey()
++ long[] generateKey(int)
+}
+enum com.welab.document.enums.DocRelationTypeEnum {
++  USER_CERT
++  CONTRACT
++  approval_validate
++  OJK_REPROT
++  approval_pdf_upload
++  SEA_COMMON_UPLOAD
++  COLLECTION
++  FINANCE_PLANS_CONTRACT
++  FINANCE_F_PLAN_CONTRACT
++  APK
++  USER_PASSBOOK
++  H5_FACE
++  TO_B_CONTRACT
++  ACCOUNT_CENTER
++  TO_B_RESTOCK_TERMSHEET
++  TO_B_RESTOCK_MAP
++  RESTOCK_BACK_FILE
++  TAPP_IMPORT_PDF_FILE
++  TAPP_BACK_FILE
++  TAPP_APPLY_FILE
++  OJK_CHECK_UFI_FILE
++  FC_PHOTO
++  GADA_CONTRACT
++  GADA_BACK
++  MAUMODAL_AO
++  MAUMODAL_USER_SENDBACK
+- Integer code
+- <<Create>> DocRelationTypeEnum(Integer)
++ Integer getCode()
+}
+interface com.welab.document.mapper.SaasDocumentMapper {
+~ int deleteByExample(SaasDocumentExample)
+~ int deleteByPrimaryKey(Long)
+~ int insert(SaasDocument)
+~ int insertSelective(SaasDocument)
+~ List<SaasDocument> selectByExample(SaasDocumentExample)
+~ SaasDocument selectByPrimaryKey(Long)
+~ int updateByExampleSelective(SaasDocument,SaasDocumentExample)
+~ int updateByExample(SaasDocument,SaasDocumentExample)
+~ int updateByPrimaryKeySelective(SaasDocument)
+~ int updateByPrimaryKey(SaasDocument)
+}
+class com.welab.document.dto.UrlDocUploadDto {
+- Long orgId
+- Integer relationType
+- Long relationId
+- String fileName
+- String docType
+- String fileUrl
+- Integer index
+- boolean watermark
+- boolean thumbnail
+- boolean async
+}
+enum com.welab.document.dto.DownloadStatusEnum {
++  INIT
++  SUCCESS
++  FAIL
+- Integer value
+~ <<Create>> DownloadStatusEnum(Integer)
++ Integer getValue()
+}
+interface com.welab.document.handler.DocumentHandler {
+~ Document upload(InputStream,String,String,boolean,boolean)
+~ Document upload(InputStream,String,String)
+~ String generateURLKey(String,String)
+~ String generateURLKey(String,String,String)
+~ String generatePresignedURL(String,String)
+~ String generatePresignedURL(String,String,String,boolean)
+~ String generatePresignedURL(String,String,String,boolean,Date)
+~ InputStream getData(String,String)
+~ InputStream getData(String,String,String,boolean)
+~ boolean doesExist(String,String)
+~ boolean doesExist(String,String,String,boolean)
+~ boolean generateWatermark(String,String)
+~ boolean generateThumbnail(String,String)
+}
+class com.welab.document.handler.DocUploadConfig {
+- {static} Logger LOGGER
+- int uploadMaxFileSize
+- int uploadMinFileSize
+- String allowedMediaTypes
+- String watermarkDocTypes
+- String thumbnailDocTypes
+- String gmHome
+- String watermarkImgPath
+- String imgSuffix
++ void afterPropertiesSet()
++ String toString()
+}
+class com.welab.document.domain.tables.TablePartnerDocument {
++ ITableField<Integer> all
++ ITableField<Long> pk
++ ITableField<Integer> lock
++ ITableField<Long> docId
++ ITableField<Long> orgId
++ ITableField<Integer> relationType
++ ITableField<Long> relationId
++ ITableField<String> docType
++ ITableField<String> fileName
++ ITableField<String> fileType
++ ITableField<String> fileUrl
++ ITableField<String> accessToken
++ ITableField<Integer> fileIndex
++ ITableField<Boolean> async
++ ITableField<Integer> watermark
++ ITableField<Integer> thumbnail
++ ITableField<Integer> downloadStatus
++ IDateTableField<Date> gmtDownload
++ IDateTableField<Date> gmtCreate
++ IDateTableField<Date> gmtModified
++ ITableField<Integer> lockVersion
+- ITableField<?>[] allFields
+- <<Create>> TablePartnerDocument()
+- <<Create>> TablePartnerDocument(String)
++ {static} TablePartnerDocument getInstance()
++ {static} TablePartnerDocument getInstance(String)
++ ITableField<?> allField()
++ ITableField<?>[] getAllFields()
++ ITableField<?> getPK()
++ ITableField<?> getLockVersion()
++ String getDataTraceTableName()
++ long getTableVersion()
++ boolean isAutoGeneratedPK()
++ boolean isLockVersion()
++ String toString()
+}
+class com.welab.document.controller.ApkController {
+- {static} String TMP_PATH
+- BaseFileService baseFileService
++ Response<String> uploadApk(Long,MultipartFile)
+- void deleteTmpFile(File)
+}
+class com.welab.document.test.Tt {
++ {static} void main(String[])
+}
+class com.welab.document.service.dto.assembler.PartnerDocDtoAssembler {
+- {static} PartnerDocDtoAssembler instance
+- <<Create>> PartnerDocDtoAssembler()
++ {static} PartnerDocDtoAssembler getInstance()
++ PartnerDocument doForward(UrlDocUploadDto)
++ UrlDocUploadDto doBackward(PartnerDocument)
+- String parseMediaType(String)
+}
+class com.welab.document.service.impl.OjkCheckContractGenerationService {
+- OssDocumentHandlerUtil ossDocumentHandlerUtil
+- DocumentService documentService
+- String baseFile
++ void createPdf(Map)
++ void uploadDocumentToOss(InputStream,String,Long)
++ void upload(MultipartFile)
+}
+class com.welab.document.service.impl.OjkCheckContractGenerationService$Base64ImgReplacedElementFactory {
++ ReplacedElement createReplacedElement(LayoutContext,BlockBox,UserAgentCallback,int,int)
+# FSImage buildImage(String,UserAgentCallback)
++ void reset()
++ void remove(Element)
++ void setFormSubmissionListener(FormSubmissionListener)
+}
+class com.welab.document.domain.tables.TableSaasDocument {
++ ITableField<Integer> all
++ ITableField<Long> pk
++ ITableField<Integer> lock
++ ITableField<Long> docId
++ ITableField<Integer> relationType
++ ITableField<Long> relationId
++ ITableField<String> docType
++ ITableField<String> fileType
++ ITableField<String> fileName
++ ITableField<Long> fileSize
++ ITableField<Integer> fileIndex
++ ITableField<Integer> watermark
++ ITableField<Integer> thumbnail
++ ITableField<String> accessToken
++ ITableField<Boolean> state
++ IDateTableField<Date> gmtUpload
++ IDateTableField<Date> gmtCreate
++ IDateTableField<Date> gmtModified
++ ITableField<Integer> lockVersion
+- ITableField<?>[] allFields
+- <<Create>> TableSaasDocument()
+- <<Create>> TableSaasDocument(String)
++ {static} TableSaasDocument getInstance()
++ {static} TableSaasDocument getInstance(String)
++ ITableField<?> allField()
++ ITableField<?>[] getAllFields()
++ ITableField<?> getPK()
++ ITableField<?> getLockVersion()
++ String getDataTraceTableName()
++ long getTableVersion()
++ boolean isAutoGeneratedPK()
++ boolean isLockVersion()
++ String toString()
+}
+class com.welab.document.app.impl.PhotoInfoServiceImpl {
+- BasePhotoInfoService basePhotoInfoService
+- PhotoInfoManager photoInfoManager
++ void save(PhotoInfoCmd)
++ List<PhotoInfoVO> findByDocIds(List<Long>)
+}
+class com.welab.document.vo.DocQueryVo {
+- {static} long serialVersionUID
+- Long orgId
+- Integer relationType
+- Long relationId
+- String docType
+- boolean imgFlag
+- String style
+}
+interface com.welab.document.service.IPhotoInfoService {
++ void save(PhotoInfoCmd)
++ List<PhotoInfoVO> findByDocIds(List<Long>)
+}
+class com.welab.document.utils.HttpClient {
+- {static} Logger LOGGER
+- {static} String[] SUPPORT_PROTOCOLS
+- {static} String USER_AGENT
+- SSLContext context
+- CloseableHttpClient m_client
+- Map<String,String> m_requestHeaderMap
+- Map<String,String> m_responseHeaderMap
++ <<Create>> HttpClient()
++ <<Create>> HttpClient(RequestConfig)
++ <<Create>> HttpClient(boolean,Certificate)
++ <<Create>> HttpClient(boolean,RequestConfig,Certificate)
++ <<Create>> HttpClient(boolean,RequestConfig,HostnameVerifier,Certificate)
+- void initializeSslContext(HostnameVerifier,Certificate[],RequestConfig)
++ String post(String,HttpEntity)
++ byte[] postToByteArray(String,HttpEntity)
++ String get(String)
++ String patch(String,HttpEntity)
++ byte[] downloadFile(String)
++ byte[] download(HttpRequestBase)
+- String sendRequest(HttpRequestBase)
+- byte[] sendRequest4Byte(HttpRequestBase)
++ String getResponseHeaderValueByName(String)
++ Map<String,String> getResponseHeaderMap()
++ void close()
+- void releaseMap(Map<String,String>)
+- void inputHeader(HttpRequestBase)
++ HttpClient addHeader(String,String)
+}
+class com.welab.document.handler.DocConverter {
+- DocumentHandler handler
++ DocumentDto convertPoToDto(SaasDocument)
++ DocumentDto convertPoToDto(SaasDocument,Date)
+- ThumbnailDto generateThumbnailDto(String,String,String,boolean)
++ List<DocumentVo> assembleDocVoFromDto(List<DocumentDto>,String)
+}
+class com.welab.document.dto.SeaDocQueryDto {
+- Long docId
+- List<Long> docIdList
+- Date urlExpiryDate
+}
+interface com.welab.document.common.Urls {
+~ String ROOT
+~ String ROOT_DESC
+~ String V1
+~ String V3
+~ String NO_AUTH
+}
+interface com.welab.document.common.Urls$File {
+~ String MODULE
+~ String V1_FILE_UPLOAD
+~ String V1_FILE_UPLOAD_DESC
+~ String V1_FILE_GETURL
+~ String V1_FILE_GETURL_DESC
+~ String V1_FILE_UPLOAD_FOR_SEA
+~ String V1_FILE_UPLOAD_FOR_SEA_DESC
+~ String V1_FILE_UPLOAD_FOR_SEA_2
+~ String V1_FILE_UPLOAD_FOR_SEA_2_DESC
+~ String V1_FILE_UPLOAD_ATTACHMENT
+~ String V1_FILE_UPLOAD_ATTACHMENT_DESC
+~ String V1_FILE_UPLOAD_REPLACE_ATTACHMENT
+~ String V1_FILE_UPLOAD_REPLACE_ATTACHMENT_DESC
+~ String V1_FILE_ATTACHMENT_LIST
+~ String V1_FILE_ATTACHMENT_LIST_DESC
+~ String V1_FILE_ATTACHMENT_DOWNLOAD
+~ String V1_FILE_ATTACHMENT_DOWNLOAD_DESC
+~ String V3_LOAN_CONTRACT
+~ String V3_LOAN_CONTRACT_DESC
+~ String V3_LOAN_CONTRACT_DOWNLOAD
+~ String V3_LOAN_CONTRACT_DOWNLOAD_DESC
+~ String V1_GET_FILE
+~ String V1_GET_FILE_DESC
+}
+interface com.welab.document.common.Urls$APK {
+~ String MODULE
+~ String V1_APK_UPLOAD_APK
+~ String V1_APK_UPLOAD_APK_DESC
+}
+class com.welab.document.dao.PartnerDocumentDaoTest {
+- BasePartnerDocumentService partnerDocumentDao
++ void testInsert()
++ void testUpdate()
+}
+class com.welab.document.utils.HttpClients {
+- {static} Logger LOGGER
+- {static} int DEFAULT_TIMEOUT
+- String url
+- String requestBody
+- Map<String,String> headerMap
+- Map<String,String> urlParamMap
+- RequestConfig.Builder configBuilder
+- <<Create>> HttpClients()
++ {static} HttpClients create()
++ HttpClients addURLParam(String,String)
++ HttpClients addURLParams(Map<String,String>)
++ HttpClients addHeader(String,String)
++ HttpClients addHeaders(Map<String,String>)
++ HttpClients setURL(String)
++ HttpClients setRequestBody(String)
++ HttpClients setConnectionRequestTimeout(int)
++ HttpClients setConnectTimeout(int)
++ HttpClients setSocketTimeout(int)
++ String doPost()
++ String doGet()
++ byte[] doDownload()
+- void validate()
+- void setHeaders(HttpClient)
+- HttpEntity assembleHttpEntity()
+- UrlEncodedFormEntity buildFormEntity()
+- String assembleUrlParamsToUrl(String)
+- boolean isHttps(String)
+}
+class com.welab.document.model.SaasDocument {
+- {static} long serialVersionUID
+- Long docId
+- Short relationType
+- Long relationId
+- String docType
+- String fileType
+- String fileName
+- Long fileSize
+- Integer fileIndex
+- Short watermark
+- Short thumbnail
+- String accessToken
+- Boolean state
+- Date gmtUpload
+- Date gmtCreate
+- Date gmtModified
+- Integer lockVersion
++ void setRelationType(Integer)
++ short getRelationTypeS()
++ Integer getRelationType()
++ void setWatermark(Integer)
++ Integer getWatermark()
++ void setThumbnail(Integer)
++ Integer getThumbnail()
+}
+class com.welab.document.dao.BaseDocumentService {
+- SaasDocumentMapper documentMapper
++ void insert(SaasDocument)
++ void update(SaasDocument)
++ List<SaasDocument> getRecords(List<Long>,int)
++ List<SaasDocument> getBySeaDocQueryDto(SeaDocQueryDto)
++ SaasDocument getLastestOne(SaasDocument)
++ List<SaasDocument> listFileByRelationIdsAndType(List<Long>,Integer)
++ SaasDocument getOne(Long)
+}
+class com.welab.document.DocumentServer {
+- {static} Logger LOG
++ {static} void main(String[])
+}
+class com.welab.document.vo.DocAccessVo {
+- {static} long serialVersionUID
+- String key
+- Integer index
+- String url
+- String watermarkUrl
+}
+class com.welab.document.vo.PhotoInfoVO {
+- {static} long serialVersionUID
+- Long docId
+- Byte pid
+- String sourceId
+- String pinfo
+}
+class com.welab.document.app.base.BasePhotoInfoService {
+- PhotoInfoMapper photoInfoMapper
+- PhotoInfoExtMapper photoInfoExtMapper
++ void save(PhotoInfo)
++ List<PhotoInfo> findByDocIds(List<Long>)
+}
+class com.welab.document.test.impl.PhotoInfoServiceImplTest {
+- IPhotoInfoService photoInfoService
++ void findByDocIds()
+}
+class com.welab.document.service.dto.assembler.DocUploadDtoAssembler {
+- {static} DocUploadDtoAssembler instance
+- DocValidator docValidator
+- <<Create>> DocUploadDtoAssembler()
++ {static} DocUploadDtoAssembler getInstance()
++ SaasDocument doForward(DocUploadDto)
++ DocUploadDto doBackward(SaasDocument)
+}
+class com.welab.document.vo.DocUploadVo {
+- Long orgId
+- Integer relationType
+- Long relationId
+- String docType
+~ Integer fileIndex
+~ boolean imgFlag
+- String base64Data
+}
+class com.welab.document.service.base.BaseFileService {
+- GridFsTemplateExt gridFsTemplate
++ String saveFile(File,String,String)
+}
+class com.welab.document.vo.DocumentVo {
+- {static} long serialVersionUID
+- String docType
+- List<DocAccessVo> docAccessVoList
++ void collectDocAccessVo(String,Integer,String,String)
+}
+class com.welab.document.utils.ThumbnailUtil {
++ {static} void resizeImage(String,String,String)
++ {static} boolean addWatermark(String,String)
+}
+class com.welab.document.utils.AccessTokenGenerator {
+- {static} List<Character> SALT
+- {static} int DEFAULT_SALT_LENGTH
+- {static} AccessTokenGenerator GENERATOR
+- {static} Random RANDOM_MACHINE
+- <<Create>> AccessTokenGenerator()
++ {static} AccessTokenGenerator getInstance()
+- String randomSalt()
++ String generateAccessToken()
+}
+class com.welab.document.utils.oss.OssDocumentHandler {
+- {static} Logger LOGGER
+- OssClientUtil ossClient
++ Document upload(InputStream,String,String,boolean,boolean)
++ Document upload(InputStream,String,String)
++ String generateURLKey(String,String,String)
++ String generatePresignedURL(String,String,String,boolean)
++ String generatePresignedURL(String,String,String,boolean,Date)
++ InputStream getData(String,String,String,boolean)
++ String generateURLKey(String,String)
++ String generatePresignedURL(String,String)
++ InputStream getData(String,String)
++ boolean doesExist(String,String)
++ boolean doesExist(String,String,String,boolean)
++ boolean generateWatermark(String,String)
++ boolean generateThumbnail(String,String)
+- void uploadDocumentToOss(InputStream,Document)
+- void uploadImageWatermark(String,Document)
+- void uploadMultiThumbnailImage(String,Document,PictureStyle,boolean)
+- void uploadThumbnailImage(String,Document,String,String,boolean)
+}
+class com.welab.document.handler.DocValidator {
+- DocUploadConfig limitConfig
++ void validateMediaType(String)
++ byte[] validateFileSize(InputStream)
++ void validateFileSize(byte[])
++ InputStream convertBase64DataToStream(String)
++ boolean isAddWatermark(String)
++ boolean isGenerateThumbnail(String)
++ void validateDocProps(SaasDocument)
++ void validateImgStyle(String)
+}
+class com.welab.document.test.SimpleTest {
+}
+class com.welab.document.handler.DocumentSettings {
+- {static} String DEFAULT_STYLE
+- {static} int DEFAULT_FILE_PATH_INTERVAL
+- {static} int DEFAULT_FILE_PATH_LIMIT
+- {static} String WATER_MARK_FILE_SUFFIX
+- {static} String watermarkImg
+- {static} String watermarkFileSuffix
+- {static} PictureStyle pictureStyle
+- {static} String graphicsMagickPath
+- {static} int filePathInterval
+- {static} int filePathLimit
+- {static} String defaultStyle
+- {static} String filePath
+- {static} void initialDefaultPictureStyle()
++ {static} void setPictureStyle(PictureStyle)
++ {static} PictureStyle getPictureStyle()
++ {static} void setGmPath(String)
++ {static} String getGmPath()
++ {static} void setFilePathLimit(int)
++ {static} int getFilePathLimit()
++ {static} void setFilePathInterval(int)
++ {static} int getFilePathInterval()
++ {static} String getDefaultStyle()
++ {static} void setDefaultStyle(String)
++ {static} String getFilePath()
++ {static} void setFilePath(String)
++ {static} String getWatermarkSuffix()
++ {static} String getWatermarkPic()
++ {static} void setWatermarkPic(String)
+}
+class com.welab.document.app.command.UploadForSeaCmdExe {
+- DocumentService docService
+- SeqNoService seqNoService
+- UploadConfig uploadConfig
+- {static} RateLimiter UPLOAD_RATE_LIMITER
++ Response uploadForSea(Long,MultipartFile,DocUploadVo)
+- Response checkFile(MultipartFile,UploadConfig.UploadItemConfig)
++ Response uploadForSea2(Long,MultipartFile,DocUploadVo)
+}
+class com.welab.document.model.SaasDocumentExample {
+# String orderByClause
+# boolean distinct
+# List<Criteria> oredCriteria
++ <<Create>> SaasDocumentExample()
++ void setOrderByClause(String)
++ String getOrderByClause()
++ void setDistinct(boolean)
++ boolean isDistinct()
++ List<Criteria> getOredCriteria()
++ void or(Criteria)
++ Criteria or()
++ Criteria createCriteria()
+# Criteria createCriteriaInternal()
++ void clear()
+}
+abstract class com.welab.document.model.SaasDocumentExample$GeneratedCriteria {
+# List<Criterion> criteria
+# <<Create>> GeneratedCriteria()
++ boolean isValid()
++ List<Criterion> getAllCriteria()
++ List<Criterion> getCriteria()
+# void addCriterion(String)
+# void addCriterion(String,Object,String)
+# void addCriterion(String,Object,Object,String)
++ Criteria andDocIdIsNull()
++ Criteria andDocIdIsNotNull()
++ Criteria andDocIdEqualTo(Long)
++ Criteria andDocIdNotEqualTo(Long)
++ Criteria andDocIdGreaterThan(Long)
++ Criteria andDocIdGreaterThanOrEqualTo(Long)
++ Criteria andDocIdLessThan(Long)
++ Criteria andDocIdLessThanOrEqualTo(Long)
++ Criteria andDocIdIn(List<Long>)
++ Criteria andDocIdNotIn(List<Long>)
++ Criteria andDocIdBetween(Long,Long)
++ Criteria andDocIdNotBetween(Long,Long)
++ Criteria andRelationTypeIsNull()
++ Criteria andRelationTypeIsNotNull()
++ Criteria andRelationTypeEqualTo(Short)
++ Criteria andRelationTypeNotEqualTo(Short)
++ Criteria andRelationTypeGreaterThan(Short)
++ Criteria andRelationTypeGreaterThanOrEqualTo(Short)
++ Criteria andRelationTypeLessThan(Short)
++ Criteria andRelationTypeLessThanOrEqualTo(Short)
++ Criteria andRelationTypeIn(List<Short>)
++ Criteria andRelationTypeNotIn(List<Short>)
++ Criteria andRelationTypeBetween(Short,Short)
++ Criteria andRelationTypeNotBetween(Short,Short)
++ Criteria andRelationIdIsNull()
++ Criteria andRelationIdIsNotNull()
++ Criteria andRelationIdEqualTo(Long)
++ Criteria andRelationIdNotEqualTo(Long)
++ Criteria andRelationIdGreaterThan(Long)
++ Criteria andRelationIdGreaterThanOrEqualTo(Long)
++ Criteria andRelationIdLessThan(Long)
++ Criteria andRelationIdLessThanOrEqualTo(Long)
++ Criteria andRelationIdIn(List<Long>)
++ Criteria andRelationIdNotIn(List<Long>)
++ Criteria andRelationIdBetween(Long,Long)
++ Criteria andRelationIdNotBetween(Long,Long)
++ Criteria andDocTypeIsNull()
++ Criteria andDocTypeIsNotNull()
++ Criteria andDocTypeEqualTo(String)
++ Criteria andDocTypeNotEqualTo(String)
++ Criteria andDocTypeGreaterThan(String)
++ Criteria andDocTypeGreaterThanOrEqualTo(String)
++ Criteria andDocTypeLessThan(String)
++ Criteria andDocTypeLessThanOrEqualTo(String)
++ Criteria andDocTypeLike(String)
++ Criteria andDocTypeNotLike(String)
++ Criteria andDocTypeIn(List<String>)
++ Criteria andDocTypeNotIn(List<String>)
++ Criteria andDocTypeBetween(String,String)
++ Criteria andDocTypeNotBetween(String,String)
++ Criteria andFileTypeIsNull()
++ Criteria andFileTypeIsNotNull()
++ Criteria andFileTypeEqualTo(String)
++ Criteria andFileTypeNotEqualTo(String)
++ Criteria andFileTypeGreaterThan(String)
++ Criteria andFileTypeGreaterThanOrEqualTo(String)
++ Criteria andFileTypeLessThan(String)
++ Criteria andFileTypeLessThanOrEqualTo(String)
++ Criteria andFileTypeLike(String)
++ Criteria andFileTypeNotLike(String)
++ Criteria andFileTypeIn(List<String>)
++ Criteria andFileTypeNotIn(List<String>)
++ Criteria andFileTypeBetween(String,String)
++ Criteria andFileTypeNotBetween(String,String)
++ Criteria andFileNameIsNull()
++ Criteria andFileNameIsNotNull()
++ Criteria andFileNameEqualTo(String)
++ Criteria andFileNameNotEqualTo(String)
++ Criteria andFileNameGreaterThan(String)
++ Criteria andFileNameGreaterThanOrEqualTo(String)
++ Criteria andFileNameLessThan(String)
++ Criteria andFileNameLessThanOrEqualTo(String)
++ Criteria andFileNameLike(String)
++ Criteria andFileNameNotLike(String)
++ Criteria andFileNameIn(List<String>)
++ Criteria andFileNameNotIn(List<String>)
++ Criteria andFileNameBetween(String,String)
++ Criteria andFileNameNotBetween(String,String)
++ Criteria andFileSizeIsNull()
++ Criteria andFileSizeIsNotNull()
++ Criteria andFileSizeEqualTo(Long)
++ Criteria andFileSizeNotEqualTo(Long)
++ Criteria andFileSizeGreaterThan(Long)
++ Criteria andFileSizeGreaterThanOrEqualTo(Long)
++ Criteria andFileSizeLessThan(Long)
++ Criteria andFileSizeLessThanOrEqualTo(Long)
++ Criteria andFileSizeIn(List<Long>)
++ Criteria andFileSizeNotIn(List<Long>)
++ Criteria andFileSizeBetween(Long,Long)
++ Criteria andFileSizeNotBetween(Long,Long)
++ Criteria andFileIndexIsNull()
++ Criteria andFileIndexIsNotNull()
++ Criteria andFileIndexEqualTo(Integer)
++ Criteria andFileIndexNotEqualTo(Integer)
++ Criteria andFileIndexGreaterThan(Integer)
++ Criteria andFileIndexGreaterThanOrEqualTo(Integer)
++ Criteria andFileIndexLessThan(Integer)
++ Criteria andFileIndexLessThanOrEqualTo(Integer)
++ Criteria andFileIndexIn(List<Integer>)
++ Criteria andFileIndexNotIn(List<Integer>)
++ Criteria andFileIndexBetween(Integer,Integer)
++ Criteria andFileIndexNotBetween(Integer,Integer)
++ Criteria andWatermarkIsNull()
++ Criteria andWatermarkIsNotNull()
++ Criteria andWatermarkEqualTo(Short)
++ Criteria andWatermarkNotEqualTo(Short)
++ Criteria andWatermarkGreaterThan(Short)
++ Criteria andWatermarkGreaterThanOrEqualTo(Short)
++ Criteria andWatermarkLessThan(Short)
++ Criteria andWatermarkLessThanOrEqualTo(Short)
++ Criteria andWatermarkIn(List<Short>)
++ Criteria andWatermarkNotIn(List<Short>)
++ Criteria andWatermarkBetween(Short,Short)
++ Criteria andWatermarkNotBetween(Short,Short)
++ Criteria andThumbnailIsNull()
++ Criteria andThumbnailIsNotNull()
++ Criteria andThumbnailEqualTo(Short)
++ Criteria andThumbnailNotEqualTo(Short)
++ Criteria andThumbnailGreaterThan(Short)
++ Criteria andThumbnailGreaterThanOrEqualTo(Short)
++ Criteria andThumbnailLessThan(Short)
++ Criteria andThumbnailLessThanOrEqualTo(Short)
++ Criteria andThumbnailIn(List<Short>)
++ Criteria andThumbnailNotIn(List<Short>)
++ Criteria andThumbnailBetween(Short,Short)
++ Criteria andThumbnailNotBetween(Short,Short)
++ Criteria andAccessTokenIsNull()
++ Criteria andAccessTokenIsNotNull()
++ Criteria andAccessTokenEqualTo(String)
++ Criteria andAccessTokenNotEqualTo(String)
++ Criteria andAccessTokenGreaterThan(String)
++ Criteria andAccessTokenGreaterThanOrEqualTo(String)
++ Criteria andAccessTokenLessThan(String)
++ Criteria andAccessTokenLessThanOrEqualTo(String)
++ Criteria andAccessTokenLike(String)
++ Criteria andAccessTokenNotLike(String)
++ Criteria andAccessTokenIn(List<String>)
++ Criteria andAccessTokenNotIn(List<String>)
++ Criteria andAccessTokenBetween(String,String)
++ Criteria andAccessTokenNotBetween(String,String)
++ Criteria andOrgIdIsNull()
++ Criteria andOrgIdIsNotNull()
++ Criteria andOrgIdEqualTo(Long)
++ Criteria andOrgIdNotEqualTo(Long)
++ Criteria andOrgIdGreaterThan(Long)
++ Criteria andOrgIdGreaterThanOrEqualTo(Long)
++ Criteria andOrgIdLessThan(Long)
++ Criteria andOrgIdLessThanOrEqualTo(Long)
++ Criteria andOrgIdIn(List<Long>)
++ Criteria andOrgIdNotIn(List<Long>)
++ Criteria andOrgIdBetween(Long,Long)
++ Criteria andOrgIdNotBetween(Long,Long)
++ Criteria andStateIsNull()
++ Criteria andStateIsNotNull()
++ Criteria andStateEqualTo(Boolean)
++ Criteria andStateNotEqualTo(Boolean)
++ Criteria andStateGreaterThan(Boolean)
++ Criteria andStateGreaterThanOrEqualTo(Boolean)
++ Criteria andStateLessThan(Boolean)
++ Criteria andStateLessThanOrEqualTo(Boolean)
++ Criteria andStateIn(List<Boolean>)
++ Criteria andStateNotIn(List<Boolean>)
++ Criteria andStateBetween(Boolean,Boolean)
++ Criteria andStateNotBetween(Boolean,Boolean)
++ Criteria andGmtUploadIsNull()
++ Criteria andGmtUploadIsNotNull()
++ Criteria andGmtUploadEqualTo(Date)
++ Criteria andGmtUploadNotEqualTo(Date)
++ Criteria andGmtUploadGreaterThan(Date)
++ Criteria andGmtUploadGreaterThanOrEqualTo(Date)
++ Criteria andGmtUploadLessThan(Date)
++ Criteria andGmtUploadLessThanOrEqualTo(Date)
++ Criteria andGmtUploadIn(List<Date>)
++ Criteria andGmtUploadNotIn(List<Date>)
++ Criteria andGmtUploadBetween(Date,Date)
++ Criteria andGmtUploadNotBetween(Date,Date)
++ Criteria andGmtCreateIsNull()
++ Criteria andGmtCreateIsNotNull()
++ Criteria andGmtCreateEqualTo(Date)
++ Criteria andGmtCreateNotEqualTo(Date)
++ Criteria andGmtCreateGreaterThan(Date)
++ Criteria andGmtCreateGreaterThanOrEqualTo(Date)
++ Criteria andGmtCreateLessThan(Date)
++ Criteria andGmtCreateLessThanOrEqualTo(Date)
++ Criteria andGmtCreateIn(List<Date>)
++ Criteria andGmtCreateNotIn(List<Date>)
++ Criteria andGmtCreateBetween(Date,Date)
++ Criteria andGmtCreateNotBetween(Date,Date)
++ Criteria andGmtModifiedIsNull()
++ Criteria andGmtModifiedIsNotNull()
++ Criteria andGmtModifiedEqualTo(Date)
++ Criteria andGmtModifiedNotEqualTo(Date)
++ Criteria andGmtModifiedGreaterThan(Date)
++ Criteria andGmtModifiedGreaterThanOrEqualTo(Date)
++ Criteria andGmtModifiedLessThan(Date)
++ Criteria andGmtModifiedLessThanOrEqualTo(Date)
++ Criteria andGmtModifiedIn(List<Date>)
++ Criteria andGmtModifiedNotIn(List<Date>)
++ Criteria andGmtModifiedBetween(Date,Date)
++ Criteria andGmtModifiedNotBetween(Date,Date)
++ Criteria andLockVersionIsNull()
++ Criteria andLockVersionIsNotNull()
++ Criteria andLockVersionEqualTo(Integer)
++ Criteria andLockVersionNotEqualTo(Integer)
++ Criteria andLockVersionGreaterThan(Integer)
++ Criteria andLockVersionGreaterThanOrEqualTo(Integer)
++ Criteria andLockVersionLessThan(Integer)
++ Criteria andLockVersionLessThanOrEqualTo(Integer)
++ Criteria andLockVersionIn(List<Integer>)
++ Criteria andLockVersionNotIn(List<Integer>)
++ Criteria andLockVersionBetween(Integer,Integer)
++ Criteria andLockVersionNotBetween(Integer,Integer)
+}
+class com.welab.document.model.SaasDocumentExample$Criteria {
+# <<Create>> Criteria()
+}
+class com.welab.document.model.SaasDocumentExample$Criterion {
+- String condition
+- Object value
+- Object secondValue
+- boolean noValue
+- boolean singleValue
+- boolean betweenValue
+- boolean listValue
+- String typeHandler
+# <<Create>> Criterion(String)
+# <<Create>> Criterion(String,Object,String)
+# <<Create>> Criterion(String,Object)
+# <<Create>> Criterion(String,Object,Object,String)
+# <<Create>> Criterion(String,Object,Object)
++ String getCondition()
++ Object getValue()
++ Object getSecondValue()
++ boolean isNoValue()
++ boolean isSingleValue()
++ boolean isBetweenValue()
++ boolean isListValue()
++ String getTypeHandler()
+}
+class com.welab.document.dto.SeaDocUploadVo {
+}
+class com.welab.document.app.manager.PhotoInfoManager {
+- BasePhotoInfoService basePhotoInfoService
++ List<PhotoInfoVO> findByDocIds(List<Long>)
+}
+interface com.welab.document.dao.mongo.AttachmentDao {
+~ List<Attachment> findByTypeAndName(String,String)
+}
+interface com.welab.document.mapper.PartnerDocumentMapper {
+~ int deleteByExample(PartnerDocumentExample)
+~ int deleteByPrimaryKey(Long)
+~ int insert(PartnerDocument)
+~ int insertSelective(PartnerDocument)
+~ List<PartnerDocument> selectByExample(PartnerDocumentExample)
+~ PartnerDocument selectByPrimaryKey(Long)
+~ int updateByExampleSelective(PartnerDocument,PartnerDocumentExample)
+~ int updateByExample(PartnerDocument,PartnerDocumentExample)
+~ int updateByPrimaryKeySelective(PartnerDocument)
+~ int updateByPrimaryKey(PartnerDocument)
+}
+class com.welab.document.utils.FilePathGenerator {
+- {static} String FILE_SEPERATOR
+- {static} FilePathGenerator GENERATOR
+- <<Create>> FilePathGenerator()
++ {static} FilePathGenerator getInstance()
++ String generate(String,String)
++ String generateRule(String)
+}
+class com.welab.document.utils.ImageBase64Utils {
++ {static} boolean isBase64Stream(String)
++ {static} String getMediaType(String)
++ {static} InputStream decodeBase64Data(String)
++ {static} byte[] toByteArray(InputStream)
+}
+class com.welab.document.Application {
+- {static} Logger LOG
++ {static} void main(String[])
+}
+class com.welab.document.service.impl.DocumentServiceImplTest {
+- DocumentService documentService
+- DocValidator docValidator
+- DocumentHandler handler
+- Long orgId
+- Long userId
++ void setUp()
++ void tearDown()
++ void testUploadFileAndSave()
++ void testUploadUrlFileAndSave()
++ void testGetStsAuthority()
++ void testGetFile()
++ void testGetLastestOneFile()
+}
+enum com.welab.document.enums.AttachmentEnum {
++  AGREEMENT
+- String type
+- String desc
+}
+interface com.welab.document.mapper.ext.PhotoInfoExtMapper {
+~ List<PhotoInfo> findByDocIds(List<Long>)
+}
+class com.welab.document.dto.ThumbnailDto {
+- {static} long serialVersionUID
+- String fileName
+- String style
+- String url
+- String watermarkUrl
+}
+class com.welab.document.dto.DocQueryDto {
+- {static} long serialVersionUID
+- Long orgId
+- Integer relationType
+- Long relationId
+- String docType
+- Date urlExpiryDate
+- Short thumbnail
+}
+class com.welab.document.model.PartnerDocumentExample {
+# String orderByClause
+# boolean distinct
+# List<Criteria> oredCriteria
++ <<Create>> PartnerDocumentExample()
++ void setOrderByClause(String)
++ String getOrderByClause()
++ void setDistinct(boolean)
++ boolean isDistinct()
++ List<Criteria> getOredCriteria()
++ void or(Criteria)
++ Criteria or()
++ Criteria createCriteria()
+# Criteria createCriteriaInternal()
++ void clear()
+}
+abstract class com.welab.document.model.PartnerDocumentExample$GeneratedCriteria {
+# List<Criterion> criteria
+# <<Create>> GeneratedCriteria()
++ boolean isValid()
++ List<Criterion> getAllCriteria()
++ List<Criterion> getCriteria()
+# void addCriterion(String)
+# void addCriterion(String,Object,String)
+# void addCriterion(String,Object,Object,String)
++ Criteria andDocIdIsNull()
++ Criteria andDocIdIsNotNull()
++ Criteria andDocIdEqualTo(Long)
++ Criteria andDocIdNotEqualTo(Long)
++ Criteria andDocIdGreaterThan(Long)
++ Criteria andDocIdGreaterThanOrEqualTo(Long)
++ Criteria andDocIdLessThan(Long)
++ Criteria andDocIdLessThanOrEqualTo(Long)
++ Criteria andDocIdIn(List<Long>)
++ Criteria andDocIdNotIn(List<Long>)
++ Criteria andDocIdBetween(Long,Long)
++ Criteria andDocIdNotBetween(Long,Long)
++ Criteria andOrgIdIsNull()
++ Criteria andOrgIdIsNotNull()
++ Criteria andOrgIdEqualTo(Long)
++ Criteria andOrgIdNotEqualTo(Long)
++ Criteria andOrgIdGreaterThan(Long)
++ Criteria andOrgIdGreaterThanOrEqualTo(Long)
++ Criteria andOrgIdLessThan(Long)
++ Criteria andOrgIdLessThanOrEqualTo(Long)
++ Criteria andOrgIdIn(List<Long>)
++ Criteria andOrgIdNotIn(List<Long>)
++ Criteria andOrgIdBetween(Long,Long)
++ Criteria andOrgIdNotBetween(Long,Long)
++ Criteria andRelationTypeIsNull()
++ Criteria andRelationTypeIsNotNull()
++ Criteria andRelationTypeEqualTo(Integer)
++ Criteria andRelationTypeNotEqualTo(Integer)
++ Criteria andRelationTypeGreaterThan(Integer)
++ Criteria andRelationTypeGreaterThanOrEqualTo(Integer)
++ Criteria andRelationTypeLessThan(Integer)
++ Criteria andRelationTypeLessThanOrEqualTo(Integer)
++ Criteria andRelationTypeIn(List<Integer>)
++ Criteria andRelationTypeNotIn(List<Integer>)
++ Criteria andRelationTypeBetween(Integer,Integer)
++ Criteria andRelationTypeNotBetween(Integer,Integer)
++ Criteria andRelationIdIsNull()
++ Criteria andRelationIdIsNotNull()
++ Criteria andRelationIdEqualTo(Long)
++ Criteria andRelationIdNotEqualTo(Long)
++ Criteria andRelationIdGreaterThan(Long)
++ Criteria andRelationIdGreaterThanOrEqualTo(Long)
++ Criteria andRelationIdLessThan(Long)
++ Criteria andRelationIdLessThanOrEqualTo(Long)
++ Criteria andRelationIdIn(List<Long>)
++ Criteria andRelationIdNotIn(List<Long>)
++ Criteria andRelationIdBetween(Long,Long)
++ Criteria andRelationIdNotBetween(Long,Long)
++ Criteria andDocTypeIsNull()
++ Criteria andDocTypeIsNotNull()
++ Criteria andDocTypeEqualTo(String)
++ Criteria andDocTypeNotEqualTo(String)
++ Criteria andDocTypeGreaterThan(String)
++ Criteria andDocTypeGreaterThanOrEqualTo(String)
++ Criteria andDocTypeLessThan(String)
++ Criteria andDocTypeLessThanOrEqualTo(String)
++ Criteria andDocTypeLike(String)
++ Criteria andDocTypeNotLike(String)
++ Criteria andDocTypeIn(List<String>)
++ Criteria andDocTypeNotIn(List<String>)
++ Criteria andDocTypeBetween(String,String)
++ Criteria andDocTypeNotBetween(String,String)
++ Criteria andFileNameIsNull()
++ Criteria andFileNameIsNotNull()
++ Criteria andFileNameEqualTo(String)
++ Criteria andFileNameNotEqualTo(String)
++ Criteria andFileNameGreaterThan(String)
++ Criteria andFileNameGreaterThanOrEqualTo(String)
++ Criteria andFileNameLessThan(String)
++ Criteria andFileNameLessThanOrEqualTo(String)
++ Criteria andFileNameLike(String)
++ Criteria andFileNameNotLike(String)
++ Criteria andFileNameIn(List<String>)
++ Criteria andFileNameNotIn(List<String>)
++ Criteria andFileNameBetween(String,String)
++ Criteria andFileNameNotBetween(String,String)
++ Criteria andFileTypeIsNull()
++ Criteria andFileTypeIsNotNull()
++ Criteria andFileTypeEqualTo(String)
++ Criteria andFileTypeNotEqualTo(String)
++ Criteria andFileTypeGreaterThan(String)
++ Criteria andFileTypeGreaterThanOrEqualTo(String)
++ Criteria andFileTypeLessThan(String)
++ Criteria andFileTypeLessThanOrEqualTo(String)
++ Criteria andFileTypeLike(String)
++ Criteria andFileTypeNotLike(String)
++ Criteria andFileTypeIn(List<String>)
++ Criteria andFileTypeNotIn(List<String>)
++ Criteria andFileTypeBetween(String,String)
++ Criteria andFileTypeNotBetween(String,String)
++ Criteria andFileUrlIsNull()
++ Criteria andFileUrlIsNotNull()
++ Criteria andFileUrlEqualTo(String)
++ Criteria andFileUrlNotEqualTo(String)
++ Criteria andFileUrlGreaterThan(String)
++ Criteria andFileUrlGreaterThanOrEqualTo(String)
++ Criteria andFileUrlLessThan(String)
++ Criteria andFileUrlLessThanOrEqualTo(String)
++ Criteria andFileUrlLike(String)
++ Criteria andFileUrlNotLike(String)
++ Criteria andFileUrlIn(List<String>)
++ Criteria andFileUrlNotIn(List<String>)
++ Criteria andFileUrlBetween(String,String)
++ Criteria andFileUrlNotBetween(String,String)
++ Criteria andAccessTokenIsNull()
++ Criteria andAccessTokenIsNotNull()
++ Criteria andAccessTokenEqualTo(String)
++ Criteria andAccessTokenNotEqualTo(String)
++ Criteria andAccessTokenGreaterThan(String)
++ Criteria andAccessTokenGreaterThanOrEqualTo(String)
++ Criteria andAccessTokenLessThan(String)
++ Criteria andAccessTokenLessThanOrEqualTo(String)
++ Criteria andAccessTokenLike(String)
++ Criteria andAccessTokenNotLike(String)
++ Criteria andAccessTokenIn(List<String>)
++ Criteria andAccessTokenNotIn(List<String>)
++ Criteria andAccessTokenBetween(String,String)
++ Criteria andAccessTokenNotBetween(String,String)
++ Criteria andFileIndexIsNull()
++ Criteria andFileIndexIsNotNull()
++ Criteria andFileIndexEqualTo(Integer)
++ Criteria andFileIndexNotEqualTo(Integer)
++ Criteria andFileIndexGreaterThan(Integer)
++ Criteria andFileIndexGreaterThanOrEqualTo(Integer)
++ Criteria andFileIndexLessThan(Integer)
++ Criteria andFileIndexLessThanOrEqualTo(Integer)
++ Criteria andFileIndexIn(List<Integer>)
++ Criteria andFileIndexNotIn(List<Integer>)
++ Criteria andFileIndexBetween(Integer,Integer)
++ Criteria andFileIndexNotBetween(Integer,Integer)
++ Criteria andAsyncIsNull()
++ Criteria andAsyncIsNotNull()
++ Criteria andAsyncEqualTo(Boolean)
++ Criteria andAsyncNotEqualTo(Boolean)
++ Criteria andAsyncGreaterThan(Boolean)
++ Criteria andAsyncGreaterThanOrEqualTo(Boolean)
++ Criteria andAsyncLessThan(Boolean)
++ Criteria andAsyncLessThanOrEqualTo(Boolean)
++ Criteria andAsyncIn(List<Boolean>)
++ Criteria andAsyncNotIn(List<Boolean>)
++ Criteria andAsyncBetween(Boolean,Boolean)
++ Criteria andAsyncNotBetween(Boolean,Boolean)
++ Criteria andWatermarkIsNull()
++ Criteria andWatermarkIsNotNull()
++ Criteria andWatermarkEqualTo(Short)
++ Criteria andWatermarkNotEqualTo(Short)
++ Criteria andWatermarkGreaterThan(Short)
++ Criteria andWatermarkGreaterThanOrEqualTo(Short)
++ Criteria andWatermarkLessThan(Short)
++ Criteria andWatermarkLessThanOrEqualTo(Short)
++ Criteria andWatermarkIn(List<Short>)
++ Criteria andWatermarkNotIn(List<Short>)
++ Criteria andWatermarkBetween(Short,Short)
++ Criteria andWatermarkNotBetween(Short,Short)
++ Criteria andThumbnailIsNull()
++ Criteria andThumbnailIsNotNull()
++ Criteria andThumbnailEqualTo(Short)
++ Criteria andThumbnailNotEqualTo(Short)
++ Criteria andThumbnailGreaterThan(Short)
++ Criteria andThumbnailGreaterThanOrEqualTo(Short)
++ Criteria andThumbnailLessThan(Short)
++ Criteria andThumbnailLessThanOrEqualTo(Short)
++ Criteria andThumbnailIn(List<Short>)
++ Criteria andThumbnailNotIn(List<Short>)
++ Criteria andThumbnailBetween(Short,Short)
++ Criteria andThumbnailNotBetween(Short,Short)
++ Criteria andDownloadStatusIsNull()
++ Criteria andDownloadStatusIsNotNull()
++ Criteria andDownloadStatusEqualTo(Short)
++ Criteria andDownloadStatusNotEqualTo(Short)
++ Criteria andDownloadStatusGreaterThan(Short)
++ Criteria andDownloadStatusGreaterThanOrEqualTo(Short)
++ Criteria andDownloadStatusLessThan(Short)
++ Criteria andDownloadStatusLessThanOrEqualTo(Short)
++ Criteria andDownloadStatusIn(List<Short>)
++ Criteria andDownloadStatusNotIn(List<Short>)
++ Criteria andDownloadStatusBetween(Short,Short)
++ Criteria andDownloadStatusNotBetween(Short,Short)
++ Criteria andGmtDownloadIsNull()
++ Criteria andGmtDownloadIsNotNull()
++ Criteria andGmtDownloadEqualTo(Date)
++ Criteria andGmtDownloadNotEqualTo(Date)
++ Criteria andGmtDownloadGreaterThan(Date)
++ Criteria andGmtDownloadGreaterThanOrEqualTo(Date)
++ Criteria andGmtDownloadLessThan(Date)
++ Criteria andGmtDownloadLessThanOrEqualTo(Date)
++ Criteria andGmtDownloadIn(List<Date>)
++ Criteria andGmtDownloadNotIn(List<Date>)
++ Criteria andGmtDownloadBetween(Date,Date)
++ Criteria andGmtDownloadNotBetween(Date,Date)
++ Criteria andGmtCreateIsNull()
++ Criteria andGmtCreateIsNotNull()
++ Criteria andGmtCreateEqualTo(Date)
++ Criteria andGmtCreateNotEqualTo(Date)
++ Criteria andGmtCreateGreaterThan(Date)
++ Criteria andGmtCreateGreaterThanOrEqualTo(Date)
++ Criteria andGmtCreateLessThan(Date)
++ Criteria andGmtCreateLessThanOrEqualTo(Date)
++ Criteria andGmtCreateIn(List<Date>)
++ Criteria andGmtCreateNotIn(List<Date>)
++ Criteria andGmtCreateBetween(Date,Date)
++ Criteria andGmtCreateNotBetween(Date,Date)
++ Criteria andGmtModifiedIsNull()
++ Criteria andGmtModifiedIsNotNull()
++ Criteria andGmtModifiedEqualTo(Date)
++ Criteria andGmtModifiedNotEqualTo(Date)
++ Criteria andGmtModifiedGreaterThan(Date)
++ Criteria andGmtModifiedGreaterThanOrEqualTo(Date)
++ Criteria andGmtModifiedLessThan(Date)
++ Criteria andGmtModifiedLessThanOrEqualTo(Date)
++ Criteria andGmtModifiedIn(List<Date>)
++ Criteria andGmtModifiedNotIn(List<Date>)
++ Criteria andGmtModifiedBetween(Date,Date)
++ Criteria andGmtModifiedNotBetween(Date,Date)
++ Criteria andLockVersionIsNull()
++ Criteria andLockVersionIsNotNull()
++ Criteria andLockVersionEqualTo(Integer)
++ Criteria andLockVersionNotEqualTo(Integer)
++ Criteria andLockVersionGreaterThan(Integer)
++ Criteria andLockVersionGreaterThanOrEqualTo(Integer)
++ Criteria andLockVersionLessThan(Integer)
++ Criteria andLockVersionLessThanOrEqualTo(Integer)
++ Criteria andLockVersionIn(List<Integer>)
++ Criteria andLockVersionNotIn(List<Integer>)
++ Criteria andLockVersionBetween(Integer,Integer)
++ Criteria andLockVersionNotBetween(Integer,Integer)
+}
+class com.welab.document.model.PartnerDocumentExample$Criteria {
+# <<Create>> Criteria()
+}
+class com.welab.document.model.PartnerDocumentExample$Criterion {
+- String condition
+- Object value
+- Object secondValue
+- boolean noValue
+- boolean singleValue
+- boolean betweenValue
+- boolean listValue
+- String typeHandler
+# <<Create>> Criterion(String)
+# <<Create>> Criterion(String,Object,String)
+# <<Create>> Criterion(String,Object)
+# <<Create>> Criterion(String,Object,Object,String)
+# <<Create>> Criterion(String,Object,Object)
++ String getCondition()
++ Object getValue()
++ Object getSecondValue()
++ boolean isNoValue()
++ boolean isSingleValue()
++ boolean isBetweenValue()
++ boolean isListValue()
++ String getTypeHandler()
+}
+class com.welab.document.dto.cmd.PhotoInfoCmd {
+- {static} long serialVersionUID
+- Long docId
+- Long userId
+- Byte pid
+- String pinfo
+- String sourceId
+}
+class com.welab.document.dto.SeaDocInsertDto {
+- {static} long serialVersionUID
+- Integer relationType
+- Long relationId
+- String docType
+- String fileType
+- String fileName
+- Long fileSize
+- Integer fileIndex
+- Integer watermark
+- Integer thumbnail
+- String accessToken
+- Boolean state
+- Date gmtUpload
+- Date gmtCreate
+- Date gmtModified
+- Integer lockVersion
+}
+class com.welab.document.service.impl.DocumentServiceImpl {
+- {static} Logger LOGGER
+- DocValidator docValidator
+- DocConverter docConverter
+- DocumentHandler documentHandler
+- ThreadPoolTaskExecutor taskExecutor
+- DocUploadDtoAssembler docUploadDtoAssembler
+- BaseDocumentService baseDocumentService
+- BasePartnerDocumentService basePartnerDocumentService
++ Long uploadFile(DocUploadDto)
++ void uploadFileAndSave(DocUploadDto)
++ void uploadUrlFileAndSave(UrlDocUploadDto)
++ Response<AliCloudStsDto> getStsAuthority(Long,Long)
++ Response<List<DocumentDto>> getFile(DocQueryDto)
++ Response<List<DocumentDto>> getRecords(List<Long>,int)
++ Response<List<DocumentDto>> getFiles(SeaDocQueryDto)
+- Response<List<DocumentDto>> getFileList(SeaDocQueryDto)
+- void insertDocRecord(SaasDocument)
+- void uploadDoc(InputStream,SaasDocument)
+- void insertUrlDocRecord(PartnerDocument)
+- void uploadUrlDocument(PartnerDocument)
+- InputStream sendRequestToGetFile(PartnerDocument)
+- void assembleDocAttr(SaasDocument,Document)
+- void urlDocUploadSuccess(PartnerDocument)
+- void urlDocUploadFail(PartnerDocument)
++ Response<DocumentDto> getLastestOneFile(DocQueryDto)
++ Response<Boolean> delete(Long)
++ Response<Long> insert(SeaDocInsertDto)
++ Response<DocumentDto> getByDocId(Long)
+}
+class com.welab.document.dto.DocUploadDto {
+- {static} long serialVersionUID
+- Long orgId
+- Integer relationType
+- Long relationId
+- String docType
+- String fileName
+- String fileType
+- String base64Data
+- Integer fileIndex
+- boolean imgFlag
+- boolean async
+- boolean thumbnail
+- InputStream fileContentStream
+}
+class com.welab.document.config.MongoConfig {
++ MappingMongoConverter mappingMongoConverter(MongoDatabaseFactory,MongoMappingContext,BeanFactory)
+}
+class com.welab.document.dto.AliCloudStsDto {
+- {static} long serialVersionUID
+- String accessKeyId
+- String accessKeySecret
+- String stsToken
+- String endpoint
+- String bucket
+- String region
+- String roleArn
+- String roleSessionName
+}
+class com.welab.document.exception.DocumentException {
+- {static} long serialVersionUID
++ <<Create>> DocumentException()
++ <<Create>> DocumentException(String,Throwable,boolean,boolean)
++ <<Create>> DocumentException(String,Throwable)
++ <<Create>> DocumentException(String)
++ <<Create>> DocumentException(Throwable)
+}
+
+
+com.welab.document.service.impl.AttachmentServiceImpl +.. com.welab.document.service.impl.AttachmentServiceImpl$QueryAttachmentReq
+com.welab.document.service.impl.Attachment <|-- com.welab.document.service.impl.AttachmentServiceImpl$QueryAttachmentReq
+java.io.Serializable <|.. com.welab.document.model.PartnerDocument
+com.welab.document.config.UploadConfig +.. com.welab.document.config.UploadConfig$UploadItemConfig
+com.welab.document.test.SimpleTest <|-- com.welab.document.test.DocumentServiceImplTest
+java.io.Serializable <|.. com.welab.document.domain.model.Attachment
+com.welab.xdao.common.DaoContext <|-- com.welab.document.domain.tables.StaticImport
+java.io.Serializable <|.. com.welab.document.dto.DocumentDto
+java.io.Serializable <|.. com.welab.document.vo.common.DocumentResponse
+com.welab.document.model.PhotoInfoExample +.. com.welab.document.model.PhotoInfoExample$GeneratedCriteria
+com.welab.document.model.PhotoInfoExample +.. com.welab.document.model.PhotoInfoExample$Criteria
+com.welab.document.model.GeneratedCriteria <|-- com.welab.document.model.PhotoInfoExample$Criteria
+com.welab.document.model.PhotoInfoExample +.. com.welab.document.model.PhotoInfoExample$Criterion
+com.welab.common.keygen.KeyGenerator <|.. com.welab.document.service.impl.SeqNoService
+org.springframework.beans.factory.InitializingBean <|.. com.welab.document.handler.DocUploadConfig
+com.welab.xdao.context.table.AbstractTable <|-- com.welab.document.domain.tables.TablePartnerDocument
+com.welab.ddd.interfaces.dto.assembler.DTOAssembler <|.. com.welab.document.service.dto.assembler.PartnerDocDtoAssembler
+com.welab.document.service.impl.OjkCheckContractGenerationService +.. com.welab.document.service.impl.OjkCheckContractGenerationService$Base64ImgReplacedElementFactory
+com.welab.document.service.impl.ReplacedElementFactory <|.. com.welab.document.service.impl.OjkCheckContractGenerationService$Base64ImgReplacedElementFactory
+com.welab.xdao.context.table.AbstractTable <|-- com.welab.document.domain.tables.TableSaasDocument
+com.welab.document.service.IPhotoInfoService <|.. com.welab.document.app.impl.PhotoInfoServiceImpl
+java.io.Serializable <|.. com.welab.document.vo.DocQueryVo
+java.io.Closeable <|.. com.welab.document.utils.HttpClient
+com.welab.document.dto.DocQueryDto <|-- com.welab.document.dto.SeaDocQueryDto
+com.welab.document.common.Urls +.. com.welab.document.common.Urls$File
+com.welab.document.common.Urls +.. com.welab.document.common.Urls$APK
+com.welab.document.test.SimpleTest <|-- com.welab.document.dao.PartnerDocumentDaoTest
+java.io.Serializable <|.. com.welab.document.model.SaasDocument
+com.welab.document.domain.tables.StaticImport <|-- com.welab.document.dao.BaseDocumentService
+java.io.Serializable <|.. com.welab.document.vo.DocAccessVo
+java.io.Serializable <|.. com.welab.document.vo.PhotoInfoVO
+com.welab.document.test.SimpleTest <|-- com.welab.document.test.impl.PhotoInfoServiceImplTest
+com.welab.ddd.interfaces.dto.assembler.DTOAssembler <|.. com.welab.document.service.dto.assembler.DocUploadDtoAssembler
+java.io.Serializable <|.. com.welab.document.vo.DocumentVo
+com.welab.document.handler.DocumentHandler <|.. com.welab.document.utils.oss.OssDocumentHandler
+org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests <|-- com.welab.document.test.SimpleTest
+com.welab.document.model.SaasDocumentExample +.. com.welab.document.model.SaasDocumentExample$GeneratedCriteria
+com.welab.document.model.SaasDocumentExample +.. com.welab.document.model.SaasDocumentExample$Criteria
+com.welab.document.model.GeneratedCriteria <|-- com.welab.document.model.SaasDocumentExample$Criteria
+com.welab.document.model.SaasDocumentExample +.. com.welab.document.model.SaasDocumentExample$Criterion
+com.welab.document.vo.DocUploadVo <|-- com.welab.document.dto.SeaDocUploadVo
+org.springframework.data.mongodb.repository.MongoRepository <|-- com.welab.document.dao.mongo.AttachmentDao
+com.welab.document.test.SimpleTest <|-- com.welab.document.service.impl.DocumentServiceImplTest
+java.io.Serializable <|.. com.welab.document.dto.ThumbnailDto
+java.io.Serializable <|.. com.welab.document.dto.DocQueryDto
+com.welab.document.model.PartnerDocumentExample +.. com.welab.document.model.PartnerDocumentExample$GeneratedCriteria
+com.welab.document.model.PartnerDocumentExample +.. com.welab.document.model.PartnerDocumentExample$Criteria
+com.welab.document.model.GeneratedCriteria <|-- com.welab.document.model.PartnerDocumentExample$Criteria
+com.welab.document.model.PartnerDocumentExample +.. com.welab.document.model.PartnerDocumentExample$Criterion
+java.io.Serializable <|.. com.welab.document.dto.cmd.PhotoInfoCmd
+java.io.Serializable <|.. com.welab.document.dto.SeaDocInsertDto
+com.welab.document.service.DocumentService <|.. com.welab.document.service.impl.DocumentServiceImpl
+java.io.Serializable <|.. com.welab.document.dto.DocUploadDto
+java.io.Serializable <|.. com.welab.document.dto.AliCloudStsDto
+com.welab.document.exception.RuntimeException <|-- com.welab.document.exception.DocumentException
+@enduml
