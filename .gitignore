@@ -1,5 +1,7 @@
 *.tmp
 code2diagram/resource/sample/*
 code2diagram/resource/input-sequence.json
-component-list/out
+component-list/out/component_classes_welab_app_to_event.json
+component-list/out/component_classes_welab_fund_to_user.json
 code2diagram/tools-experiment
+documentation-tools/
