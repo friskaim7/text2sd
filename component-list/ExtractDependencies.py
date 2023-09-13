@@ -14,7 +14,7 @@ def get_package_name(package_line):
     splitted_package_line = package_line.split(' ')
     return splitted_package_line[-1].strip()
 
-def get_dependency_list(file, dep_type=DEPENDS_UPON):
+def get_dependency_list(file):
     dep_list = set()
     # Skipping the Dependency Type
     line = file.readline()
@@ -22,7 +22,6 @@ def get_dependency_list(file, dep_type=DEPENDS_UPON):
     # Every Dependency Type ends with an empty line
     while line not in ['\n', '\r\n']:
         if ROOT_PACKAGE_NAME in line:
-            # print(f'{dep_type} {line}')  # Print each dependency
             dep_list.add(line.strip())
         line = file.readline()
     return dep_list
@@ -56,32 +55,17 @@ if __name__ == "__main__":
                                                 "du" : set(),
                                                 "ub" : set()
                                             }
-                # print()
-                # print(f"package_name: {package_name}")
-                # print(f"repo_name: {repo_name}")
-            
             # Get the next line
             line = file.readline()
 
             # Iterate next line as long as there is "com.welab" after Dependency Type line
             if DEPENDS_UPON in line:
-                depend_upon_list = get_dependency_list(file, DEPENDS_UPON)
-                # print(f"DU: {depend_upon_list}")
+                depend_upon_list = get_dependency_list(file)
             elif USED_BY in line:
-                used_by_list = get_dependency_list(file, USED_BY)
-                # print(f"UB: {used_by_list}")
+                used_by_list = get_dependency_list(file)
 
             if (package_name is not None) and (repo_name is not None):
-                # repo_dependencies[repo_name] = dep_list_to_dict(depend_upon_list, used_by_list)
-            
                 repo_dependencies[repo_name]["du"].update(depend_upon_list)
                 repo_dependencies[repo_name]["ub"].update(used_by_list)
 
-                # set(repo_dependencies[repo_name]["du"])
-                # set(repo_dependencies[repo_name]["ub"])
-            # repo_dependencies.append({
-            #     "repo_name": repo_name,
-            #     "du" : depend_upon_list,
-            #     "ub" : used_by_list
-            # })
     pprint.pprint(repo_dependencies)
