@@ -1,0 +1,247 @@
+{
+    "com.welab.application": {
+        "du": [
+            "com.welab.application"
+        ],
+        "ub": [
+            "com.welab.marketing",
+            "com.welab.application"
+        ]
+    },
+    "com.welab.approval": {
+        "du": [
+            "com.welab.approval",
+            "com.welab.moon",
+            "com.welab.application"
+        ],
+        "ub": [
+            "com.welab.approval"
+        ]
+    },
+    "com.welab.collect": {
+        "du": [
+            "com.welab.collect",
+            "com.welab.sea",
+            "com.welab.common"
+        ],
+        "ub": [
+            "com.welab.marketing",
+            "com.welab.approval",
+            "com.welab.collect",
+            "com.welab.application"
+        ]
+    },
+    "com.welab.collection": {
+        "du": [
+            "com.welab.collection",
+            "com.welab.common"
+        ],
+        "ub": []
+    },
+    "com.welab.common": {
+        "du": [],
+        "ub": [
+            "com.welab.approval",
+            "com.welab.test",
+            "com.welab.common"
+        ]
+    },
+    "com.welab.credit": {
+        "du": [
+            "com.welab.credit",
+            "com.welab.sea",
+            "com.welab.common"
+        ],
+        "ub": [
+            "com.welab.marketing",
+            "com.welab.approval",
+            "com.welab.credit",
+            "com.welab.application"
+        ]
+    },
+    "com.welab.customer": {
+        "du": [
+            "com.welab.application",
+            "com.welab.customer",
+            "com.welab.common"
+        ],
+        "ub": [
+            "com.welab.customer",
+            "com.welab.application"
+        ]
+    },
+    "com.welab.dayu": {
+        "du": [
+            "com.welab.dayu"
+        ],
+        "ub": []
+    },
+    "com.welab.ddd": {
+        "du": [
+            "com.welab.dayu"
+        ],
+        "ub": []
+    },
+    "com.welab.document": {
+        "du": [
+            "com.welab.document"
+        ],
+        "ub": [
+            "com.welab.document",
+            "com.welab.application"
+        ]
+    },
+    "com.welab.enums": {
+        "du": [
+            "com.welab.document"
+        ],
+        "ub": []
+    },
+    "com.welab.event": {
+        "du": [
+            "com.welab.event"
+        ],
+        "ub": [
+            "com.welab.event"
+        ]
+    },
+    "com.welab.fund": {
+        "du": [
+            "com.welab.sea"
+        ],
+        "ub": [
+            "com.welab.approval",
+            "com.welab.fund"
+        ]
+    },
+    "com.welab.komodo": {
+        "du": [
+            "com.welab.common"
+        ],
+        "ub": []
+    },
+    "com.welab.loan": {
+        "du": [],
+        "ub": []
+    },
+    "com.welab.marketing": {
+        "du": [
+            "com.welab.marketing",
+            "com.welab.sea"
+        ],
+        "ub": [
+            "com.welab.marketing"
+        ]
+    },
+    "com.welab.merchant": {
+        "du": [
+            "com.welab.merchant",
+            "com.welab.common"
+        ],
+        "ub": [
+            "com.welab.merchant",
+            "com.welab.application"
+        ]
+    },
+    "com.welab.message": {
+        "du": [],
+        "ub": [
+            "com.welab.merchant",
+            "com.welab.application"
+        ]
+    },
+    "com.welab.moon": {
+        "du": [
+            "com.welab.moon",
+            "com.welab.common"
+        ],
+        "ub": [
+            "com.welab.marketing",
+            "com.welab.approval",
+            "com.welab.moon",
+            "com.welab.application"
+        ]
+    },
+    "com.welab.pay": {
+        "du": [
+            "com.welab.moon",
+            "com.welab.common"
+        ],
+        "ub": [
+            "com.welab.marketing",
+            "com.welab.approval",
+            "com.welab.application"
+        ]
+    },
+    "com.welab.report": {
+        "du": [
+            "com.welab.report",
+            "com.welab.sea"
+        ],
+        "ub": []
+    },
+    "com.welab.sea": {
+        "du": [],
+        "ub": []
+    },
+    "com.welab.security": {
+        "du": [
+            "com.welab.security"
+        ],
+        "ub": [
+            "com.welab.security",
+            "com.welab.marketing",
+            "com.welab.application"
+        ]
+    },
+    "com.welab.sun": {
+        "du": [
+            "com.welab.security"
+        ],
+        "ub": [
+            "com.welab.marketing",
+            "com.welab.application"
+        ]
+    },
+    "com.welab.test": {
+        "du": [
+            "com.welab.security",
+            "com.welab.common"
+        ],
+        "ub": [
+            "com.welab.marketing",
+            "com.welab.application"
+        ]
+    },
+    "com.welab.trace": {
+        "du": [
+            "com.welab.common"
+        ],
+        "ub": []
+    },
+    "com.welab.user": {
+        "du": [
+            "com.welab.user",
+            "com.welab.common"
+        ],
+        "ub": [
+            "com.welab.marketing",
+            "com.welab.approval",
+            "com.welab.user",
+            "com.welab.application"
+        ]
+    },
+    "com.welab.x": {
+        "du": [],
+        "ub": [
+            "com.welab.approval",
+            "com.welab.application",
+            "com.welab.marketing",
+            "com.welab.user"
+        ]
+    },
+    "com.welab.xdao": {
+        "du": [],
+        "ub": []
+    }
+}

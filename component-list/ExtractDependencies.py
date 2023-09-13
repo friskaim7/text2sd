@@ -1,6 +1,7 @@
-import pprint
+import json
 
-INPUT_FILENAME = "./component-list/out/JDepend/output - Copy.txt"
+INPUT_FILENAME = "./component-list/out/JDepend/output.txt"
+OUTPUT_FILENAME = "./component-list/out/JDepend/repo-dependencies.txt"
 ROOT_PACKAGE_NAME = "com.welab."
 PACKAGE_LINE_STARTER = "- Package: "
 DEPENDS_UPON = "Depends Upon:"
@@ -68,4 +69,11 @@ if __name__ == "__main__":
                 repo_dependencies[repo_name]["du"].update(depend_upon_list)
                 repo_dependencies[repo_name]["ub"].update(used_by_list)
 
-    pprint.pprint(repo_dependencies)
+    # Convert sets to lists
+    for repo_name, dep_info in repo_dependencies.items():
+        dep_info["du"] = list(dep_info["du"])
+        dep_info["ub"] = list(dep_info["ub"])
+
+    # Save the dictionary to the JSON file
+    with open(OUTPUT_FILENAME, 'w',  encoding='utf-8') as json_file:
+        json.dump(repo_dependencies, json_file, indent=4)
