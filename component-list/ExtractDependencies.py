@@ -1,3 +1,5 @@
+import pprint
+
 INPUT_FILENAME = "./component-list/out/JDepend/output - Copy.txt"
 ROOT_PACKAGE_NAME = "com.welab."
 PACKAGE_LINE_STARTER = "- Package: "
@@ -13,17 +15,33 @@ def get_package_name(package_line):
     return splitted_package_line[-1].strip()
 
 def get_dependency_list(file, dep_type=DEPENDS_UPON):
+    dep_list = set()
     # Skipping the Dependency Type
     line = file.readline()
 
     # Every Dependency Type ends with an empty line
     while line not in ['\n', '\r\n']:
         if ROOT_PACKAGE_NAME in line:
-            print(f'{dep_type} {line}')  # Print each dependency
+            # print(f'{dep_type} {line}')  # Print each dependency
+            dep_list.add(line.strip())
         line = file.readline()
+    return dep_list
+
+def dep_list_to_dict(du, ub):
+    return {
+        "du" : du,
+        "ub" : ub
+    }
 
 if __name__ == "__main__":
     with open(INPUT_FILENAME, 'r', encoding='utf-8') as file:
+        # Define outputs
+        repo_dependencies = {}
+        package_name = None
+        repo_name = None
+        depend_upon_list = set()
+        used_by_list = set()
+
         # the first line is always empty
         line = file.readline()
 
@@ -34,15 +52,36 @@ if __name__ == "__main__":
             if (line.startswith(PACKAGE_LINE_STARTER)) and (ROOT_PACKAGE_NAME in line):
                 package_name = get_package_name(line)
                 repo_name = get_repo_name(package_name)
-                print()
-                print(f"package_name: {package_name}")
-                print(f"repo_name: {repo_name}")
+                repo_dependencies[repo_name] = {
+                                                "du" : set(),
+                                                "ub" : set()
+                                            }
+                # print()
+                # print(f"package_name: {package_name}")
+                # print(f"repo_name: {repo_name}")
             
             # Get the next line
             line = file.readline()
 
             # Iterate next line as long as there is "com.welab" after Dependency Type line
             if DEPENDS_UPON in line:
-                get_dependency_list(file, DEPENDS_UPON)
+                depend_upon_list = get_dependency_list(file, DEPENDS_UPON)
+                # print(f"DU: {depend_upon_list}")
             elif USED_BY in line:
-                get_dependency_list(file, USED_BY)
+                used_by_list = get_dependency_list(file, USED_BY)
+                # print(f"UB: {used_by_list}")
+
+            if (package_name is not None) and (repo_name is not None):
+                # repo_dependencies[repo_name] = dep_list_to_dict(depend_upon_list, used_by_list)
+            
+                repo_dependencies[repo_name]["du"].update(depend_upon_list)
+                repo_dependencies[repo_name]["ub"].update(used_by_list)
+
+                # set(repo_dependencies[repo_name]["du"])
+                # set(repo_dependencies[repo_name]["ub"])
+            # repo_dependencies.append({
+            #     "repo_name": repo_name,
+            #     "du" : depend_upon_list,
+            #     "ub" : used_by_list
+            # })
+    pprint.pprint(repo_dependencies)
