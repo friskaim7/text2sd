@@ -22,7 +22,7 @@ def get_dependency_list(file):
     # Every Dependency Type ends with an empty line
     while line not in ['\n', '\r\n']:
         if ROOT_PACKAGE_NAME in line:
-            dep_list.add(line.strip())
+            dep_list.add(get_repo_name(line.strip()))
         line = file.readline()
     return dep_list
 
