@@ -1,4 +1,8 @@
+INPUT_FILENAME = "./component-list/out/JDepend/output - Copy.txt"
 ROOT_PACKAGE_NAME = "com.welab."
+PACKAGE_LINE_STARTER = "- Package: "
+DEPENDS_UPON = "Depends Upon:"
+USED_BY = "Used By:"
 
 def get_repo_name(package_name) -> str:
     splitted_package_name = package_name.split('.')
@@ -8,7 +12,7 @@ def get_package_name(package_line):
     splitted_package_line = package_line.split(' ')
     return splitted_package_line[-1].strip()
 
-def get_dependency_list(file, dep_type="Depends Upon:"):
+def get_dependency_list(file, dep_type=DEPENDS_UPON):
     # Skipping the Dependency Type
     line = file.readline()
 
@@ -19,15 +23,15 @@ def get_dependency_list(file, dep_type="Depends Upon:"):
         line = file.readline()
 
 if __name__ == "__main__":
-    input_filename = "./component-list/out/JDepend/output - Copy.txt"
-    with open(input_filename, 'r', encoding='utf-8') as file:
+    with open(INPUT_FILENAME, 'r', encoding='utf-8') as file:
+        # the first line is always empty
         line = file.readline()
 
         # Iterate as long as EOF has not been reached
         while line:
             # Change Package and Repo name when enter new package
             # Non Welab packages are ignored
-            if (line.startswith("- Package: ")) and (ROOT_PACKAGE_NAME in line):
+            if (line.startswith(PACKAGE_LINE_STARTER)) and (ROOT_PACKAGE_NAME in line):
                 package_name = get_package_name(line)
                 repo_name = get_repo_name(package_name)
                 print()
@@ -37,8 +41,8 @@ if __name__ == "__main__":
             # Get the next line
             line = file.readline()
 
-            # Iterate next line as long as there is "com.welab" after "Depends Upon"
-            if "Depends Upon:" in line:
-                get_dependency_list(file, "Depends Upon:")
-            elif "Used By:" in line:
-                get_dependency_list(file, "Used By:")
+            # Iterate next line as long as there is "com.welab" after Dependency Type line
+            if DEPENDS_UPON in line:
+                get_dependency_list(file, DEPENDS_UPON)
+            elif USED_BY in line:
+                get_dependency_list(file, USED_BY)
