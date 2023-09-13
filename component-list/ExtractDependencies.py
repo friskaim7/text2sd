@@ -8,10 +8,12 @@ def get_package_name(package_line):
     splitted_package_line = package_line.split(' ')
     return splitted_package_line[-1].strip()
 
-def get_dependency_list(file, dep_type="depend upon", stoper="Used By:"):
-    print(dep_type)
+def get_dependency_list(file, dep_type="Depends Upon:"):
+    # Skipping the Dependency Type
     line = file.readline()
-    while stoper not in line:
+
+    # Every Dependency Type ends with an empty line
+    while line not in ['\n', '\r\n']:
         if ROOT_PACKAGE_NAME in line:
             print(f'{dep_type} {line}')  # Print each dependency
         line = file.readline()
@@ -32,12 +34,11 @@ if __name__ == "__main__":
                 print(f"package_name: {package_name}")
                 print(f"repo_name: {repo_name}")
             
-            # Get next line
+            # Get the next line
             line = file.readline()
 
             # Iterate next line as long as there is "com.welab" after "Depends Upon"
             if "Depends Upon:" in line:
-                get_dependency_list(file, "Depends Upon:", "Used By:")
-            # if "Used By:" in line:
+                get_dependency_list(file, "Depends Upon:")
             elif "Used By:" in line:
-                get_dependency_list(file, "Used By:", "--------------------------------------------------")
+                get_dependency_list(file, "Used By:")
