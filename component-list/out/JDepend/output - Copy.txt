@@ -44,15 +44,12 @@ Concrete Classes:
 
 Depends Upon:
     com.ctrip.framework.apollo.spring.annotation
+    com.welab.application.advance
     com.welab.common
     java.lang
     java.util.concurrent
     org.apache.dubbo.config.spring.context.annotation
     org.slf4j
-    org.springframework.boot
-    org.springframework.boot.autoconfigure
-    org.springframework.context.annotation
-    org.springframework.context.support
     org.springframework.scheduling.annotation
     org.springframework.scheduling.concurrent
 
@@ -169,6 +166,9 @@ Depends Upon:
     io.swagger.annotations
     java.io
     java.lang
+    com.welab.approval.app.command.goldfish
+    com.welab.approval.app.command.kyc
+    com.welab.collect.base
     java.util
     javax.validation.constraints
     org.hibernate.validator.constraints
