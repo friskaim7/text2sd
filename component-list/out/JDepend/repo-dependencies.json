@@ -4,15 +4,15 @@
             "com.welab.application"
         ],
         "ub": [
-            "com.welab.marketing",
-            "com.welab.application"
+            "com.welab.application",
+            "com.welab.marketing"
         ]
     },
     "com.welab.approval": {
         "du": [
-            "com.welab.approval",
+            "com.welab.application",
             "com.welab.moon",
-            "com.welab.application"
+            "com.welab.approval"
         ],
         "ub": [
             "com.welab.approval"
@@ -20,15 +20,15 @@
     },
     "com.welab.collect": {
         "du": [
+            "com.welab.common",
             "com.welab.collect",
-            "com.welab.sea",
-            "com.welab.common"
+            "com.welab.sea"
         ],
         "ub": [
+            "com.welab.application",
             "com.welab.marketing",
-            "com.welab.approval",
             "com.welab.collect",
-            "com.welab.application"
+            "com.welab.approval"
         ]
     },
     "com.welab.collection": {
@@ -41,33 +41,33 @@
     "com.welab.common": {
         "du": [],
         "ub": [
-            "com.welab.approval",
+            "com.welab.common",
             "com.welab.test",
-            "com.welab.common"
+            "com.welab.approval"
         ]
     },
     "com.welab.credit": {
         "du": [
+            "com.welab.common",
             "com.welab.credit",
-            "com.welab.sea",
-            "com.welab.common"
+            "com.welab.sea"
         ],
         "ub": [
-            "com.welab.marketing",
-            "com.welab.approval",
             "com.welab.credit",
-            "com.welab.application"
+            "com.welab.application",
+            "com.welab.marketing",
+            "com.welab.approval"
         ]
     },
     "com.welab.customer": {
         "du": [
+            "com.welab.common",
             "com.welab.application",
-            "com.welab.customer",
-            "com.welab.common"
+            "com.welab.customer"
         ],
         "ub": [
-            "com.welab.customer",
-            "com.welab.application"
+            "com.welab.application",
+            "com.welab.customer"
         ]
     },
     "com.welab.dayu": {
@@ -126,8 +126,8 @@
     },
     "com.welab.marketing": {
         "du": [
-            "com.welab.marketing",
-            "com.welab.sea"
+            "com.welab.sea",
+            "com.welab.marketing"
         ],
         "ub": [
             "com.welab.marketing"
@@ -135,8 +135,8 @@
     },
     "com.welab.merchant": {
         "du": [
-            "com.welab.merchant",
-            "com.welab.common"
+            "com.welab.common",
+            "com.welab.merchant"
         ],
         "ub": [
             "com.welab.merchant",
@@ -152,25 +152,25 @@
     },
     "com.welab.moon": {
         "du": [
-            "com.welab.moon",
-            "com.welab.common"
+            "com.welab.common",
+            "com.welab.moon"
         ],
         "ub": [
+            "com.welab.application",
             "com.welab.marketing",
-            "com.welab.approval",
             "com.welab.moon",
-            "com.welab.application"
+            "com.welab.approval"
         ]
     },
     "com.welab.pay": {
         "du": [
-            "com.welab.moon",
-            "com.welab.common"
+            "com.welab.common",
+            "com.welab.moon"
         ],
         "ub": [
+            "com.welab.application",
             "com.welab.marketing",
-            "com.welab.approval",
-            "com.welab.application"
+            "com.welab.approval"
         ]
     },
     "com.welab.report": {
@@ -189,9 +189,9 @@
             "com.welab.security"
         ],
         "ub": [
+            "com.welab.application",
             "com.welab.security",
-            "com.welab.marketing",
-            "com.welab.application"
+            "com.welab.marketing"
         ]
     },
     "com.welab.sun": {
@@ -199,18 +199,18 @@
             "com.welab.security"
         ],
         "ub": [
-            "com.welab.marketing",
-            "com.welab.application"
+            "com.welab.application",
+            "com.welab.marketing"
         ]
     },
     "com.welab.test": {
         "du": [
-            "com.welab.security",
-            "com.welab.common"
+            "com.welab.common",
+            "com.welab.security"
         ],
         "ub": [
-            "com.welab.marketing",
-            "com.welab.application"
+            "com.welab.application",
+            "com.welab.marketing"
         ]
     },
     "com.welab.trace": {
@@ -221,23 +221,23 @@
     },
     "com.welab.user": {
         "du": [
-            "com.welab.user",
-            "com.welab.common"
+            "com.welab.common",
+            "com.welab.user"
         ],
         "ub": [
+            "com.welab.application",
             "com.welab.marketing",
             "com.welab.approval",
-            "com.welab.user",
-            "com.welab.application"
+            "com.welab.user"
         ]
     },
     "com.welab.x": {
         "du": [],
         "ub": [
-            "com.welab.approval",
             "com.welab.application",
-            "com.welab.marketing",
-            "com.welab.user"
+            "com.welab.approval",
+            "com.welab.user",
+            "com.welab.marketing"
         ]
     },
     "com.welab.xdao": {
