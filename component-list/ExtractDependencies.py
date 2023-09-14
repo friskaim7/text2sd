@@ -1,7 +1,7 @@
 import json
 
 INPUT_FILENAME = "./component-list/out/JDepend/output.txt"
-OUTPUT_FILENAME = "./component-list/out/JDepend/repo-dependencies.txt"
+OUTPUT_FILENAME = "./component-list/out/JDepend/repo-dependencies.json"
 ROOT_PACKAGE_NAME = "com.welab."
 PACKAGE_LINE_STARTER = "- Package: "
 DEPENDS_UPON = "Depends Upon:"
