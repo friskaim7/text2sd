@@ -1,0 +1,24 @@
+1. read line
+2. extract komponen (class, method, return, :)
+3. save to caller line
+4. read next line
+5. extract komponen (class, method, return:)
+6. save to called line
+7. format first line
+8. print formated first line
+9. if (:), call this method with the next line
+10. print return line
+=======================================
+- read caller line
+- print formatted caller line
+- if caller line has (:), then
+	- loop next line until the tab number same as caller
+	- do same as to the caller method (need recursive)
+- print formatted return of caller line
+read next line
+
+
+
+
+
+
