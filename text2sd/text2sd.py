@@ -1,6 +1,7 @@
 """ This file containing the function needed to convert .txt file into .puml """
 
 import re
+from nonbinary_tree import build_tree_from_file
 
 INPUT_FILENAME = "./text2sd/sample/[Input] Sample.txt"
 CLASS = "cls"
@@ -43,26 +44,21 @@ def formatted_return(caller, called):
     called_prop = property_identifier(called)
     return f"{caller_prop[CLASS]} <-- {called_prop[CLASS]}: {called_prop[RETURN]}"
 
-def process(file, caller_line="", called_line=""):
-    print(formatted_caller(caller_line, called_line))
-    print(formatted_return(caller_line, called_line))
+# def process(file, caller_line="", called_line=""):
+#     print(formatted_caller(caller_line, called_line))
+#     print(formatted_return(caller_line, called_line))
 
+def print_tree(node, indent=0):
+    if node is not None:
+        print("  " * indent + node.data)
+        for child in node.children:
+            print_tree(child, indent + 1)
 
 
 def main():
     """ Run the program """
-    with open(INPUT_FILENAME, "r", encoding="utf-8") as input_file:
-        caller_line = input_file.readline()
-        called_line = input_file.readline()
-        print(f"caller {caller_line}")
-        # caller_tab_count = count_leading_tab(caller_line)
-        process(input_file, caller_line[:-1], called_line[:-1])
-        # if ":" in caller_line:
-        #     print(f"{caller_line[:-1]} : {caller_tab_count}")
-        #     current_tab_count = caller_tab_count + 1
-        #     while (current_tab_count > (caller_tab_count)):
-        #         current_line = input_file.readline()
-        #         current_tab_count = count_leading_tab(current_line)
+    tree_root = build_tree_from_file(INPUT_FILENAME)
+    print_tree(tree_root)
 
 
 if __name__ == "__main__":
