@@ -26,6 +26,8 @@ def property_identifier2(line):
 def property_identifier(line):
     """	return class, method, and return """
     line_prop = {CLASS: "", METHOD: "", RETURN: ""}
+    if line is None:
+        return line_prop
     class_rest = line.split('.')
     method_return_raw = class_rest[1].split(" >> ")
     line_prop[CLASS] = class_rest[0].strip()
@@ -34,19 +36,17 @@ def property_identifier(line):
     return line_prop
 
 
-def formatted_caller(caller, called):
-    caller_prop = property_identifier(caller)
-    called_prop = property_identifier(called)
+def formatted_caller(caller_node, called_node):
+    caller_line, called_line = formatting_passer(caller_node,called_node)
+    caller_prop = property_identifier(caller_line)
+    called_prop = property_identifier(called_line)
     return f"{caller_prop[CLASS]} -> {called_prop[CLASS]}: {called_prop[METHOD]}"
 
-def formatted_return(caller, called):
-    caller_prop = property_identifier(caller)
-    called_prop = property_identifier(called)
+def formatted_return(caller_node, called_node):
+    caller_line, called_line = formatting_passer(caller_node,called_node)
+    caller_prop = property_identifier(caller_line)
+    called_prop = property_identifier(called_line)
     return f"{caller_prop[CLASS]} <-- {called_prop[CLASS]}: {called_prop[RETURN]}"
-
-# def process(file, caller_line="", called_line=""):
-#     print(formatted_caller(caller_line, called_line))
-#     print(formatted_return(caller_line, called_line))
 
 def print_tree(node, indent=0):
     if node is not None:
@@ -54,11 +54,25 @@ def print_tree(node, indent=0):
         for child in node.children:
             print_tree(child, indent + 1)
 
+def formatting_passer(parent, child):
+    if parent is None:
+        return None, child.data
+    else:
+        return parent.data, child.data
+
+def print_custom(node, parent=None):
+    if node is not None:
+        print(formatted_caller(parent, node))
+        for child in node.children:
+            print_custom(child, node)
+        print(formatted_return(parent, node))
 
 def main():
     """ Run the program """
     tree_root = build_tree_from_file(INPUT_FILENAME)
     print_tree(tree_root)
+    print("\n==========\n")
+    print_custom(tree_root)
 
 
 if __name__ == "__main__":
