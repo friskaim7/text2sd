@@ -67,12 +67,23 @@ def print_custom(node, parent=None):
             print_custom(child, node)
         print(formatted_return(parent, node))
 
+def save_to_puml(puml_file, node, parent=None):
+    if node is not None:
+        print(formatted_caller(parent, node))
+        puml_file.write(formatted_caller(parent, node) + '\n')
+        for child in node.children:
+            save_to_puml(puml_file, child, node)
+        print(formatted_return(parent, node))
+        puml_file.write(formatted_return(parent, node) + '\n')
+    
+
 def main():
     """ Run the program """
     tree_root = build_tree_from_file(INPUT_FILENAME)
     print_tree(tree_root)
     print("\n==========\n")
-    print_custom(tree_root)
+    with open("./text2sd/output/sample.puml", "w") as puml_file:
+        save_to_puml(puml_file, tree_root)
 
 
 if __name__ == "__main__":

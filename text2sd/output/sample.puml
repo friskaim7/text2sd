@@ -1,0 +1,18 @@
+ -> class1: method1(param1)
+class1 -> class2: method2(param1, param2)
+class1 <-- class2: boolean
+class1 -> class2: method3(param1, param2, param3)
+class2 -> class3: method4()
+class3 -> class4: method5()
+class3 <-- class4: int
+class3 -> class4: method6()
+class3 <-- class4: string
+class2 <-- class3: string
+class2 -> class3: method7()
+class3 -> class5: method8()
+class3 <-- class5: int
+class2 <-- class3: int
+class1 <-- class2: string
+class1 -> class2: method9()
+class1 <-- class2: boolean
+ <-- class1: int
