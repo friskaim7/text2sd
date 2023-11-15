@@ -75,16 +75,13 @@ def save_to_puml(puml_file, node, parent=None):
             save_to_puml(puml_file, child, node)
         print(formatted_return(parent, node))
         puml_file.write(formatted_return(parent, node) + '\n')
-    
 
 def main():
     """ Run the program """
-    tree_root = build_tree_from_file(INPUT_FILENAME)
-    print_tree(tree_root)
-    print("\n==========\n")
-    with open("./text2sd/output/sample.puml", "w") as puml_file:
-        save_to_puml(puml_file, tree_root)
-
+    with open(INPUT_FILENAME, 'r', encoding='utf-8') as input_file:
+        tree_root = build_tree_from_file(input_file)
+        with open("./text2sd/output/sample.puml", "w", encoding='utf-8') as puml_file:
+            save_to_puml(puml_file, tree_root)
 
 if __name__ == "__main__":
     main()

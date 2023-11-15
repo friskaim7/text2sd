@@ -3,29 +3,27 @@ class TreeNode:
         self.data = data
         self.children = []
 
-def build_tree_from_file(file_path):
+def build_tree_from_file(file):
     root = None
     current_node = None
     stack = []
+    for line in file:
+        line = line.rstrip('\n')
+        indent_level = line.count('\t')
 
-    with open(file_path, 'r') as file:
-        for line in file:
-            line = line.rstrip('\n')
-            indent_level = line.count('\t')
+        node_data = line.lstrip('\t')
+        new_node = TreeNode(node_data)
 
-            node_data = line.lstrip('\t')
-            new_node = TreeNode(node_data)
+        if indent_level == 0:
+            root = new_node
+            stack = [root]
+        else:
+            while len(stack) > indent_level:
+                stack.pop()
 
-            if indent_level == 0:
-                root = new_node
-                stack = [root]
-            else:
-                while len(stack) > indent_level:
-                    stack.pop()
-
-                current_node = stack[-1]
-                current_node.children.append(new_node)
-                stack.append(new_node)
+            current_node = stack[-1]
+            current_node.children.append(new_node)
+            stack.append(new_node)
 
     return root
 
