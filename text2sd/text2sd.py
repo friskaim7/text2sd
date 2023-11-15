@@ -1,6 +1,5 @@
 """ This file containing the functions needed to convert .txt file into .puml """
 
-import re
 from nonbinary_tree import build_tree_from_file
 
 INPUT_FILENAME = "./text2sd/sample/[Input] Sample.txt"
