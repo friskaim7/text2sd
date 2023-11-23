@@ -9,16 +9,16 @@ UnknownClass -> PreApplyLoansCmdExe: process(jsonData)
 PreApplyLoansCmdExe -> GoldFishManager: isGoldFish(loanNumber)>> boolean
 PreApplyLoansCmdExe <-- GoldFishManager: 
 UnknownClass <-- PreApplyLoansCmdExe: void
-UnknownClass -> GoldFishRule: FdcCheckHasOver15(userId, nik)
-GoldFishRule -> GoldFishRuleService: goldFishProcess(userType, loanNumber, userId, nik, StringBuilder)
-GoldFishRuleService -> GoldFishRuleService: preReject(loanNumber)
-GoldFishRuleService -> PreApplyLoansCmdExe: runPreRule(loanNumber)
-PreApplyLoansCmdExe -> FdcFailJob: execute(shardingContext)
-PreApplyLoansCmdExe <-- FdcFailJob: void
-GoldFishRuleService <-- PreApplyLoansCmdExe: void
+UnknownClass -> FdcFailJob: execute(shardingContext)
+FdcFailJob -> PreApplyLoansCmdExe: runPreRule(loanNumber)
+PreApplyLoansCmdExe -> GoldFishRuleService: preReject(loanNumber)
+GoldFishRuleService -> GoldFishRuleService: goldFishProcess(userType, loanNumber, userId, nik, StringBuilder)
+GoldFishRuleService -> GoldFishRule: FdcCheckHasOver15(userId, nik)
+GoldFishRuleService <-- GoldFishRule: Response<Boolean>
 GoldFishRuleService <-- GoldFishRuleService: RuleResultDto
-GoldFishRule <-- GoldFishRuleService: RuleResultDto
-UnknownClass <-- GoldFishRule: Response<Boolean>
+PreApplyLoansCmdExe <-- GoldFishRuleService: RuleResultDto
+FdcFailJob <-- PreApplyLoansCmdExe: void
+UnknownClass <-- FdcFailJob: void
 UnknownClass -> FdcFailJob: execute(shardingContext)
 FdcFailJob -> PreApplyLoansCmdExe: runPreRule(loanNumber)
 PreApplyLoansCmdExe -> GoldFishRuleService: preReject(loanNumber)
@@ -35,16 +35,16 @@ BaseRule -> BaseRule: reject(loanNumber)
 BaseRule <-- BaseRule: RuleResultDto
 BaseRule <-- BaseRule: RuleResultDto
 UnknownClass <-- BaseRule: Boolean
-UnknownClass -> FifinsightController: getFifinsight():
-FifinsightController -> BaseFifinsightCheckService: getOneByNik(nik)
-BaseFifinsightCheckService -> FifInsightClient: loadFifinsightCheck(loadFifinsightCheck)
-FifInsightClient -> GoldFishManager: fishFinderSecondCheck(ruleResultDto, loanNumber)
-GoldFishManager -> ApplyReportTwoConsumer: process(message)
-GoldFishManager <-- ApplyReportTwoConsumer: void
-FifInsightClient <-- GoldFishManager: RuleResultDto
-BaseFifinsightCheckService <-- FifInsightClient: FifinsightCheck
-FifinsightController <-- BaseFifinsightCheckService: FifinsightCheck
-UnknownClass <-- FifinsightController: 
+UnknownClass -> ApplyReportTwoConsumer: process(message)
+ApplyReportTwoConsumer -> GoldFishManager: fishFinderSecondCheck(ruleResultDto, loanNumber)
+GoldFishManager -> FifInsightClient: loadFifinsightCheck(loadFifinsightCheck)
+FifInsightClient -> BaseFifinsightCheckService: getOneByNik(nik)
+BaseFifinsightCheckService -> FifinsightController: getFifinsight()
+BaseFifinsightCheckService <-- FifinsightController: 
+FifInsightClient <-- BaseFifinsightCheckService: FifinsightCheck
+GoldFishManager <-- FifInsightClient: FifinsightCheck
+ApplyReportTwoConsumer <-- GoldFishManager: RuleResultDto
+UnknownClass <-- ApplyReportTwoConsumer: void
 UnknownClass -> BaseCheckService: gadaCheck(userInfo, loanNumber)
 BaseCheckService -> DukcapilClientV2Service: doCall(dukcapilRequest)
 DukcapilClientV2Service -> BaseCheckService: checkGadaAsli(loanNumber, docId)
@@ -53,32 +53,32 @@ BaseCheckService <-- BaseCheckService: String
 DukcapilClientV2Service <-- BaseCheckService: String
 BaseCheckService <-- DukcapilClientV2Service: String
 UnknownClass <-- BaseCheckService: String
-UnknownClass -> ScoreCheckService: getLastDigit(loanNumber)
-ScoreCheckService -> BaseCheckService: getLastDigit():
-BaseCheckService -> AbstractScoreCheckService: getApprovalScoreConfig(loanNumber, nik, userType)
-AbstractScoreCheckService -> AbstractScoreCheckService: doResult(response, isScoreNullReject)
-AbstractScoreCheckService -> ScoreCheck2GoldFish: doScoreCheck(nik, loanNumber)
-ScoreCheck2GoldFish -> ScoreCheck2GoldFish: checkScore(nik, loanNumber)
-ScoreCheck2GoldFish -> GoldFishManager: getCheckScore(userType, uw2aSegment, uw2bSegment, nik, loanNumber)
-GoldFishManager -> GoldFishManager: fishFinderSecondCheck(ruleResultDto, loanNumber)
-GoldFishManager <-- GoldFishManager: RuleResultDto
-GoldFishManager -> ApplyReportTwoConsumer: process(message)
-GoldFishManager <-- ApplyReportTwoConsumer: void
-ScoreCheck2GoldFish <-- GoldFishManager: Response<ScoreResultBO>
-ScoreCheck2GoldFish <-- ScoreCheck2GoldFish: Response<ScoreResultBO>
-AbstractScoreCheckService <-- ScoreCheck2GoldFish: Response<ScoreResultBO>
+UnknownClass -> ApplyReportTwoConsumer: process(message)
+ApplyReportTwoConsumer -> GoldFishManager: fishFinderSecondCheck(ruleResultDto, loanNumber)
+GoldFishManager -> GoldFishManager: getCheckScore(userType, uw2aSegment, uw2bSegment, nik, loanNumber)
+GoldFishManager -> ScoreCheck2GoldFish: checkScore(nik, loanNumber)
+ScoreCheck2GoldFish -> ScoreCheck2GoldFish: doScoreCheck(nik, loanNumber)
+ScoreCheck2GoldFish -> AbstractScoreCheckService: doResult(response, isScoreNullReject)
+AbstractScoreCheckService -> AbstractScoreCheckService: getApprovalScoreConfig(loanNumber, nik, userType)
+AbstractScoreCheckService -> BaseCheckService: getLastDigit():
+BaseCheckService -> ScoreCheckService: getLastDigit(loanNumber)
+BaseCheckService <-- ScoreCheckService: int
+AbstractScoreCheckService <-- BaseCheckService: 
 AbstractScoreCheckService <-- AbstractScoreCheckService: Response<ScoreResultBO>
-BaseCheckService <-- AbstractScoreCheckService: Response<ScoreResultBO>
-ScoreCheckService <-- BaseCheckService: 
-UnknownClass <-- ScoreCheckService: int
+ScoreCheck2GoldFish <-- AbstractScoreCheckService: Response<ScoreResultBO>
+ScoreCheck2GoldFish <-- ScoreCheck2GoldFish: Response<ScoreResultBO>
+GoldFishManager <-- ScoreCheck2GoldFish: Response<ScoreResultBO>
+GoldFishManager <-- GoldFishManager: Response<ScoreResultBO>
+ApplyReportTwoConsumer <-- GoldFishManager: RuleResultDto
+UnknownClass <-- ApplyReportTwoConsumer: void
 UnknownClass -> GoldFishManager: getCreditTagUW2(origin, score, flagList)
 GoldFishManager -> BackstageConfigServiceFacade: getConfigValue(configKey)
 GoldFishManager <-- BackstageConfigServiceFacade: String
 UnknownClass <-- GoldFishManager: String
-UnknownClass -> ScoreCheck2GoldFish: scoreFive2Nine(nik, lastDigit, loanNumber)
-ScoreCheck2GoldFish -> ScoreCheck2GoldFish: defaultScoring(nik, lastDigit, loanNumber, userProfile)
-ScoreCheck2GoldFish <-- ScoreCheck2GoldFish: Respond
-UnknownClass <-- ScoreCheck2GoldFish: Response
+UnknownClass -> ScoreCheck2GoldFish: defaultScoring(nik, lastDigit, loanNumber, userProfile)
+ScoreCheck2GoldFish -> ScoreCheck2GoldFish: scoreFive2Nine(nik, lastDigit, loanNumber)
+ScoreCheck2GoldFish <-- ScoreCheck2GoldFish: Response
+UnknownClass <-- ScoreCheck2GoldFish: Respond
 UnknownClass -> BaseCheckService: checkSelfieScore(loanNumber)
 BaseCheckService -> BaseCheckService: checkSelfieScoreNew(loanNumber, hitBasic)
 BaseCheckService -> BaseCheckService: findKyc(loanNumber)
@@ -103,14 +103,14 @@ BaseCheckService <-- BaseCheckService: Response<Boolean>
 BaseCheckService <-- BaseCheckService: String
 BaseCheckService <-- BaseCheckService: String
 UnknownClass <-- BaseCheckService: String
-UnknownClass -> BaseCheckService: checkTeleStatus():
-BaseCheckService -> BaseCheckService: checkAdvanceCallBack():
-BaseCheckService -> BaseApprovalService: handAdvanceCallBack():
-BaseApprovalService -> AdvanceTeleConsumer: onMessage()
-BaseApprovalService <-- AdvanceTeleConsumer: 
-BaseCheckService <-- BaseApprovalService: 
+UnknownClass -> AdvanceTeleConsumer: onMessage():
+AdvanceTeleConsumer -> BaseApprovalService: handAdvanceCallBack():
+BaseApprovalService -> BaseCheckService: checkAdvanceCallBack():
+BaseCheckService -> BaseCheckService: checkTeleStatus()
 BaseCheckService <-- BaseCheckService: 
-UnknownClass <-- BaseCheckService: 
+BaseApprovalService <-- BaseCheckService: 
+AdvanceTeleConsumer <-- BaseApprovalService: 
+UnknownClass <-- AdvanceTeleConsumer: 
 UnknownClass -> NotifyUtils: saveTag()
 UnknownClass <-- NotifyUtils: 
  <-- UnknownClass: Unknown
