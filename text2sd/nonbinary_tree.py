@@ -8,10 +8,14 @@ def build_tree_from_file(file):
     current_node = None
     stack = []
     for line in file:
-        line = line.rstrip('\n')
-        indent_level = line.count('\t')
+        # Ignore lines starting with ' or empty lines
+        if line.startswith("'"):
+            continue
+        
+        # 1 tab = 4 spaces
+        indent_level = (len(line) - len(line.lstrip()))/4
 
-        node_data = line.lstrip('\t')
+        node_data = line.strip()
         new_node = TreeNode(node_data)
 
         if indent_level == 0:
@@ -32,8 +36,3 @@ def print_tree(node, indent=0):
         print("  " * indent + node.data)
         for child in node.children:
             print_tree(child, indent + 1)
-
-# Example usage
-# file_path = "./text2sd/sample/[Input] Sample.txt"
-# tree_root = build_tree_from_file(file_path)
-# print_tree(tree_root)

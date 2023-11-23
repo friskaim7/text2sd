@@ -1,9 +1,9 @@
 """ This file containing the functions needed to convert .txt file into .puml """
 
-from nonbinary_tree import build_tree_from_file
+from nonbinary_tree import build_tree_from_file, print_tree
 
-INPUT_FILENAME = "./text2sd/sample/[Input] Sample.txt"
-OUTPUT_FILENAME = "./text2sd/output/sample.puml"
+INPUT_FILENAME = "E:/Work/Maucash/Outputs/UML Diagrams/Modified Input/[Input] Fish Finder - Approving C1.txt"
+OUTPUT_FILENAME = "./text2sd/output/[SD]FishFinder-ApprovingC1.puml"
 CLASS = "cls"
 METHOD = "method"
 RETURN = "ret"
@@ -29,7 +29,9 @@ def property_identifier(line):
     method_return_raw = class_rest[1].split(" >> ")
     line_prop[CLASS] = class_rest[0].strip()
     line_prop[METHOD] = method_return_raw[0].strip()
-    line_prop[RETURN] = method_return_raw[1][:-1].strip() if method_return_raw[1].endswith(":") else method_return_raw[1].strip()
+    # if return part is not empty, then take the return property
+    if len(method_return_raw) > 1:
+        line_prop[RETURN] = method_return_raw[1][:-1].strip() if method_return_raw[1].endswith(":") else method_return_raw[1].strip()
     return line_prop
 
 def formatting_passer(parent, child):
