@@ -14,7 +14,9 @@
 - Locate your input files directory. i.e. "input-sample/"
 > input-sample/
 - Run "py text2sd.py \<input deirectory>"
-> `py text2sd.py input-sample/`
+```
+py text2sd.py input-sample/
+```
 - The output will be in the "out" directory
 ```.
 ├── README.md
