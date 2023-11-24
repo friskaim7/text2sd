@@ -32,9 +32,9 @@ def property_identifier(line):
     method_return_raw = class_rest[1].split(" >> ")
     line_prop[CLASS] = class_rest[0].strip()
     line_prop[METHOD] = method_return_raw[0].strip()
-    ret_raw = method_return_raw[1]
     # if return part is not empty, then take the return property
     if len(method_return_raw) > 1:
+        ret_raw = method_return_raw[1]
         line_prop[RETURN] = ret_raw[:-1].strip() if ret_raw.endswith(":") else ret_raw.strip()
     return line_prop
 
@@ -106,5 +106,5 @@ if __name__ == "__main__":
 
         print(f'PlantUML File saved to\t"{output_file_path}"')
         convert_puml_to_image(output_file_path, IMAGE_OUTPUT_PATH)
-        print(f'Sequence Diagram saved to "./out/img/{input_filename}.png"')
+        print(f'Sequence Diagram saved to "./out/img/[SD] {input_filename}.png"')
  
