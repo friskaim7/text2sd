@@ -1,9 +1,11 @@
 """ This file containing the functions needed to convert .txt file into .puml """
 
-from lib.custom.nonbinary_tree import build_tree_from_file, print_tree
+import os
+import sys
+from lib.custom.nonbinary_tree import build_tree_from_file
 
-INPUT_FILENAME = "E:/Work/Maucash/Outputs/UML Diagrams/Modified Input/[Input] Fish Finder - Approving C1.txt"
-OUTPUT_FILENAME = "./out/puml/[SD]FishFinder-ApprovingC1.puml"
+# INPUT_FILENAME = "E:/Work/Maucash/Outputs/UML Diagrams/Modified Input/[Input] Fish Finder - Approving C1.txt"
+# OUTPUT_FILENAME = "./out/puml/[SD]FishFinder-ApprovingC1.puml"
 CLASS = "cls"
 METHOD = "method"
 RETURN = "ret"
@@ -66,12 +68,27 @@ def save_to_puml(puml_file, node, parent=None):
         puml_file.write(get_formatted_return(parent, node) + '\n')
 
 
-def main():
-    """ Run the program """
-    with open(INPUT_FILENAME, 'r', encoding='utf-8') as input_file:
-        tree_root = build_tree_from_file(input_file)
-        with open(OUTPUT_FILENAME, "w", encoding='utf-8') as puml_file:
-            save_to_puml(puml_file, tree_root)
-
 if __name__ == "__main__":
-    main()
+    """ Run the program """
+    if len(sys.argv) != 2:
+        print("Usage: python text2sd.py input_file_directory")
+        sys.exit(1)
+
+    # Extract input file name from command-line arguments
+    input_directory = sys.argv[1]
+
+    for filename in os.listdir(input_directory):
+        if filename.endswith(".txt"):
+            # Construct the full path for the file
+            input_file_path = os.path.join(input_directory, filename)
+
+            # Extract only the filename from the path (excluding extension)
+            input_filename, _ = os.path.splitext(os.path.basename(input_file_path))
+            output_file_path = f"./out/puml/[SD] {input_filename}.puml"
+        else:
+            print(f'"{filename}" is not a .txt file and cannot be processed.')
+
+        with open(input_file_path, 'r', encoding='utf-8') as input_file:
+            tree_root = build_tree_from_file(input_file)
+            with open(output_file_path, "w", encoding='utf-8') as puml_file:
+                save_to_puml(puml_file, tree_root)
