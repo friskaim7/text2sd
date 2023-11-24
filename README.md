@@ -13,7 +13,7 @@
 # How To Use
 - Locate your input files directory. i.e. "input-sample/"
 > input-sample/
-- Run "py text2sd.py \<input deirectory>"
+- Run "py text2sd.py \<input directory>"
 ```
 py text2sd.py input-sample/
 ```
