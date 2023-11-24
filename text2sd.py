@@ -1,9 +1,9 @@
 """ This file containing the functions needed to convert .txt file into .puml """
 
-from nonbinary_tree import build_tree_from_file, print_tree
+from lib.custom.nonbinary_tree import build_tree_from_file, print_tree
 
 INPUT_FILENAME = "E:/Work/Maucash/Outputs/UML Diagrams/Modified Input/[Input] Fish Finder - Approving C1.txt"
-OUTPUT_FILENAME = "./text2sd/output/[SD]FishFinder-ApprovingC1.puml"
+OUTPUT_FILENAME = "./out/puml/[SD]FishFinder-ApprovingC1.puml"
 CLASS = "cls"
 METHOD = "method"
 RETURN = "ret"

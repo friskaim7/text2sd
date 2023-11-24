@@ -1,5 +1,0 @@
--> class1 : method1()
-	class1 -> class2 : method2()
-	class1 <-- class2 : boolean
-	class1 -> class2 : method3()
-	class1 <-- class2 : string
