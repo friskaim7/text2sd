@@ -102,7 +102,7 @@ if __name__ == "__main__":
                 save_to_puml(puml_file, tree_root)
                 puml_file.write("@enduml\n")
         
-        print(f'PlantUML saved to "{output_file_path}"')
+        print(f'PlantUML File saved to\t"{output_file_path}"')
         convert_puml_to_image(output_file_path, IMAGE_OUTPUT_PATH)
         print(f'Sequence Diagram saved to "./out/img/{input_filename}.png"')
  
