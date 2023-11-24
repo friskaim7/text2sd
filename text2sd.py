@@ -1,11 +1,12 @@
 """ This file containing the functions needed to convert .txt file into .puml """
 
 import os
+import subprocess
 import sys
 from lib.custom.nonbinary_tree import build_tree_from_file
 
-# INPUT_FILENAME = "E:/Work/Maucash/Outputs/UML Diagrams/Modified Input/[Input] Fish Finder - Approving C1.txt"
-# OUTPUT_FILENAME = "./out/puml/[SD]FishFinder-ApprovingC1.puml"
+PLANTUML_PATH = "lib/plantuml-1.2023.10.jar"
+IMAGE_OUTPUT_PATH = "../img"
 CLASS = "cls"
 METHOD = "method"
 RETURN = "ret"
@@ -67,11 +68,16 @@ def save_to_puml(puml_file, node, parent=None):
             save_to_puml(puml_file, child, node)
         puml_file.write(get_formatted_return(parent, node) + '\n')
 
+def convert_puml_to_image(input_puml_path, output_path):
+    try:
+        # Use Java to execute the PlantUML JAR file
+        subprocess.run(["java", "-jar", PLANTUML_PATH, input_puml_path, "-o", output_path], check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error during conversion: {e}")
 
 if __name__ == "__main__":
-    """ Run the program """
     if len(sys.argv) != 2:
-        print("Usage: python text2sd.py input_file_directory")
+        print('Usage: python text2sd.py input_file_directory\ni.e. "py text2sd.py input-sample/"\n')
         sys.exit(1)
 
     # Extract input file name from command-line arguments
@@ -90,7 +96,13 @@ if __name__ == "__main__":
 
         with open(input_file_path, 'r', encoding='utf-8') as input_file:
             tree_root = build_tree_from_file(input_file)
+
             with open(output_file_path, "w", encoding='utf-8') as puml_file:
                 puml_file.write(f"@startuml {input_filename}\n")
                 save_to_puml(puml_file, tree_root)
                 puml_file.write("@enduml\n")
+        
+        print(f'PlantUML saved to "{output_file_path}"')
+        convert_puml_to_image(output_file_path, IMAGE_OUTPUT_PATH)
+        print(f'Sequence Diagram saved to "./out/img/{input_filename}.png"')
+ 

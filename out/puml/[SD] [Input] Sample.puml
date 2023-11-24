@@ -1,3 +1,4 @@
+@startuml [Input] Sample
  -> class1: method1(param1)
 class1 -> class2: method2(param1, param2)
 class1 <-- class2: boolean
@@ -16,3 +17,4 @@ class1 <-- class2: string
 class1 -> class2: method9()
 class1 <-- class2: boolean
  <-- class1: int
+@enduml

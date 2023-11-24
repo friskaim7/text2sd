@@ -1,9 +1,0 @@
-class1.method1(param1) >> int:
-	class2.method2(param1, param2) >> boolean
-	class2.method3(param1, param2, param3) >> string:
-		class3.method4() >> string:
-			class4.method5() >> int
-			class4.method6() >> string
-		class3.method7() >> int:
-			class5.method8() >> int
-	class2.method9() >> boolean

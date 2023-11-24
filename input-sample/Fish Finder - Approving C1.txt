@@ -1,0 +1,58 @@
+UnknownClass.unknownMethod() >> Unknown:
+    PreApplyLoansCmdExe.isWhiteListB(jsonData) >> Boolean:
+        GoldFishManager.isWhiteListB(userId) >> boolean:
+            UfiWhiteListDubboService.existsUfiWhiteList(userId) >> Boolean
+    PreApplyLoansCmdExe.process(jsonData) >> void:
+        GoldFishManager.isGoldFish(loanNumber)>> boolean
+    FdcFailJob.execute(shardingContext) >> void:
+        PreApplyLoansCmdExe.runPreRule(loanNumber) >> void:
+            GoldFishRuleService.preReject(loanNumber) >> RuleResultDto:
+                GoldFishRuleService.goldFishProcess(userType, loanNumber, userId, nik, StringBuilder) >> RuleResultDto:
+                    GoldFishRule.FdcCheckHasOver15(userId, nik) >> Response<Boolean>
+    FdcFailJob.execute(shardingContext) >> void:
+        PreApplyLoansCmdExe.runPreRule(loanNumber) >> void:
+            GoldFishRuleService.preReject(loanNumber) >> RuleResultDto:
+                GoldFishRule.ocrCheck(userId, sourceId) >> String:
+                    ApplicationServiceFacde.getPaperworkDataList(userId, source) >> List<PaperworkDataVO>
+    BaseRule.rejectByFNDI(userId) >> Boolean:
+        BaseRule.commonCheck(StringBuilder, applyInfoDto, loanNumber, item, mobile) >> RuleResultDto:
+            BaseRule.reject(loanNumber) >> RuleResultDto
+    ApplyReportTwoConsumer.process(message) >> void:
+        GoldFishManager.fishFinderSecondCheck(ruleResultDto, loanNumber) >> RuleResultDto:
+            FifInsightClient.loadFifinsightCheck(loadFifinsightCheck) >> FifinsightCheck:
+                BaseFifinsightCheckService.getOneByNik(nik) >> FifinsightCheck:
+                    FifinsightController.getFifinsight()
+    BaseCheckService.gadaCheck(userInfo, loanNumber) >> String:
+        DukcapilClientV2Service.doCall(dukcapilRequest) >> String:
+            BaseCheckService.checkGadaAsli(loanNumber, docId) >> String:
+                BaseCheckService.checkBasicSelfie(VidaAsliBO ) >> String
+    ApplyReportTwoConsumer.process(message) >> void:
+        GoldFishManager.fishFinderSecondCheck(ruleResultDto, loanNumber) >> RuleResultDto
+            GoldFishManager.getCheckScore(userType, uw2aSegment, uw2bSegment, nik, loanNumber) >> Response<ScoreResultBO>:
+                ScoreCheck2GoldFish.checkScore(nik, loanNumber) >> Response<ScoreResultBO>:
+                    ScoreCheck2GoldFish.doScoreCheck(nik, loanNumber) >> Response<ScoreResultBO>:
+                        AbstractScoreCheckService.doResult(response, isScoreNullReject) >> Response<ScoreResultBO>:
+                            AbstractScoreCheckService.getApprovalScoreConfig(loanNumber, nik, userType) >> Response<ScoreResultBO>:
+                                BaseCheckService.getLastDigit():
+                                    ScoreCheckService.getLastDigit(loanNumber) >> int
+    GoldFishManager.getCreditTagUW2(origin, score, flagList) >> String:
+        BackstageConfigServiceFacade.getConfigValue(configKey) >> String
+    ScoreCheck2GoldFish.defaultScoring(nik, lastDigit, loanNumber, userProfile) >> Respond:
+        ScoreCheck2GoldFish.scoreFive2Nine(nik, lastDigit, loanNumber) >> Response
+    BaseCheckService.checkSelfieScore(loanNumber) >> String:
+        BaseCheckService.checkSelfieScoreNew(loanNumber, hitBasic) >> String:
+            BaseCheckService.findKyc(loanNumber) >> String:
+                BaseCheckService.vidaScoreCheck(loanNumber, hitBasic, type) >> Response<Boolean>:
+                    BaseCheckService.checkSelfieScoreVida(loanNumber, hitBasic, type) >> VerifyResultBO:
+                        VidaClient.checkSelfieScore(loanNumber, hitBasic, type) >> VerifyResultBO:
+                            VidaClient.checkLiveness(loanNumber, data) >> boolean:
+                                VidaClient.checkCodesOrKycstatus(loanNumber, errors, data, respObj) >> boolean:
+                                    VidaClient.processCheckSelfieScore(loanNumber, errors, data, respObj) >> String
+                BaseCheckService.verihubScoreCheck(loanNumber, hitBasic, type) >> Response<Boolean>:
+                    AsliClient.verifyAsliNew(loanNumber, hitBasic, type) >> String:
+                        BaseCheckService.processCheckAsliScoreNew()
+    AdvanceTeleConsumer.onMessage():
+        BaseApprovalService.handAdvanceCallBack():
+            BaseCheckService.checkAdvanceCallBack():
+                BaseCheckService.checkTeleStatus()
+    NotifyUtils.saveTag()
