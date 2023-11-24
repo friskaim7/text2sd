@@ -1,7 +1,7 @@
-""" This file containing the functions needed to convert .txt file into .puml """
+""" This file containing the functions needed to convert .txt file into .puml and .png """
 
 import os
-import subprocess
+import subprocess as sp
 import sys
 from lib.custom.nonbinary_tree import build_tree_from_file
 
@@ -32,9 +32,10 @@ def property_identifier(line):
     method_return_raw = class_rest[1].split(" >> ")
     line_prop[CLASS] = class_rest[0].strip()
     line_prop[METHOD] = method_return_raw[0].strip()
+    ret_raw = method_return_raw[1]
     # if return part is not empty, then take the return property
     if len(method_return_raw) > 1:
-        line_prop[RETURN] = method_return_raw[1][:-1].strip() if method_return_raw[1].endswith(":") else method_return_raw[1].strip()
+        line_prop[RETURN] = ret_raw[:-1].strip() if ret_raw.endswith(":") else ret_raw.strip()
     return line_prop
 
 def formatting_passer(parent, child):
@@ -60,19 +61,20 @@ def get_formatted_return(caller_node, called_node):
     caller_prop, called_prop = get_output_props(caller_node, called_node)
     return f"{caller_prop[CLASS]} <-- {called_prop[CLASS]}: {called_prop[RETURN]}"
 
-def save_to_puml(puml_file, node, parent=None):
+def save_to_puml(puml_output_file, node, parent=None):
     """" Save inputed tree into a puml file with PlantUML sequence diagram syntax"""
     if node is not None:
-        puml_file.write(get_formatted_caller(parent, node) + '\n')
+        puml_output_file.write(get_formatted_caller(parent, node) + '\n')
         for child in node.children:
-            save_to_puml(puml_file, child, node)
-        puml_file.write(get_formatted_return(parent, node) + '\n')
+            save_to_puml(puml_output_file, child, node)
+        puml_output_file.write(get_formatted_return(parent, node) + '\n')
 
 def convert_puml_to_image(input_puml_path, output_path):
+    """ Convert generated puml file into an image"""
     try:
         # Use Java to execute the PlantUML JAR file
-        subprocess.run(["java", "-jar", PLANTUML_PATH, input_puml_path, "-o", output_path], check=True)
-    except subprocess.CalledProcessError as e:
+        sp.run(["java", "-jar", PLANTUML_PATH, input_puml_path, "-o", output_path], check=True)
+    except sp.CalledProcessError as e:
         print(f"Error during conversion: {e}")
 
 if __name__ == "__main__":
@@ -101,7 +103,7 @@ if __name__ == "__main__":
                 puml_file.write(f"@startuml {input_filename}\n")
                 save_to_puml(puml_file, tree_root)
                 puml_file.write("@enduml\n")
-        
+
         print(f'PlantUML File saved to\t"{output_file_path}"')
         convert_puml_to_image(output_file_path, IMAGE_OUTPUT_PATH)
         print(f'Sequence Diagram saved to "./out/img/{input_filename}.png"')
