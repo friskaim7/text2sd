@@ -91,4 +91,6 @@ if __name__ == "__main__":
         with open(input_file_path, 'r', encoding='utf-8') as input_file:
             tree_root = build_tree_from_file(input_file)
             with open(output_file_path, "w", encoding='utf-8') as puml_file:
+                puml_file.write(f"@startuml {input_filename}\n")
                 save_to_puml(puml_file, tree_root)
+                puml_file.write("@enduml\n")
